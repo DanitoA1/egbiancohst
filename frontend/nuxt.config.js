@@ -46,7 +46,12 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/svg-sprite',
   ],
+  svgSprite: {
+    // manipulate module options
+    input: '~/assets/icons/'
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
