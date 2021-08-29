@@ -98,21 +98,23 @@
             We offered the following courses at Egbian college of science and
             Technology
           </h1>
-          <div v-for="(item, idx) in coursesArray" :key="item" :class="[idx == 0? 'mt-12' : 'mt-8','grid grid-cols-12']" >
+          <div
+            v-for="(item, idx) in coursesArray"
+            :key="item"
+            :class="[idx == 0 ? 'mt-12' : 'mt-8', 'grid grid-cols-12']"
+          >
             <svg-icon name="checked" class="h-10 w-10"></svg-icon>
             <span
               class="col-span-10 text-xl roboto text-dark-500 ml-3 self-center"
-              > {{item}} </span
             >
+              {{ item }}
+            </span>
           </div>
-
-
-
-
-         
         </div>
       </div>
     </div>
+    <Gallery />
+    <LatestNews />
     <BaseAppFooter />
   </div>
 </template>
