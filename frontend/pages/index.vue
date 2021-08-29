@@ -1,10 +1,12 @@
 <template>
   <div>
-    <BaseAppHeader/>
+    <BaseAppHeader />
     <div class="-mt-36 landing h-827 text-center flex flex-col justify-center">
       <h1 class="text-8xl mx-auto playfair">Unleashing</h1>
       <h1 class="text-8xl mx-auto playfair mt-4">Your Creativity</h1>
-      <h2 class="text-2xl mx-auto roboto mt-8 font-thin">Creating the perfect timeline for your career</h2>
+      <h2 class="text-2xl mx-auto roboto mt-8 font-thin">
+        Creating the perfect timeline for your career
+      </h2>
     </div>
     <div class="text-center my-16">
       <h1 class="text-6xl font-bold roboto">About Our College</h1>
@@ -16,10 +18,12 @@
             <div class="grid grid-cols-6 gap-x-5">
               <svg-icon name="notes" class="w-24 h-24"></svg-icon>
               <div class="flex flex-col ml-6 text-xl col-span-5">
-                <h3 class="roboto font-bold text-dark-500">We have determind to make this our vision</h3>
+                <h3 class="roboto font-bold text-dark-500">
+                  We have determind to make this our vision
+                </h3>
                 <p class="roboto mt-3 text-dark-700">
-                  To be a globally recognized college in the training of competent healthcare
-                  professionals
+                  To be a globally recognized college in the training of
+                  competent healthcare professionals
                 </p>
               </div>
             </div>
@@ -28,10 +32,13 @@
             <div class="grid grid-cols-6 gap-x-5">
               <svg-icon name="arrow" class="w-24 h-24"></svg-icon>
               <div class="flex flex-col ml-6 text-xl col-span-5">
-                <h3 class="roboto font-bold text-dark-500">It is our aim to become the front teer:</h3>
+                <h3 class="roboto font-bold text-dark-500">
+                  It is our aim to become the front teer:
+                </h3>
                 <p class="roboto mt-3 text-dark-700">
-                  Help the community through innovative learning and research, with an unwavering commitment to ethical
-                  practice for the benefit of humanity.
+                  Help the community through innovative learning and research,
+                  with an unwavering commitment to ethical practice for the
+                  benefit of humanity.
                 </p>
               </div>
             </div>
@@ -40,9 +47,12 @@
             <div class="grid grid-cols-6 gap-x-5">
               <svg-icon name="goal" class="w-24 h-24"></svg-icon>
               <div class="flex flex-col ml-6 text-xl col-span-5">
-                <h3 class="roboto font-bold text-dark-500">The mission we embarked on</h3>
+                <h3 class="roboto font-bold text-dark-500">
+                  The mission we embarked on
+                </h3>
                 <p class="roboto mt-3 text-dark-700">
-                  To strives to provide professionals with the 21st-century skills needed to revamp the nation's healthcare sector.
+                  To strives to provide professionals with the 21st-century
+                  skills needed to revamp the nation's healthcare sector.
                 </p>
               </div>
             </div>
@@ -53,55 +63,53 @@
             A good education is a foundation of a better future
           </h1>
           <p class="text-xl text-dark-700 roboto mt-12">
-            A community for peer-to-peer learning platform equipped with the required tool for teaching and implenting the knowledge of science and technology.
-            DIstinuished professors are ready to build your future all ahead of you,
+            A community for peer-to-peer learning platform equipped with the
+            required tool for teaching and implenting the knowledge of science
+            and technology. DIstinuished professors are ready to build your
+            future all ahead of you,
           </p>
           <p class="text-xl text-dark-700 roboto mt-4">
-            We provide you with a personalized program that is research-backed and builds on the experince brought by our experts.
+            We provide you with a personalized program that is research-backed
+            and builds on the experince brought by our experts.
           </p>
-          <button class="bg-dark-blue text-white py-3.5 px-10 mt-12 rounded-md text-2xl">
+          <button
+            class="
+              bg-dark-blue
+              text-white
+              py-3.5
+              px-10
+              mt-12
+              rounded-md
+              text-2xl
+            "
+          >
             Explore more
           </button>
         </div>
       </div>
       <div class="grid grid-cols-2 gap-x-32 my-40">
-        <img src="~/assets/images/courses.svg" alt="Courses Offered" class="self-center">
+        <img
+          src="~/assets/images/courses.svg"
+          alt="Courses Offered"
+          class="self-center"
+        />
         <div class="ml-6">
           <h1 class="text-3xl roboto font-extrabold text-dark-500">
-            We offered the following courses at Egbian college of science and Technology
+            We offered the following courses at Egbian college of science and
+            Technology
           </h1>
-          <div class="grid grid-cols-12 mt-12">
+          <div v-for="(item, idx) in coursesArray" :key="item" :class="[idx == 0? 'mt-12' : 'mt-8','grid grid-cols-12']" >
             <svg-icon name="checked" class="h-10 w-10"></svg-icon>
-            <span class="col-span-10 text-xl roboto text-dark-500 ml-3 self-center">Environmental Health Technicians (EHT)</span>
+            <span
+              class="col-span-10 text-xl roboto text-dark-500 ml-3 self-center"
+              > {{item}} </span
+            >
           </div>
-          <div class="grid grid-cols-12 mt-8">
-            <svg-icon name="checked" class="h-10 w-10"></svg-icon>
-            <span class="col-span-10 text-xl roboto text-dark-500 ml-3 self-center">Community Health Extension Workers (CHEW)</span>
-          </div>
-          <div class="grid grid-cols-12 mt-8">
-            <svg-icon name="checked" class="h-10 w-10"></svg-icon>
-            <span class="col-span-10 text-xl roboto text-dark-500 ml-3 self-center">Health Information Management (HIM)</span>
-          </div>
-          <div class="grid grid-cols-12 mt-8">
-            <svg-icon name="checked" class="h-10 w-10"></svg-icon>
-            <span class="col-span-10 text-xl roboto text-dark-500 ml-3 self-center">X-Ray Technician (XRT)</span>
-          </div>
-          <div class="grid grid-cols-12 mt-8">
-            <svg-icon name="checked" class="h-10 w-10"></svg-icon>
-            <span class="col-span-10 text-xl roboto text-dark-500 ml-3 self-center">Health Education and Promotion (HEP)</span>
-          </div>
-          <div class="grid grid-cols-12 mt-8">
-            <svg-icon name="checked" class="h-10 w-10"></svg-icon>
-            <span class="col-span-10 text-xl roboto text-dark-500 ml-3 self-center">Pharmacy Technician (PT)</span>
-          </div>
-          <div class="grid grid-cols-12 mt-8">
-            <svg-icon name="checked" class="h-10 w-10"></svg-icon>
-            <span class="col-span-10 text-xl roboto text-dark-500 ml-3 self-center">Dental Technician (DT)</span>
-          </div>
-          <div class="grid grid-cols-12 mt-8">
-            <svg-icon name="checked" class="h-10 w-10"></svg-icon>
-            <span class="col-span-10 text-xl roboto text-dark-500 ml-3 self-center">Medical Laboratory Technology (MLT)</span>
-          </div>
+
+
+
+
+         
         </div>
       </div>
     </div>
@@ -110,19 +118,20 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      coursesArray: [
+        'Environmental Health Technicians (EHT)',
+        'Community Health Extension Workers (CHEW)',
+        'Health Information Management (HIM)',
+        'X-Ray Technician (XRT)',
+        'Health Education and Promotion (HEP)',
+        'Pharmacy Technician (PT)',
+        'Dental Technician (DT)',
+        'Medical Laboratory Technology (MLT)',
+      ],
+    }
+  },
+}
 </script>
-
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@300;400;500;700&display=swap');
-
-  .landing {
-    background: url('~assets/images/landing.gif');
-  }
-  .playfair {
-    font-family: 'Playfair Display', serif;
-  }
-  .roboto {
-    font-family: 'Roboto', sans-serif;
-  }
-</style>

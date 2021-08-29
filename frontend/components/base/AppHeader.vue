@@ -4,17 +4,17 @@
       <img src="~/assets/images/Logo.svg" alt="">
       <div class="flex flex-col justify-between text-xl my-2">
         <div class="flex flex-row justify-end text-dark-blue">
-          <a href="#" class="mr-16">Staff</a>
-          <a href="#" class="mr-16">Student</a>
-          <a href="#" class="mr-16">Alumni</a>
+          <nuxt-link to='/' class="mr-16">Staff</nuxt-link>
+          <nuxt-link to='/' class="mr-16">Student</nuxt-link>
+          <nuxt-link to='/' class="mr-16">Alumni</nuxt-link>
           <span class="ml-20 flex flex-row"><svg-icon name="search" class="w-4 h-4 my-1 mr-2"></svg-icon>Search</span>
         </div>
         <div class="flex flex-row space-x-16 mr-48">
-          <a href="#" class="font-semibold">About</a>
-          <a href="#" class="font-semibold">Admission</a>
-          <a href="#" class="font-semibold">Courses</a>
-          <a href="#" class="font-semibold">News</a>
-          <a href="#" class="font-semibold">Contact</a>
+          <nuxt-link to='/' class="font-semibold">About</nuxt-link>
+          <nuxt-link to='/' class="font-semibold">Admission</nuxt-link>
+          <nuxt-link to='/' class="font-semibold">Courses</nuxt-link>
+          <nuxt-link to='/' class="font-semibold">News</nuxt-link>
+          <nuxt-link to='/' class="font-semibold">Contact</nuxt-link>
         </div>
       </div>
     </div>
