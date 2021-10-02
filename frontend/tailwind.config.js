@@ -31,6 +31,10 @@ module.exports = {
         '96': '96%',
         '330' : '330px'
       },
+      padding: {
+        '22' : '90px'
+      }
+
     },
   },
   variants: {
