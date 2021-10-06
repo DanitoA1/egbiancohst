@@ -9,9 +9,8 @@
     "generate": "nuxt generate",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint:style": "stylelint \"**/*.{vue,css}\" --ignore-path .gitignore",
-    "prepare": "husky install",
     "lint": "yarn lint:js && yarn lint:style",
-    "test": "jest"
+    "test": "jest"  
   },
   "lint-staged": {
     "*.{js,vue}": "eslint",
@@ -26,8 +25,11 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.14.7",
+    "@fortawesome/free-brands-svg-icons": "^5.15.4",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@nuxtjs/eslint-config": "^6.0.1",
     "@nuxtjs/eslint-module": "^3.0.2",
+    "@nuxtjs/fontawesome": "^1.1.2",
     "@nuxtjs/stylelint-module": "^4.0.0",
     "@nuxtjs/tailwindcss": "^4.2.0",
     "@vue/test-utils": "^1.2.1",
@@ -37,7 +39,6 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-nuxt": "^2.0.0",
     "eslint-plugin-vue": "^7.12.1",
-    "husky": "^6.0.0",
     "jest": "^27.0.5",
     "lint-staged": "^10.5.4",
     "postcss": "^8.3.5",
@@ -46,5 +47,6 @@
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^22.0.0",
     "vue-jest": "^3.0.4"
+   
   }
 }

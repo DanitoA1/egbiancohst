@@ -14,9 +14,8 @@ module.exports = {
         'admin' : '#FFF6D8',
         'treaurer' : '#DBFFE2',
         'janitor' : '#E6FEFF',
+        'light-blue': '#EFF8FF        ',
         'gallery' :  'rgba(247, 247, 247, 0.68)'
-
-
       },
       height: {
         '827': '827px',
@@ -31,6 +30,13 @@ module.exports = {
         '96': '96%',
         '330' : '330px'
       },
+      padding: {
+        '22' : '90px'
+      },
+      borderRadius : {
+        '4px' : '4px'
+      }
+
     },
   },
   variants: {
