@@ -57,14 +57,14 @@
             <div>
               <input
                 class="
-                  mt-3
+                 mt-3
                   overflow-ellipsis
-                  border-2
+                  border
                   outline-none
                   border-gray-300
                   w-full
-                  shadow-md
-                  rounded-md
+                  focus:shadow-md
+                  rounded-4px
                   p-3.5
                   focus:border-blue-400
                 "
@@ -83,16 +83,16 @@
             <div>
               <input
                 class="
-                  mt-3
+                    mt-3
                   overflow-ellipsis
-                  border-2
+                  border
                   outline-none
                   border-gray-300
                   w-full
-                  shadow-md
-                  rounded-md
+                  focus:shadow-md
+                  rounded-4px
                   p-3.5
-                   focus:border-blue-400
+                  focus:border-blue-400
                 "
                 type="telephone"
                 name="email"
@@ -107,16 +107,16 @@
             <div>
               <input
                 class="
-                  mt-3
+                    mt-3
                   overflow-ellipsis
-                  border-2
+                  border
                   outline-none
                   border-gray-300
                   w-full
-                  shadow-md
-                  rounded-md
+                  focus:shadow-md
+                  rounded-4px
                   p-3.5
-                   focus:border-blue-400
+                  focus:border-blue-400
                 "
                 type="password"
                 name="email"
@@ -137,7 +137,7 @@
                   outline-none
                   border-gray-300
                   w-full  
-                  rounded-md
+                  rounded-4px
                   p-3.5
                 ">
   Create an account

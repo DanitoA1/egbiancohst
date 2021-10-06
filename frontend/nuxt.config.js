@@ -35,6 +35,7 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    '@nuxtjs/fontawesome',
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/stylelint
@@ -43,6 +44,13 @@ export default {
     '@nuxtjs/tailwindcss',
   ],
 
+  fontawesome : {
+    icons : {
+      solid : true,
+      brands : true,
+   
+    }
+  },
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
