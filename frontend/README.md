@@ -67,3 +67,16 @@ More information about the usage of this directory in [the documentation](https:
 This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
 
 More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
+
+
+### `Current Pages`
+
+\ - Homepage
+\about - About page
+\contact - Contact us page
+\faq - FAQs Pages
+\news - News Pages
+\admission\registration - Admission Registration Page
+\admission\documentation - Admission Documentation Page
+\student\login  - student login page
+
