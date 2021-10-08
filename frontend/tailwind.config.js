@@ -15,7 +15,8 @@ module.exports = {
         'treaurer' : '#DBFFE2',
         'janitor' : '#E6FEFF',
         'light-blue': '#EFF8FF        ',
-        'gallery' :  'rgba(247, 247, 247, 0.68)'
+        'gallery' :  'rgba(247, 247, 247, 0.68)',
+        'profile-blue' : '#1343B4'
       },
       height: {
         '827': '827px',
