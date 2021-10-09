@@ -93,7 +93,7 @@
           <div class="text-center">
             <span class="text-gray-600"> Already have an account ? </span>
             <span class="font-bold text-dark-blue"
-              ><a href="/admission/registration">Start application</a></span
+              ><a href="/admission/registration"> Create account</a></span
             >
           </div>
         </div>

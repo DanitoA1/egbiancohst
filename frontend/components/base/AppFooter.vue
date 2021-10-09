@@ -13,14 +13,14 @@
           <nuxt-link to="/" class="font-light text-xl"
             >Contact Egbian</nuxt-link
           >
-          <nuxt-link to="/" class="font-light text-xl"
+          <nuxt-link to="/contact" class="font-light text-xl"
             >Map &amp; Directions</nuxt-link
           >
           <nuxt-link to="/" class="font-light text-xl">Opportunities</nuxt-link>
         </div>
         <div class="flex flex-col text-white roboto space-y-8">
           <h3 class="font-bold text-3xl">Admission</h3>
-          <nuxt-link to="/" class="font-light text-xl">Undergraduate</nuxt-link>
+          <nuxt-link to="/student/login" class="font-light text-xl">Undergraduate</nuxt-link>
           <nuxt-link to="/" class="font-light text-xl">Graduate</nuxt-link>
         </div>
       </div>
