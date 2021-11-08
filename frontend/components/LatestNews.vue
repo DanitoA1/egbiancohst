@@ -11,7 +11,7 @@
           </p>
         </div>
 
-        <div class="grid grid-cols-3 gap-8 mb-16">
+        <div class="grid lg:grid-cols-3 gap-8 mb-16">
           <!-- First Card  -->
           <div class="shadow-2xl bg-white grid grid-col">
             <div>

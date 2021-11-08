@@ -10,7 +10,7 @@
   font-family: 'Roboto', sans-serif;
 }
 .header-text {
-  @apply text-5xl font-medium mb-2 text-dark-blue;
+  @apply lg:text-5xl text-3xl font-medium mb-2 text-dark-blue;
 
   font-family: 'Roboto', sans-serif;
 }

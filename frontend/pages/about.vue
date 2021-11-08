@@ -5,7 +5,7 @@
       <!-- Hero Section  Begin -->
       <div>
         <div class="flex mb-7">
-          <div class="flex w-3/5 space-x-8">
+          <div class="flex lg:w-3/5 w-full space-x-8">
             <div class="flex items-end w-45">
               <img
                 class="w-full object-cover"
@@ -21,7 +21,7 @@
               />
             </div>
           </div>
-          <div class="flex pl-6 w-2/5 items-center">
+          <div class="lg:flex pl-6 hidden lg:w-2/5 items-center">
             <div>
               <h1 class="header-text">How did we start?</h1>
               <p class="text-dark-700 font-normal text-lg">
@@ -33,18 +33,32 @@
             </div>
           </div>
         </div>
-        <div class="flex">
-          <div class="flex w-3/5 pl-16 pr-10 -mt-3">
+        <div class="flex lg:flex-row flex-col">
+          <div class="flex lg:w-3/5  lg:pl-16 lg:pr-10 -mt-3">
             <img
               src="@/assets/images/student-reading.svg"
               alt="student-reading"
             />
           </div>
-          <div class="flex w-2/5">
+          <div class="flex w-full lg:w-2/5">
+          <div class="lg:flex hidden">
+
             <img
               src="@/assets/images/teacher-writing.svg"
               alt="teacher-writing"
             />
+          </div>
+          <div class="flex my-10 lg:my-0 lg:hidden">
+               <div>
+              <h1 class="header-text">How did we start?</h1>
+              <p class="text-dark-700 font-normal text-lg">
+                Information on how egbian college of science and technology is
+                structure and explore our life long history with the community.
+                Our leadership, management and endowement as an independent
+                entity that operate efficiently.
+              </p>
+            </div>
+          </div>
           </div>
         </div>
       </div>
@@ -52,7 +66,7 @@
 
       <!-- Main Begin -->
       <div class="mt-8">
-        <div class="text-center px-28">
+        <div class="text-center lg:px-28 px-5">
           <h1 class="header-text">The most preferred and trusted</h1>
           <p class="sub-text">
             Come and discover exciting and vibrant campus and find out why
@@ -60,7 +74,7 @@
           </p>
         </div>
 
-        <div class="mt-10 flex justify-between text-center">
+        <div class="mt-10 flex lg:justify-between flex-col lg:flex-row text-center">
           <div
             v-for="(data, idx) in propertyData"
             :key="idx"
@@ -79,8 +93,8 @@
             >
               <svg-icon :name="data.icon" class="h-9 w-9"></svg-icon>
             </div>
-            <h1 class="header-text">{{ data.count }}</h1>
-            <h4 class="sub-text px-8">{{ data.desc }}</h4>
+            <h1 class="lg:text-3xl text-5xl font-medium mb-2 text-dark-blue">{{ data.count }}</h1>
+            <h4 class="sub-text  px-8">{{ data.desc }}</h4>
           </div>
         </div>
 
@@ -94,7 +108,7 @@
           </div>
         </div>
         <!-- courses offered  -->
-        <div class="grid grid-cols-2 gap-10">
+        <div class="grid lg:grid-cols-2 gap-10">
           <div>
             <img
               src="@/assets/images/courses-offered.svg"
@@ -109,7 +123,7 @@
               the same direction, and encourage the inclusive, divers
               methodology of improving student
             </div>
-            <div class="capitalize text-3xl grid pl-3 grid-cols-2 gap-8">
+            <div class="capitalize text-3xl grid pl-3 lg:grid-cols-2 gap-8">
               <div class="flex items-center">
                 <span>
                   <img
@@ -165,7 +179,7 @@
         </div>
 
         <!-- Learn and Grow -->
-        <div class="mt-44 grid grid-cols-2 gap-10">
+        <div class="mt-44 grid lg:grid-cols-2 gap-10">
           <div class="mt-8 flex flex-col">
             <div class="header-text leading-loose mb-20">
               Get ready to learn and grow with us
@@ -236,7 +250,7 @@
           <!-- stakeholders -->
 
           <div class="mt-20">
-            <div class="grid grid-cols-3 gap-20 text-center">
+            <div class="grid lg:grid-cols-3 gap-20 text-center">
               <div class="flex justify-center flex-col " v-for="person in 6" :key='person'>
                 <div class=" h-330 bg-hod w-full pt-5 mb-8">
                   <img

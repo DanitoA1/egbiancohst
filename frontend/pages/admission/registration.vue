@@ -1,13 +1,15 @@
 <template>
-  <div class=" ">
-    <div class="grid grid-cols-3">
+  <div class="">
+    <div class="flex lg:flex-row flex-col">
       <!-- Dark Blue Half Section -->
       <div
         class="
           h-screen
-         
+          w-1/3
+          hidden
           bg-dark-blue
-          flex flex-col
+          lg:flex
+          flex-col
           py-40
           pl-16
           pr-10
@@ -19,7 +21,9 @@
         "
       >
         <div class="absolute bottom-0 left-0">
-          <img src="~/assets/images/mortarboard-trans.svg" alt="" />
+          <nuxt-link to="/">
+            <img src="~/assets/images/mortarboard-trans.svg" alt="" />
+          </nuxt-link>
         </div>
         <div>
           <img
@@ -36,9 +40,11 @@
       </div>
 
       <!-- Registration Section -->
-      <div class="col-span-2 flex  h-screen overflow-scroll reg-container">
+      <div
+        class="flex lg:flex-row flex-col h-screen overflow-scroll reg-container"
+      >
         <!-- Left Section -->
-        <div class="w-8/12 pl-32 pr-10 mt-12">
+        <div class="lg:w-8/12 w-full lg:pl-32 px-8 lg:pr-10 mt-12">
           <div class="flex mb-5">
             <div class="pr-4">
               <svg-icon name="mortarboard" class="w-10 h-10"></svg-icon>
@@ -57,7 +63,7 @@
             <div>
               <input
                 class="
-                 mt-3
+                  mt-3
                   overflow-ellipsis
                   border
                   outline-none
@@ -83,7 +89,7 @@
             <div>
               <input
                 class="
-                    mt-3
+                  mt-3
                   overflow-ellipsis
                   border
                   outline-none
@@ -103,11 +109,13 @@
           <!-- Password Imput -->
 
           <div class="mb-8">
-            <label for="password" class="text-gray-600 font-bold"> Password </label>
+            <label for="password" class="text-gray-600 font-bold">
+              Password
+            </label>
             <div>
               <input
                 class="
-                    mt-3
+                  mt-3
                   overflow-ellipsis
                   border
                   outline-none
@@ -125,33 +133,39 @@
             </div>
           </div>
 
-    <!-- Submit input -->
+          <!-- Submit input -->
 
-    <button type="submit" class="
-                  bg-dark-blue
-                  text-white
-                  text-center
-                  mt-3
-                  overflow-ellipsis
-                  border
-                  outline-none
-                  border-gray-300
-                  w-full  
-                  rounded-4px
-                  p-3.5
-                ">
-  Create an account
-    </button>
+          <button
+            type="submit"
+            class="
+              bg-dark-blue
+              text-white text-center
+              mt-3
+              overflow-ellipsis
+              border
+              outline-none
+              border-gray-300
+              w-full
+              rounded-4px
+              p-3.5
+            "
+          >
+            Create an account
+          </button>
 
-    <div class="text-center mt-8 mb-20">
-    <span class='text-gray-600'>  Already have an account ? </span> <span class="font-bold text-dark-blue"><nuxt-link to='/'>Start application</nuxt-link></span>
-    </div>
-
-
+          <div class="text-center mt-8 mb-20 space-x-4">
+            <span class="text-gray-600"> Already have an account ? </span>
+            <span class="font-bold text-dark-blue"
+              ><nuxt-link to="/">Start application</nuxt-link></span
+            >
+            <span class="font-bold text-dark-blue"
+              ><nuxt-link to="/">Homepage</nuxt-link></span
+            >
+          </div>
         </div>
 
         <!-- Right Section -->
-        <div class="w-4/12 mt-4 mr-8">
+        <div class="lg:w-4/12 px-5 order-first lg:order-last w-full mt-4 mr-8">
           <div
             class="
               flex
@@ -191,7 +205,7 @@ export default {
 </script>
 
 <style scoped>
-.reg-container::-webkit-scrollbar{
-  display: none
+.reg-container::-webkit-scrollbar {
+  display: none;
 }
 </style>
