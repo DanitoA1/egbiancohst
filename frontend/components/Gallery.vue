@@ -1,7 +1,7 @@
 <template>
   <div class="bg-gallery">
     <div class="container w-11/12 mx-auto py-12">
-      <div class="grid grid-cols-2 gap-28">
+      <div class="grid lg:grid-cols-2 gap-28">
         <div>
           <h2 class="uppercase mb-5 text-dark-blue text-xl font-medium">
             gallery

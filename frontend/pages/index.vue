@@ -12,7 +12,7 @@
       <h1 class="text-6xl font-bold roboto">About Our College</h1>
     </div>
     <div class="container mx-auto w-11/12">
-      <div class="grid grid-cols-2 gap-x-32">
+      <div class="grid lg:grid-cols-2  gap-x-32">
         <div>
           <el-card class="border-0 p-2">
             <div class="grid grid-cols-6 gap-x-5">
@@ -58,7 +58,7 @@
             </div>
           </el-card>
         </div>
-        <div class="ml-6">
+        <div class="ml-6 lg:mt-0 mt-10">
           <h1 class="text-3xl roboto font-extrabold text-dark-500">
             A good education is a foundation of a better future
           </h1>
@@ -87,11 +87,11 @@
           </button>
         </div>
       </div>
-      <div class="grid grid-cols-2 gap-x-32 my-40">
+      <div class="grid lg:grid-cols-2  gap-x-32 my-40">
         <img
           src="~/assets/images/courses.svg"
           alt="Courses Offered"
-          class="self-center"
+          class="self-center mx-auto h-80 object-contain"
         />
         <div class="ml-6">
           <h1 class="text-3xl roboto font-extrabold text-dark-500">
