@@ -19,7 +19,14 @@
 
   @apply text-dark-700 font-normal text-lg;
 }
+body.el-popup-parent--hidden .v-modal{
+  z-index: 0 !important;
+}
+body.el-popup-parent--hidden .el-drawer.rtl{
+  width : 50% !important;
+  @apply bg-gray-200 text-dark-blue !important;
 
+}
 
 
 

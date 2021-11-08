@@ -91,7 +91,7 @@
         <img
           src="~/assets/images/courses.svg"
           alt="Courses Offered"
-          class="self-center mx-auto h-80 object-contain"
+          class="self-center mx-auto lg:h-full h-80 object-contain"
         />
         <div class="ml-6">
           <h1 class="text-3xl roboto font-extrabold text-dark-500">
