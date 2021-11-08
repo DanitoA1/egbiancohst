@@ -1,9 +1,9 @@
 <template>
   <div>
     <BaseAppHeader />
-    <div class="-mt-36 landing h-827 text-center flex flex-col justify-center">
-      <h1 class="text-8xl mx-auto playfair">Unleashing</h1>
-      <h1 class="text-8xl mx-auto playfair mt-4">Your Creativity</h1>
+    <div class="-mt-36 landing h-827 text-center flex flex-col font-semibold justify-center text-white">
+      <h1 class="lg:text-8xl text-5xl mx-auto playfair">Unleashing</h1>
+      <h1 class="lg:text-8xl text-5xl mx-auto playfair mt-4">Your Creativity</h1>
       <h2 class="text-2xl mx-auto roboto mt-8 font-thin">
         Creating the perfect timeline for your career
       </h2>
@@ -16,8 +16,8 @@
         <div>
           <el-card class="border-0 p-2">
             <div class="grid grid-cols-6 gap-x-5">
-              <svg-icon name="notes" class="w-24 h-24"></svg-icon>
-              <div class="flex flex-col ml-6 text-xl col-span-5">
+              <svg-icon name="notes" class="lg:w-24 w-16 h-24"></svg-icon>
+              <div class="flex flex-col ml-6 lg:text-xl text-base col-span-5">
                 <h3 class="roboto font-bold text-dark-500">
                   We have determind to make this our vision
                 </h3>
@@ -30,8 +30,8 @@
           </el-card>
           <el-card class="border-0 mt-10 p-2">
             <div class="grid grid-cols-6 gap-x-5">
-              <svg-icon name="arrow" class="w-24 h-24"></svg-icon>
-              <div class="flex flex-col ml-6 text-xl col-span-5">
+              <svg-icon name="arrow" class="lg:w-24 w-16 h-24"></svg-icon>
+              <div class="flex flex-col ml-6 lg:text-xl text-base col-span-5">
                 <h3 class="roboto font-bold text-dark-500">
                   It is our aim to become the front teer:
                 </h3>
@@ -45,8 +45,8 @@
           </el-card>
           <el-card class="border-0 mt-10 p-2">
             <div class="grid grid-cols-6 gap-x-5">
-              <svg-icon name="goal" class="w-24 h-24"></svg-icon>
-              <div class="flex flex-col ml-6 text-xl col-span-5">
+              <svg-icon name="goal" class="lg:w-24 w-16 h-24"></svg-icon>
+              <div class="flex flex-col ml-6 lg:text-xl text-base col-span-5">
                 <h3 class="roboto font-bold text-dark-500">
                   The mission we embarked on
                 </h3>
