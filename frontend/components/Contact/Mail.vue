@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="grid text-left grid-cols-2 gap-5">
+    <div class="grid text-left lg:grid-cols-2 gap-5">
       <div class="flex flex-col">
         <div class="mb-8">
           <span for="Name" class="text-gray-600 font-bold"> You Name </span>
