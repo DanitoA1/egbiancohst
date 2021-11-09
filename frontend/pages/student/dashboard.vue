@@ -65,7 +65,7 @@
         </div>
         <!-- Main Begin -->
      
-     <StudentAdmissionLetter />
+     <StudentDashboard />
 
         <!-- Main End -->
       </div>

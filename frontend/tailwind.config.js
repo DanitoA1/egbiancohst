@@ -16,7 +16,11 @@ module.exports = {
         'janitor' : '#E6FEFF',
         'light-blue': '#EFF8FF        ',
         'gallery' :  'rgba(247, 247, 247, 0.68)',
-        'profile-blue' : '#1343B4'
+        'profile-blue' : '#1343B4',
+        'reg-blue' : '#E2F6FE',
+        'adm-purple' : '#E5EBFF',
+        'acc-yellow' : '#FFF6DB'
+        
       },
       height: {
         '827': '827px',

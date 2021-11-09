@@ -64,9 +64,13 @@
           <!-- SideBar Content Ends -->
         </div>
         <!-- Main Begin -->
-     
-     <StudentAdmissionLetter />
 
+
+
+  <!-- ============= MAIN =============== -->
+
+
+      
         <!-- Main End -->
       </div>
     </main>
@@ -75,8 +79,8 @@
 
 <script>
 export default {
-  name: 'Admission-Letter',
-  props: {},
+  name: 'Template',
+  props: ['data'],
   data() {
     return {
       sideabrContents: [
