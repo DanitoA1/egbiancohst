@@ -75,7 +75,7 @@
 
 <script>
 export default {
-  name: 'Admission-Letter',
+  name: 'Dashboard',
   props: {},
   data() {
     return {
@@ -108,13 +108,13 @@ export default {
           icon: 'sitemap',
           name: 'Accomodation',
           type: 'fas',
-          link: '/student/accomodation',
+          link: '/student/registration-fee',
         },
         {
           icon: 'credit-card',
           name: 'School Fee',
           type: 'fas',
-          link: '/student/school-fee',
+          link: '/student/registration-fee',
         },
         { icon: 'book', name: 'Result', type: 'fas', link: '/student/result/' },
         {
@@ -141,5 +141,9 @@ export default {
 .form-page::-webkit-scrollbar,
 .sidebar::-webkit-scrollbar {
   display: none;
+}
+a:hover,
+a.nuxt-link-exact-active {
+  @apply text-gray-400;
 }
 </style>

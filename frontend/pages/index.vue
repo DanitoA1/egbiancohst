@@ -1,18 +1,43 @@
 <template>
   <div>
-    <BaseAppHeader />
-    <div class="-mt-36 landing h-827 text-center flex flex-col font-semibold justify-center text-white">
+    <BaseAppHeaderLanding />
+
+    <section class="hero ">
+      <el-carousel :interval="5000" arrow="always">
+        <el-carousel-item v-for="item in 8" :key="item">
+          <img
+            :src="require(`@/assets/images/carousel/${item}.jpg`)"
+            alt=""
+            class="lg:w-screen lg:h-screen w-full h-72 mt-28 lg:mt-0"
+          />
+        </el-carousel-item>
+      </el-carousel>
+    </section>
+
+    <div
+      class="
+        landing
+      my-10
+        text-center
+        flex flex-col
+        font-semibold
+        justify-center
+        text-black
+      "
+    >
       <h1 class="lg:text-8xl text-5xl mx-auto playfair">Unleashing</h1>
-      <h1 class="lg:text-8xl text-5xl mx-auto playfair mt-4">Your Creativity</h1>
+      <h1 class="lg:text-8xl text-5xl mx-auto playfair mt-4">
+        Your Creativity
+      </h1>
       <h2 class="text-2xl mx-auto roboto mt-8 font-thin">
         Creating the perfect timeline for your career
       </h2>
     </div>
-    <div class="text-center my-16">
+    <div class="text-center my-6">
       <h1 class="text-6xl font-bold roboto">About Our College</h1>
     </div>
     <div class="container mx-auto w-11/12">
-      <div class="grid lg:grid-cols-2  gap-x-32">
+      <div class="grid lg:grid-cols-2 gap-x-32">
         <div>
           <el-card class="border-0 p-2">
             <div class="grid grid-cols-6 gap-x-5">
@@ -87,7 +112,7 @@
           </button>
         </div>
       </div>
-      <div class="grid lg:grid-cols-2  gap-x-32 my-40">
+      <div class="grid lg:grid-cols-2 gap-x-32 my-40">
         <img
           src="~/assets/images/courses.svg"
           alt="Courses Offered"
@@ -105,7 +130,7 @@
           >
             <svg-icon name="checked" class="h-10 w-10"></svg-icon>
             <span
-              class="col-span-10 text-xl roboto text-dark-500 ml-3 self-center"
+              class="col-span-10 text-xl roboto text-dark-500 ml-6 lg:ml-3 self-center"
             >
               {{ item }}
             </span>
@@ -137,3 +162,31 @@ export default {
   },
 }
 </script>
+<style>
+section .el-carousel.el-carousel--horizontal .el-carousel__container {
+  position: relative !important;
+  height: 100vh !important;
+}
+section .el-carousel__indicators--outside button {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+  @apply bg-dark-blue;
+}
+
+section .el-carousel__container .el-carousel__arrow {
+  z-index: 10;
+  @apply bg-dark-blue;
+}
+
+@media screen and (max-width: 760px) {
+  section .el-carousel.el-carousel--horizontal .el-carousel__container {
+    position: relative !important;
+    height: 400px !important;
+  }
+  section .el-carousel__container .el-carousel__arrow {
+    transform: translateY(50%);
+    @apply bg-dark-blue;
+  }
+}
+</style>
