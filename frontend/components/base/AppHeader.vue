@@ -29,7 +29,7 @@
           <nuxt-link to="/admission/registration" class="font-semibold"
             >Admission</nuxt-link
           >
-          <nuxt-link to="#course" class="font-semibold">Courses</nuxt-link>
+          <nuxt-link to="/school/departments" class="font-semibold">Courses</nuxt-link>
           <nuxt-link to="/news" class="font-semibold">News</nuxt-link>
           <nuxt-link to="/contact" class="font-semibold">Contact</nuxt-link>
         </div>
@@ -60,7 +60,7 @@
                   </router-link>
                 </li>
                 <li divided class="">
-                  <router-link to="#courses"> Courses </router-link>
+                  <router-link to="/school/departments"> Courses </router-link>
                 </li>
                 <li divided class="">
                   <router-link to="/news"> News </router-link>

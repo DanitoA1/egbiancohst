@@ -4,7 +4,7 @@
       <h1 class="text-2xl font-medium">Dashboard</h1>
       <div class="my-4 p-3 rounded-sm bg-blue-400 w-full p3">
         <div class="text-blue-700">
-          Hello Welcome Back! <span class="font-bold"> John Doe</span>
+          Hello Welcome Back! <span class="font-bold"> Abdur-rasheed Idris</span>
         </div>
       </div>
       <div class="grid grid-cols-3 gap-5 my-5">
@@ -20,7 +20,7 @@
             bg-reg-blue
           "
         >
-          <div class=""><svg-icon name="regfee" class="w-10 h-10" ></svg-icon> </div>
+          <div class=""><img src="@/assets/images/registration.png" class="w-10 h-10" > </div>
           <h1 class="text-red-600">
             <p>Registration</p>
             <p>Yes</p>
@@ -38,7 +38,7 @@
             bg-adm-purple
           "
         >
-          <div class=""><svg-icon name="admissionfee" class="w-10 h-10" ></svg-icon></div>
+          <div class=""><img src="@/assets/images/admission.png" class="w-10 h-10" ></div>
           <h1 class="text-red-600">
             <p>Admission</p>
             <p>Yes</p>
@@ -56,7 +56,7 @@
             bg-acc-yellow
           "
         >
-          <div class=""><svg-icon name="accomodation" class="w-10 h-10"></svg-icon></div>
+          <div class=""><img src="@/assets/images/room-key.png" class="w-10 h-10" ></div>
           <h1 class="text-red-600">
             <p>Accomodation</p>
             <p>Yes</p>
