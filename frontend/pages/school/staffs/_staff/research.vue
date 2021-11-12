@@ -10,7 +10,7 @@
         justify-between
         items-center
         bg-dark-blue
-        -inset-x-0
+        w-screen
       "
     >
       <div class="flex items-center">
@@ -22,7 +22,7 @@
               alt="Egbian Logo"
           /></nuxt-link>
         </span>
-        <div class="font-medium py-3 text-white text-base pr-6 mr-6">
+        <div class="font-medium py-3 text-white text-base lg:xl pr-6 mr-6">
           Egbian College of Health and Technology
         </div>
       </div>
@@ -43,33 +43,20 @@
     </header>
 
     <main class="grid">
-      <div
-        class="
-          transition
-          duration-300
-          overflow-y-scroll
-
-          form-page
-          bg-white
-          h-screen
-          pt-20
-          pl-20
-          overflow-x-scroll w-5xl lg:w-full lg:overflow-x-hidden
-        "
-      >
+      <div class="overflow-y-scroll form-page bg-white h-screen pt-20 pl-20">
         <div
-  
-
-          :class="[
+                 :class="[
             drawer ? 'openAside' : '',
             'fixed z-8 h-screen left-0 inset-y-0 sm:pt-16 pt-20 sidebar text-white bg-dark-blue flex flex-col',
           ]"
         >
           <!-- SideBar Content -->
-          <div class="flex pl-5 py-3 items-center  bg-profile-blue mb-4">
+          <div
+            class="flex lg:flex-col pl-5 py-3 items-center bg-profile-blue mb-4"
+          >
             <img
               src="~/assets/images/profile-pic.svg"
-              class="h-12 w-12 object-contain mr-4"
+              class="lg:h-32 lg:w-10/12 h-12 w-12 object-contain mx-auto"
               alt=""
             />
             <div class="w-auto ml-4">
@@ -97,9 +84,8 @@
           <!-- SideBar Content Ends -->
         </div>
         <!-- Main Begin -->
-        <div>
-          <StudentAdmissionLetter />
-        </div>
+
+        <StaffResearch />
 
         <!-- Main End -->
       </div>
@@ -109,54 +95,42 @@
 
 <script>
 export default {
-  name: 'Dashboard',
-  props: {},
+  name: 'Template',
+  props: ['data'],
   data() {
     return {
       drawer: false,
+
       sideabrContents: [
         {
-          icon: 'th-large',
-          name: 'Dashboard',
+          icon: 'home',
+          name: 'Home',
           type: 'fas',
-          link: '/student/dashboard',
+          link: '/school/staffs/1',
         },
         {
-          icon: 'envelope-open-text',
-          name: 'Admission letter',
+          icon: 'search-plus',
+          name: 'Research Area',
           type: 'fas',
-          link: '/student/admission-letter',
+          link: '/school/staffs/1/research',
+        },
+        {
+          icon: 'book',
+          name: 'Publications',
+          type: 'fas',
+          link: '/school/staffs/1/publications',
+        },
+        {
+          icon: 'images',
+          type: 'fas',
+          name: 'Gallery',
+          link: '/school/staffs/1/gallery',
         },
         {
           icon: 'address-card',
-          name: 'Bio Data Records',
+          name: 'Bio Data',
           type: 'fas',
-          link: '/student/biodata',
-        },
-        {
-          icon: 'list-alt',
-          type: 'fas',
-          name: 'Course registration',
-          link: '/student/course-reg',
-        },
-        {
-          icon: 'sitemap',
-          name: 'Accomodation',
-          type: 'fas',
-          link: '/student/registration-fee',
-        },
-        {
-          icon: 'credit-card',
-          name: 'School Fee',
-          type: 'fas',
-          link: '/student/registration-fee',
-        },
-        { icon: 'book', name: 'Result', type: 'fas', link: '/student/result/' },
-        {
-          icon: 'sign-out-alt',
-          name: 'Logout',
-          type: 'fas',
-          link: '/student/logout',
+          link: '/school/staffs/1/biodata',
         },
       ],
     }
@@ -167,12 +141,6 @@ export default {
 </script>
 
 <style scoped>
-/* .sidebar {
-  width: 285px;
-  transition: width 0.27s;
-  z-index: 5;
-  overflow-y: scroll;
-} */
 .sidebar {
   width: 70px;
   transition: width 0.27s;

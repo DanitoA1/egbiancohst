@@ -1,9 +1,11 @@
 <template>
-  <div>
-    <div class="bg-dark-blue hidden lg:flex py-3 w-full">
+  <div class="fixed top-0 left-0 z-20 right-0">
+    <div class="hidden
+          lg:flex bg-dark-blue py-2 w-full">
       <div
         class="
-          flex flex-row
+          flex
+          flex-row
           mb-1
           mx-auto
           container
@@ -22,21 +24,19 @@
           > -->
       </div>
     </div>
-    <div class="lg:bg-white bg-dark-blue py-3">
+    <div class="w-full py-2 lg:bg-white bg-dark-blue">
       <div class="container w-11/12 mx-auto z-30">
         <div class="flex flex-row items-center justify-between">
           <div class="flex items-center">
             <a href="/">
               <img src="~/assets/images/Logo.svg" class="w-16 h-16 mr-5" alt=""
             /></a>
-            <div class="flex flex-col mr-3">
-                  <h1 class="font-semibold text-white lg:text-black lg:text-2xl text-base ">
-              <div class="lg:flex hidden">
-                Egbian College of Science and Technology
-              </div>
-              <div class="lg:hidden flex tracking-widest">ECHST</div>
+            <div class=" flex flex-col   mr-3">
+              <h1 class="font-semibold text-white lg:text-black lg:text-2xl text-base ">
+                <div class="lg:flex hidden">Egbian College of Science and Technology</div>
+                <div class="lg:hidden flex tracking-widest">ECHST</div>
               </h1>
-              <p class="text-gray-500 md:text-lg text-sm">Minna, Nigeria</p>
+              <p class="text-gray-500 lg:text-lg text-sm">Minna, Nigeria</p>
             </div>
           </div>
           <div
@@ -114,8 +114,6 @@
           </div>
         </div>
       </div>
-
-      
     </div>
   </div>
 </template>

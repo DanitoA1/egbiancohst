@@ -67,8 +67,8 @@
 
     <!-- Names -->
 
-    <div class="flex my-10">
-      <div class="w-7/12">
+    <div class="lg:flex-row flex-col space-y-4 lg:space-y-0 my-10">
+      <div class="lg:w-7/12 w-full">
         <label for="fullName" class="text-gray-600 font-bold">
           Full Name
         </label>
@@ -92,7 +92,7 @@
           placeholder="Abdur-rasheed Idris"
         />
       </div>
-      <div class="mx-5 w-4/12">
+      <div class="lg:mx-5 mx-0 lg:w-4/12 w-full">
         <label for="middleName" class="text-gray-600 font-bold">
           Middle Name
         </label>
@@ -120,8 +120,8 @@
 
     <!-- Nationality  && DOB -->
 
-    <div class="flex my-10">
-      <div class="w-7/12">
+    <div class="lg:flex-row flex-col space-y-4 lg:space-y-0 lg:my-10 my-5">
+      <div class="lg:w-7/12 w-full">
         <label for="nationality" class="text-gray-600 font-bold">
           Nationality
         </label>
@@ -153,37 +153,23 @@
         </select>
       </div>
 
-      <div class="mx-5 w-4/12 relative">
+      <div class="lg:mx-5 mx-0 lg:w-4/12 w-full">
         <label for="dob" class="text-gray-600 font-bold"> Date of Birth </label>
 
-        <input
-          class="
-            mt-3
-            overflow-ellipsis
-            border-2
-            outline-none
-            border-gray-300
-            w-full
-            shadow-md
-            rounded-md
-            p-3.5
-            focus:border-blue-400
-          "
-          type="text"
-          name="dob"
-          placeholder="01/02/2021"
-        />
-        <svg-icon
-          name="calendar"
-          class="absolute right-3 top cursor-pointer h-6 w-6"
-        ></svg-icon>
+        <el-date-picker
+          v-model="value2"
+          type="date"
+          placeholder="Pick a day"
+          :picker-options="pickerOptions"
+        >
+        </el-date-picker>
       </div>
     </div>
 
     <!-- Local Govt && Gender -->
 
-    <div class="flex my-10">
-      <div class="w-7/12">
+    <div class="flex lg:flex-row flex-col space-y-4 lg:space-y-0 my-10">
+      <div class="lg:w-7/12 w-full">
         <label for="localgovt" class="text-gray-600 font-bold">
           Local Government Area
         </label>
@@ -208,7 +194,7 @@
         </select>
       </div>
 
-      <div class="mx-5 w-4/12 relative">
+      <div class="lg:mx-5 mx-0 lg:w-4/12 w-full relative">
         <label for="gender" class="text-gray-600 font-bold"> Gender </label>
 
         <select
@@ -232,7 +218,6 @@
         </select>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -243,6 +228,36 @@ export default {
     return {
       CountryList: countryList,
       selectedCountry: 'Nigeria',
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now()
+        },
+        shortcuts: [
+          {
+            text: 'Today',
+            onClick(picker) {
+              picker.$emit('pick', new Date())
+            },
+          },
+          {
+            text: 'Yesterday',
+            onClick(picker) {
+              const date = new Date()
+              date.setTime(date.getTime() - 3600 * 1000 * 24)
+              picker.$emit('pick', date)
+            },
+          },
+          {
+            text: 'A week ago',
+            onClick(picker) {
+              const date = new Date()
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+              picker.$emit('pick', date)
+            },
+          },
+        ],
+      },
+      value2: '',
     }
   },
 
@@ -254,7 +269,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .centerdot {
   left: 47%;
 }
@@ -263,5 +278,24 @@ export default {
 }
 .top {
   top: 55%;
+}
+.el-date-editor.el-input {
+  width: 100% !important;
+}
+body input.el-input__inner {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
+  height: auto;
+  padding: 6px;
+  margin-top: 12px;
+  margin-right: 20px;
+  border: 2px solid rgba(209, 213, 219, 1);
+  outline: none;
+  width: 100%;
+}
+.el-input__prefix {
+  top: 9px;
+  left: 5px;
 }
 </style>

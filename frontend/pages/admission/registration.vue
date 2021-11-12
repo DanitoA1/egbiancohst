@@ -26,11 +26,12 @@
           </nuxt-link>
         </div>
         <div>
+         <nuxt-link to="/">
           <img
             src="~/assets/images/egbian-logo.svg"
             class="h-20 w-20 object-contain"
             alt=""
-          />
+          /></nuxt-link>
         </div>
         <div class="text-3xl">Creating Brilliant Learning path ways</div>
         <div class="text-xl">

@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen">
+  <div class="h-full">
     <header
       class="
         fixed
@@ -10,7 +10,7 @@
         justify-between
         items-center
         bg-dark-blue
-        -inset-x-0
+       w-full
       "
     >
       <div class="flex items-center">
@@ -22,7 +22,7 @@
               alt="Egbian Logo"
           /></nuxt-link>
         </span>
-        <div class="font-medium py-3 text-white text-base pr-6 mr-6">
+        <div class="font-medium py-3 text-white text-base lg:xl pr-6 mr-6">
           Egbian College of Health and Technology
         </div>
       </div>
@@ -48,25 +48,24 @@
           transition
           duration-300
           overflow-y-scroll
-
           form-page
           bg-white
-          h-screen
-          pt-20
+          h-full
+          overflow-x-scroll
+          w-5xl
+          lg:w-full lg:overflow-x-hidden
+           pt-20
           pl-20
-          overflow-x-scroll w-5xl lg:w-full lg:overflow-x-hidden
         "
       >
         <div
-  
-
           :class="[
             drawer ? 'openAside' : '',
             'fixed z-8 h-screen left-0 inset-y-0 sm:pt-16 pt-20 sidebar text-white bg-dark-blue flex flex-col',
           ]"
         >
           <!-- SideBar Content -->
-          <div class="flex pl-5 py-3 items-center  bg-profile-blue mb-4">
+          <div class="flex pl-5 py-3 items-center bg-profile-blue mb-4">
             <img
               src="~/assets/images/profile-pic.svg"
               class="h-12 w-12 object-contain mr-4"
@@ -97,8 +96,8 @@
           <!-- SideBar Content Ends -->
         </div>
         <!-- Main Begin -->
-        <div>
-          <StudentAdmissionLetter />
+        <div class="overflow-x-scroll lg:overflow-x-hidden">
+          <StudentCourses />
         </div>
 
         <!-- Main End -->

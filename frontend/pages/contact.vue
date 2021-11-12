@@ -1,7 +1,7 @@
 <template>
   <div>
     <BaseAppHeader />
-    <div class="container w-1/2 mx-auto">
+    <div class="container w-10/12 lg:w-1/2  my-10 mx-auto">
       <div class="flex justify-center items-center">
         <div class="text-gray-700 font-bold text-center">
           <p>Get In Touch</p>
@@ -37,6 +37,8 @@
         </div>
       </div>
     </div>
+    <BaseAppFooter />
+
   </div>
 </template>
 

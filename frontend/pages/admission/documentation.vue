@@ -2,12 +2,13 @@
   <div class="h-screen">
     <header class="fixed z-50 px-2 py-2 flex items-center bg-black w-screen">
       <span class="mr-10">
-        <img
-          src="~/assets/images/Logo.svg"
-          class="h-10 w-10 object-contain"
-          alt="Egbian Logo"
-        />
-      </span>
+        <router-link to="/">
+          <img
+            src="~/assets/images/Logo.svg"
+            class="h-10 w-10 object-contain"
+            alt="Egbian Logo"
+          /> </router-link
+      ></span>
       <div
         class="
           font-medium
@@ -18,12 +19,13 @@
           mr-6
         "
       >
-        Egbian College of Health and Technology
+        <p class="lg:flex hidden">Egbian College of Health and Technology</p>
+        <p class="flex lg:hidden">ECHST</p>
       </div>
       <span class="text-white"> {{ pageTag[`${pageTracker}`] }} </span>
     </header>
 
-    <main class="grid grid-cols-2">
+    <main class="grid lg:grid-cols-2">
       <div class="overflow-y-scroll form-page bg-white h-screen pt-20 pl-22">
         <div
           class="
@@ -83,10 +85,16 @@
 
         <div class="flex justify-between text-center mb-20 mr-7">
           <button
-            class="w-32 rounded-sm bg-dark-blue p-3 text-white"
+            class="w-auto rounded-sm bg-dark-blue p-3 px-5 text-white"
             @click="pageTrackerHandlerBack"
           >
-            Back
+            <div class="lg:flex hidden text-center">Back</div>
+            <div class="lg:hidden block">
+              <font-awesome-icon
+                :icon="['fas', 'angle-double-left']"
+                class="w-6 text-white h-6"
+              />
+            </div>
           </button>
           <button
             class="
@@ -95,26 +103,31 @@
               text-dark-blue
               border border-dark-blue
               p-3
-              mr-5
               hover:bg-dark-blue hover:text-white
             "
           >
             Save to draft
           </button>
           <button
-            class="w-32 rounded-sm bg-dark-blue p-3 text-white"
+            class="w-auto rounded-sm bg-dark-blue p-3 px-5 text-white"
             @click="pageTrackerHandlerNext"
           >
-            Next
+            <div class="lg:flex hidden text-center">Back</div>
+            <div class="lg:hidden block">
+              <font-awesome-icon
+                :icon="['fas', 'angle-double-right']"
+                class="w-6 text-white h-6"
+              />
+            </div>
           </button>
         </div>
       </div>
 
-      <div class="bg-dark-blue flex justify-center items-end">
-        <div class=" ">
+      <div class="bg-dark-blue hidden lg:flex justify-center items-end">
+        <div class="">
           <img
             src="~/assets/images/new-student.svg"
-            class=" "
+            class=""
             alt="new student"
           />
         </div>
@@ -138,11 +151,11 @@ export default {
         { icon: 'mail', name: 'Contact us', link: '/' },
         { icon: 'logout', name: 'logout', link: '/' },
       ],
-      pageTag : {
-        1 : 'Personal Details',
-        2 : 'Certificates',
-        3 : 'Certificates',
-      }
+      pageTag: {
+        1: 'Personal Details',
+        2: 'Certificates',
+        3: 'Certificates',
+      },
     }
   },
   created() {},
@@ -159,15 +172,14 @@ export default {
     // },
 
     pageTrackerHandlerBack() {
-      this.pageTracker = this.pageTracker - 1;
+      this.pageTracker = this.pageTracker - 1
 
       console.log(this.pageTracker)
     },
     pageTrackerHandlerNext() {
-      this.pageTracker = this.pageTracker + 1;
-      
-      console.log(this.pageTracker)
+      this.pageTracker = this.pageTracker + 1
 
+      console.log(this.pageTracker)
     },
   },
 }
@@ -194,8 +206,8 @@ export default {
 .form-page::-webkit-scrollbar {
   display: none;
 }
-.centerImage{
-  left : 50%;
-  transform : translate(-50%, 0%);
+.centerImage {
+  left: 50%;
+  transform: translate(-50%, 0%);
 }
 </style>

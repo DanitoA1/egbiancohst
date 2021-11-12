@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="login">
+    <div class="login ">
       <div
         class="
           bg-gray-100
@@ -11,10 +11,11 @@
           items-center
           inset-0
           bg-opacity-30
+          px-10
         "
       >
-        <div class="bg-white rounded-sm shadow-md w-auto h-auto px-16 py-4">
-          <p class="text-xl font-bold mb-10">Student Portal</p>
+        <div class="bg-white rounded-sm shadow-md w-auto h-auto px-16 mx-5 py-4">
+          <p class="text-xl font-bold mb-10 text-center">Student Portal</p>
 
           <div class="mb-10">
             <label for="email" class="text-gray-600 font-semibold">
@@ -93,7 +94,10 @@
           <div class="text-center">
             <span class="text-gray-600"> Already have an account ? </span>
             <span class="font-bold text-dark-blue"
-              ><a href="/admission/registration"> Create account</a></span
+              ><a href="/admission/registration"> Create account </a></span
+            >|
+            <span class="font-bold text-dark-blue"
+              ><a href="/"> Homepage </a></span
             >
           </div>
         </div>

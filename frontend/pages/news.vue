@@ -26,12 +26,12 @@
     </div>
     <div class="my-28 container w-11/12 mx-auto">
       <div class="mb-8 text-lg text-gray-700 font-semibold">Recent</div>
-      <div class="grid lg:grid-cols-3 gap-8">
+      <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
         <NewsCard v-for="no in 3" :key="no" />
       </div>
 
       <div class="my-10 text-lg text-gray-700 font-semibold">Local</div>
-      <div class="grid lg:grid-cols-3 gap-8">
+      <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
         <NewsCard v-for="no in 3" :key="no" />
       </div>
     </div>

@@ -21,7 +21,7 @@
           </h3>
         </div>
 
-        <div>
+        <main>
           <el-carousel indicator-position="outside" arrow="always">
             <el-carousel-item v-for="item in 4" :key="item">
               <!-- <div class="">
@@ -44,14 +44,14 @@
               >
                 <div class="carousel-overlay"></div>
                 <img
-                  src="@/assets/images/Smiling-lady.png"
+                   :src="require(`@/assets/images/carousel/1_${item}.jpg`)"
                   class="h-full w-full z-1"
                   alt="photo-shoot"
                 />
               </div>
             </el-carousel-item>
           </el-carousel>
-        </div>
+        </main>
       </div>
     </div>
   </div>
@@ -61,21 +61,21 @@
 export default {}
 </script>
 
-<style>
-.carousel-overlay {
+<style >
+main .carousel-overlay {
   position: absolute;
   margin: 10px;
   width: 92%;
   height: 92%;
   border: 3px solid white;
 }
-.el-carousel__item {
+main .el-carousel__item {
   /* @apply grid place-content-center; */
   padding: 0 70px;
 }
 
 
-.el-carousel__indicators--outside button
+main .el-carousel__indicators--outside button
    {
   width: 12px !important;
   height: 12px !important;
@@ -83,7 +83,7 @@ export default {}
    @apply bg-dark-blue;
 }
 
-.el-carousel__container .el-carousel__arrow {
+main .el-carousel__container .el-carousel__arrow {
   @apply bg-dark-blue;
 }
 
