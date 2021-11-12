@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="my-4 px-14">
+    <div class="my-4 px-5">
       <div class="py-3 text-2xl border-b border-gray-500 font-semibold">Registration fee payment form</div>
       <div class="grid uppercase">
         <div class="mb-2">

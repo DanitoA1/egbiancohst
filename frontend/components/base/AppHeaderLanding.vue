@@ -31,9 +31,10 @@
             <a href="/">
               <img src="~/assets/images/Logo.svg" class="w-16 h-16 mr-5" alt=""
             /></a>
-            <div class=" md:flex flex-col hidden  mr-3">
+            <div class=" flex flex-col   mr-3">
               <h1 class="font-semibold text-white lg:text-black lg:text-2xl text-base ">
-                Egbian College of Science and Technology
+                <div class="lg:flex hidden">Egbian College of Science and Technology</div>
+                <div class="lg:hidden flex tracking-widest">ECHST</div>
               </h1>
               <p class="text-gray-500 lg:text-lg text-sm">Minna, Nigeria</p>
             </div>
@@ -61,7 +62,7 @@
               <nuxt-link to="/contact" class="font-semibold">Contact</nuxt-link>
             </div>
             <div class="flex justify-center items-center lg:hidden">
-              <el-button @click="drawer = true">
+              <div @click="drawer = true">
                 <svg
                   width="32"
                   height="33"
@@ -73,7 +74,7 @@
                   <path d="M5 15.7021H27V17.7021H5V15.7021Z" fill="black" />
                   <path d="M5 24.7021H27V26.7021H5V24.7021Z" fill="black" />
                 </svg>
-              </el-button>
+              </div>
 
               <el-drawer :visible.sync="drawer" :direction="direction">
                 <nav class="px-5 text-xl font-semibold text-blue-600">

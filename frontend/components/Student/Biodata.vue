@@ -1,8 +1,8 @@
 <template>
  <div>
-    <div class="my-4 px-14">
+    <div class="my-4 px-5">
       <div class="py-3 text-2xl font-semibold">Pesrsonal Data</div>
-      <div class="grid grid-cols-2 gap-8">
+      <div class="grid md:grid-cols-2 gap-8">
         <div class="mb-2">
           <label for="email" class="text-gray-600 font-semibold">
             Full Name

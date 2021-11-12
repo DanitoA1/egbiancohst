@@ -7,6 +7,8 @@
           space-x-4
           p-3
           flex
+          lg:flex-row
+          flex-col
           items-center
           bg-gray-200
         "
@@ -23,6 +25,8 @@
           space-x-4
           p-3
           flex
+             lg:flex-row
+          flex-col
           items-center
           bg-gray-200
         "

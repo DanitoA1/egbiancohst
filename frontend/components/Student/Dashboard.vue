@@ -7,7 +7,7 @@
           Hello Welcome Back! <span class="font-bold"> Abdur-rasheed Idris</span>
         </div>
       </div>
-      <div class="grid grid-cols-3 gap-5 my-5">
+      <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-5 my-5">
         <div
           class="
             flex

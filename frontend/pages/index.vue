@@ -8,7 +8,7 @@
           <img
             :src="require(`@/assets/images/carousel/${item}.jpg`)"
             alt=""
-            class="lg:w-screen lg:h-screen w-full h-72 mt-28 lg:mt-0"
+            class="lg:w-screen lg:h-screen w-full h-72 mt-24 lg:mt-0"
           />
         </el-carousel-item>
       </el-carousel>

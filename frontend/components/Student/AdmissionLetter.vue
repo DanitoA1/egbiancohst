@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <div
       class="
         flex flex-col
@@ -10,7 +10,7 @@
         pb-3
       "
     >
-      <div class="text-4xl uppercase">
+      <div class="text-center py-2 text-4xl uppercase">
         Egbian College of Health and Technology
       </div>
       <div class="">
