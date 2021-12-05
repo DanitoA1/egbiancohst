@@ -29,14 +29,15 @@
                   border
                   outline-none
                   border-gray-300
-                  w-80
+                  w-full
                   focus:shadow-md
                   rounded-4px
                   p-3.5
                   focus:border-blue-400
                 "
-                type="text"
+                type="email"
                 name="email"
+                v-model="auth.email"
                 placeholder="Input Phone no., Reg ID or email"
               />
             </div>
@@ -54,14 +55,15 @@
                   border
                   outline-none
                   border-gray-300
-                  w-80
+                  w-full
                   focus:shadow-md
                   rounded-4px
                   p-3.5
                   focus:border-blue-400
                 "
                 type="password"
-                name="email"
+         
+                 v-model="auth.password"
                 placeholder="Your Secret Pin"
               />
             </div>
@@ -73,7 +75,7 @@
           </div>
 
           <button
-            type="submit"
+            @click="login"
             class="
               bg-dark-blue
               text-white text-center
@@ -107,7 +109,27 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      auth : {
+        email : '',
+        password : ''
+      }
+    }
+  },
+  methods: {
+    login(){
+      const dis = this
+      this.$fire.auth.signInWithEmailAndPassword(this.auth.email, this.auth.password).then( user => {
+        dis.$router.push('/student/dashboard')
+        console.log(user);
+      }).catch(err => {
+        alert(err)
+      })
+    }
+  },
+}
 </script>
 
 <style scoped>

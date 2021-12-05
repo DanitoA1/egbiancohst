@@ -27,7 +27,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
+   '@/plugins/persistedState.client.js' 
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -56,7 +57,41 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/svg-sprite',
+    [
+      '@nuxtjs/firebase',
+      {
+        config: {
+          apiKey: "AIzaSyDjVpfFH4Z69Uo0KhjxCM4abW6mmsHRQSk",
+          authDomain: "project-egbiancohst.firebaseapp.com",
+          projectId: "project-egbiancohst",
+          storageBucket: "project-egbiancohst.appspot.com",
+          messagingSenderId: "921999027341",
+          appId: "1:921999027341:web:33165c4f8cbb75725586c4"
+        },
+        services: {
+          auth:  {
+            persistence: 'local', // default
+            initialize: {
+              onAuthStateChangedAction: 'onAuthStateChangedAction',
+              subscribeManually: false
+            },
+            ssr: false, // default
+          },
+          firestore: true,
+          functions: true,
+          storage: true,
+          database: true,
+        }
+      }
+    ]
   ],
+
+router : {
+  middleware : ['auth']
+},
+
+
+
   svgSprite: {
     // manipulate module options
     input: '~/assets/icons/'
@@ -74,21 +109,5 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: [/^element-ui/],
-    /*
-    ** You can extend webpack config here
-    */
-    // ** Run ESLint on save
-    // */
-    // extend(config, ctx) {
-    //   if (ctx.isDev && ctx.isClient) {
-    //     config.module.rules.push({
-    //       enforce: "pre",
-    //       test: /\.(js|vue)$/,
-    //       loader: "eslint-loader",
-    //       exclude: /(node_modules)/
-    //     });
-    //   }
-    // }```
-
   }
 }
