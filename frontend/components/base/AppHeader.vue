@@ -60,8 +60,10 @@
               >
               <nuxt-link to="/news" class="font-semibold">News</nuxt-link>
               <nuxt-link to="/contact" class="font-semibold">Contact</nuxt-link>
+            
             </div>
             <div class="flex justify-center items-center lg:hidden">
+
               <div @click="drawer = true">
                 <svg
                   width="32"
@@ -70,9 +72,9 @@
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path d="M5 6.70215H27V8.70215H5V6.70215Z" fill="black" />
-                  <path d="M5 15.7021H27V17.7021H5V15.7021Z" fill="black" />
-                  <path d="M5 24.7021H27V26.7021H5V24.7021Z" fill="black" />
+                  <path d="M5 6.70215H27V8.70215H5V6.70215Z" fill="white" />
+                  <path d="M5 15.7021H27V17.7021H5V15.7021Z" fill="white" />
+                  <path d="M5 24.7021H27V26.7021H5V24.7021Z" fill="white" />
                 </svg>
               </div>
 
@@ -127,6 +129,7 @@ export default {
       direction: 'rtl',
     }
   },
+  
 }
 </script>
 <style scoped>

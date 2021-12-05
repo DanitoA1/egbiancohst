@@ -1,11 +1,9 @@
 <template>
   <div class="fixed top-0 left-0 z-20 right-0">
-    <div class="hidden
-          lg:flex bg-dark-blue py-2 w-full">
+    <div class="hidden lg:flex bg-dark-blue py-2 w-full">
       <div
         class="
-          flex
-          flex-row
+          flex flex-row
           mb-1
           mx-auto
           container
@@ -15,6 +13,7 @@
           text-base text-white
         "
       >
+        <button @click="sayHello">Say Hello</button>
         <nuxt-link to="#staff" class="">Staff</nuxt-link>
         <nuxt-link to="/student/login" class="">Student</nuxt-link>
         <nuxt-link to="#alumni" class="">Alumni</nuxt-link>
@@ -31,9 +30,18 @@
             <a href="/">
               <img src="~/assets/images/Logo.svg" class="w-16 h-16 mr-5" alt=""
             /></a>
-            <div class=" flex flex-col   mr-3">
-              <h1 class="font-semibold text-white lg:text-black lg:text-2xl text-base ">
-                <div class="lg:flex hidden">Egbian College of Science and Technology</div>
+            <div class="flex flex-col mr-3">
+              <h1
+                class="
+                  font-semibold
+                  text-white
+                  lg:text-black lg:text-2xl
+                  text-base
+                "
+              >
+                <div class="lg:flex hidden">
+                  Egbian College of Science and Technology
+                </div>
                 <div class="lg:hidden flex tracking-widest">ECHST</div>
               </h1>
               <p class="text-gray-500 lg:text-lg text-sm">Minna, Nigeria</p>
@@ -124,6 +132,14 @@ export default {
       drawer: false,
       direction: 'rtl',
     }
+  },
+  methods: { 
+    async sayHello() {
+      const sayHelloFunc = await this.$fire.functions.httpsCallable('sayHello')
+      sayHelloFunc({name : 'Alley'}).then((result) => {
+        console.log(result)
+      })
+    },
   },
 }
 </script>

@@ -26,11 +26,11 @@
           </nuxt-link>
         </div>
         <div>
-         <nuxt-link to="/">
-          <img
-            src="~/assets/images/egbian-logo.svg"
-            class="h-20 w-20 object-contain"
-            alt=""
+          <nuxt-link to="/">
+            <img
+              src="~/assets/images/egbian-logo.svg"
+              class="h-20 w-20 object-contain"
+              alt=""
           /></nuxt-link>
         </div>
         <div class="text-3xl">Creating Brilliant Learning path ways</div>
@@ -76,7 +76,7 @@
                   focus:border-blue-400
                 "
                 type="email"
-                name="email"
+                v-model="auth.email"
                 placeholder="example@domain.edu.ng"
               />
             </div>
@@ -101,8 +101,8 @@
                   p-3.5
                   focus:border-blue-400
                 "
-                type="telephone"
-                name="email"
+                type="tel"
+                v-model="auth.phoneNumber"
                 placeholder="+234 8123 456 789"
               />
             </div>
@@ -128,7 +128,7 @@
                   focus:border-blue-400
                 "
                 type="password"
-                name="email"
+                v-model="auth.password"
                 placeholder="Password Input atleast 8 Characters"
               />
             </div>
@@ -137,7 +137,7 @@
           <!-- Submit input -->
 
           <button
-            type="submit"
+            @click="Register"
             class="
               bg-dark-blue
               text-white text-center
@@ -157,7 +157,7 @@
           <div class="text-center mt-8 mb-20 space-x-4">
             <span class="text-gray-600"> Already have an account ? </span>
             <span class="font-bold text-dark-blue"
-              ><nuxt-link to="/">Start application</nuxt-link></span
+              ><nuxt-link to="/">Login</nuxt-link></span
             >
             <span class="font-bold text-dark-blue"
               ><nuxt-link to="/">Homepage</nuxt-link></span
@@ -194,14 +194,40 @@
 
 <script>
 export default {
-  name: 'Test',
+  name: 'application-registration',
 
   props: {},
   data() {
-    return {}
+    return {
+      auth: {
+        email: '',
+        password: '',
+        phoneNumber : null
+      },
+    }
   },
   created() {},
-  methods: {},
+  methods: {
+  async Register() {
+      const dis = this
+
+      await this.$fire.auth
+        .createUserWithEmailAndPassword(this.auth.email, this.auth.password)
+        .then(({ user }) => {
+          console.log('Acct Created Successfully')
+          console.log(user)
+          dis.$store.dispatch('createUser', {id: user.uid,
+          email : dis.auth.email,
+          password : dis.auth.password,
+          phoneNumber : dis.auth.phoneNumber
+          })
+          dis.$router.push('/')
+        })
+        .catch((err) => {
+          alert(err.messsage)
+        })
+    },
+  },
 }
 </script>
 
