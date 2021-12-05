@@ -44,6 +44,19 @@ exports.candidateDeleted = functions.auth.user().onDelete((user) => {
     console.log(error.message)
   }
 })
+let generatedId = null
+function regIdGenerator() {
+  // Generate Applicant Random Id
+  let text = 'ECHST-'
+  const possible =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+
+  for (let i = 0; i < 5; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length))
+  }
+  generatedId = text
+  return text
+}
 
 exports.autoSendEmail = functions.firestore
   .document('users/{id}')
