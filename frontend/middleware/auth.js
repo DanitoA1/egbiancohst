@@ -11,7 +11,7 @@ export default function ({ app, route, redirect }) {
         //  Remain in Login Page
     }
     else{
-        return redirect('/')
+        return redirect('/admission/documentation')
     }
   }
 }

@@ -200,10 +200,12 @@ export default {
           dis.$router.push('/admission/documentation')
         })
         .catch((err) => {
-          this.$notify.error({
-            title: 'Error',
-            message: `${err.message}`,
-          })
+          if (err.message.includes('invalid')) {
+            this.$notify.error({
+              title: 'Error',
+              message: 'Invalid Credentials- Email Or Password',
+            })
+          }
         })
     },
   },
