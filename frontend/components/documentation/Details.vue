@@ -5,7 +5,7 @@
       <p class="text-gray-500">Please ensure your fill in correct details</p>
       <div class="font-semibold">
         <span>Registration ID:</span>
-        <span class="text-gray-500">1232032EC</span>
+        <span class="text-gray-500"> {{ getCurrentCandidate ? getCurrentCandidate.regId : 'Loading...'}} </span>
       </div>
     </div>
     <!-- Step -->
@@ -67,7 +67,7 @@
 
     <!-- Names -->
 
-    <div class="lg:flex-row flex-col space-y-4 lg:space-y-0 my-10">
+    <div class="flex lg:flex-row flex-col space-y-4 lg:space-y-0 my-10">
       <div class="lg:w-7/12 w-full">
         <label for="fullName" class="text-gray-600 font-bold">
           Full Name
@@ -120,7 +120,7 @@
 
     <!-- Nationality  && DOB -->
 
-    <div class="lg:flex-row flex-col space-y-4 lg:space-y-0 lg:my-10 my-5">
+    <div class="flex lg:flex-row flex-col space-y-4 lg:space-y-0 lg:my-10 my-5">
       <div class="lg:w-7/12 w-full">
         <label for="nationality" class="text-gray-600 font-bold">
           Nationality
@@ -224,6 +224,7 @@
 <script>
 import { countryList } from './CountryNames'
 export default {
+  props : ["getCurrentCandidate"],
   data() {
     return {
       CountryList: countryList,
