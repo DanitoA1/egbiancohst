@@ -159,7 +159,8 @@
             <span class="font-bold text-dark-blue mr-3"
               ><nuxt-link to="/admission/login">Login</nuxt-link></span
             >
-            | <span class="font-bold text-dark-blue"
+            |
+            <span class="font-bold text-dark-blue"
               ><nuxt-link to="/">Homepage</nuxt-link></span
             >
           </div>
@@ -214,6 +215,12 @@ export default {
       await this.$fire.auth
         .createUserWithEmailAndPassword(this.auth.email, this.auth.password)
         .then(({ user }) => {
+          this.$notify({
+            title: 'Registered',
+            message: 'Registration Successful',
+            type: 'success',
+          })
+
           console.log('Acct Created Successfully')
           console.log(user)
           dis.$store.dispatch('createUser', {
@@ -222,10 +229,13 @@ export default {
             password: dis.auth.password,
             phoneNumber: dis.auth.phoneNumber,
           })
-          dis.$router.push('/')
+          dis.$router.push('/admission/login')
         })
         .catch((err) => {
-          alert(err.messsage)
+          this.$notify.error({
+            title: 'Error',
+            message: `${err.message}`,
+          })
         })
     },
   },

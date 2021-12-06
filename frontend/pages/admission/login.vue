@@ -51,8 +51,7 @@
               <svg-icon name="mortarboard" class="w-10 h-10"></svg-icon>
             </div>
             <div class="text-dark-blue font-medium text-xl">
-              <div>Registered
-                 account</div>
+              <div>Registered account</div>
               <div class="font-bold text-lg">
                 Egbian College of Science and Technology
               </div>
@@ -181,7 +180,6 @@ export default {
         email: '',
         password: '',
       },
-      
     }
   },
   created() {},
@@ -193,12 +191,19 @@ export default {
         .signInWithEmailAndPassword(this.auth.email, this.auth.password)
         .then(({ user }) => {
           console.log('Login Successfully')
+          this.$notify.success({
+            title: 'Login Sucessfull',
+            message: 'Welcome back!',
+          })
           console.log(user)
           dis.$store.dispatch('fetchProfile', user)
           dis.$router.push('/admission/documentation')
         })
         .catch((err) => {
-          alert(err.messsage)
+          this.$notify.error({
+            title: 'Error',
+            message: `${err.message}`,
+          })
         })
     },
   },
