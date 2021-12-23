@@ -13,7 +13,6 @@
           text-base text-white
         "
       >
-        <button @click="sayHello">Say Hello</button>
         <nuxt-link to="#staff" class="">Staff</nuxt-link>
         <nuxt-link to="/student/login" class="">Student</nuxt-link>
         <nuxt-link to="#alumni" class="">Alumni</nuxt-link>

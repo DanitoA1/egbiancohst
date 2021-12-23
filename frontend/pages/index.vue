@@ -97,6 +97,7 @@
             We provide you with a personalized program that is research-backed
             and builds on the experince brought by our experts.
           </p>
+        <nuxt-link to="/about">
           <button
             class="
               bg-dark-blue
@@ -109,7 +110,7 @@
             "
           >
             Explore more
-          </button>
+          </button></nuxt-link>
         </div>
       </div>
       <div class="grid lg:grid-cols-2 gap-x-32 my-40">

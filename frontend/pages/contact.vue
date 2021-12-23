@@ -54,7 +54,7 @@ export default {
 
         {
           name: 'address',
-          title: 'Minna, Niger State',
+          title: 'Egbian, Niger State',
           icon: 'map-marker-alt',
         },
       ],

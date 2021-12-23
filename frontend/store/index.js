@@ -1,20 +1,20 @@
 const state = () => ({
-  user: null,
+  currentCandidate: null,
 })
 
 const actions = {
-  async onAuthStateChangedAction(state, { authUser, claim }) {
+ async onAuthStateChangedAction(state, { authUser, claim }) {
     if (!authUser) {
-      state.commit('SET_USER', null)
+      state.commit('SET_CURRRENT_CANDIDATE', null)
       this.$router.push({
         path: '/student/login',
       })
     } else {
-      const { email, uid } = await authUser
-      console.log(authUser)
-      state.commit('SET_USER', {
-        email,
-        uid,
+      await this.$fire.firestore
+      .collection('users')
+      .doc(authUser.uid)
+      .onSnapshot((doc) => {
+        state.commit('SET_CURRRENT_CANDIDATE', doc.data())
       })
     }
   },
@@ -26,16 +26,24 @@ const actions = {
       console.log(error.message)
     }
   },
+  async fetchProfile({ commit, state, rootState }, user) {
+    await this.$fire.firestore
+      .collection('users')
+      .doc(user.id)
+      .onSnapshot((doc) => {
+        commit('SET_CURRRENT_CANDIDATE', doc.data())
+      })
+  },
 }
 
 const mutations = {
-  SET_USER(state, user) {
-    state.user = user
+  SET_CURRRENT_CANDIDATE(state, data) {
+    state.currentCandidate = data
   },
 }
 const getters = {
-  getUser(state) {
-    return state.user
+  getCurrentCandidate(state) {
+    return state.currentCandidate
   },
 }
 

@@ -7,7 +7,8 @@
       </p>
       <div class="font-semibold">
         <span>Registration ID:</span>
-        <span class="text-gray-500">1232032EC</span>
+              <span class="text-gray-500"> {{ getCurrentCandidate ? getCurrentCandidate.regId : 'Loading...'}} </span>
+
       </div>
     </div>
     <!-- Step -->
@@ -103,6 +104,8 @@
 
 <script>
 export default {
+  props : ["getCurrentCandidate"],
+
   data() {
     return {}
   },

@@ -50,42 +50,62 @@
               alt=""
             />
             <div class="sidebar-text flex-col">
-              <div class="font-meduim text-xl">Abdur-rasheed Idris</div>
-              <p class="text-xs">Idrisrash2017@gmail.com</p>
+              <div class="font-meduim text-xl"> {{  getCurrentCandidate ? getCurrentCandidate.fullname : 'loading...'  }}  </div>
+              <p class="text-xs">
+                {{
+                  getCurrentCandidate ? getCurrentCandidate.email : 'loading...'
+                }}
+              </p>
             </div>
           </div>
 
           <div class="space-y-8 mt-5">
-            <div
-              v-for="(content, index) in sideabrContents"
-              :key="index"
-              class="flex justify-content items-center"
-            >
-              <img
-                :src="require(`~/assets/images/${content.icon}.svg`)"
-                :alt="content.icon"
-                :class="[index === 1 ? 'ml-0' : 'ml-1', 'object-contain']"
-              />
+            <div v-for="(content, index) in sideabrContents" :key="index">
               <div
-                :class="[
-                  index > 1 ? 'ml-5' : 'ml-6',
-                  'sidebar-text text-md font-normal',
-                ]"
+                class="flex justify-content items-center cursor-pointer"
+                @click="content.link"
               >
-                {{ content.name }}
+                <img
+                  :src="require(`~/assets/images/${content.icon}.svg`)"
+                  :alt="content.icon"
+                  :class="[index === 1 ? 'ml-0' : 'ml-1', 'object-contain']"
+                />
+                <div
+                  :class="[
+                    index > 1 ? 'ml-5' : 'ml-6',
+                    'sidebar-text text-md font-normal',
+                  ]"
+                >
+                  {{ content.name }}
+                </div>
               </div>
             </div>
           </div>
           <!-- SideBar Content Ends -->
         </div>
 
-        <DocumentationDetails v-if="pageTracker === 1" />
-        <DocumentationPSCertificate v-if="pageTracker === 2" />
-        <DocumentationBCertificate v-if="pageTracker === 3" />
+        <DocumentationDetails
+          v-if="pageTracker === 1"
+          :getCurrentCandidate="getCurrentCandidate"
+        />
+        <DocumentationPSCertificate
+          v-if="pageTracker === 2"
+          :getCurrentCandidate="getCurrentCandidate"
+        />
+        <DocumentationBCertificate
+          v-if="pageTracker === 3"
+          :getCurrentCandidate="getCurrentCandidate"
+        />
 
         <div class="flex justify-between text-center mb-20 mr-7">
           <button
-            class="w-auto rounded-sm bg-dark-blue p-3 px-5 text-white"
+            :disabled="pageTracker == 1"
+            :class="
+              pageTracker == 1
+                ? 'bg-blue-400 cursor-not-allowed'
+                : 'bg-dark-blue'
+            "
+            class="w-auto rounded-sm p-3 px-5 text-white"
             @click="pageTrackerHandlerBack"
           >
             <div class="lg:flex hidden text-center">Back</div>
@@ -96,23 +116,18 @@
               />
             </div>
           </button>
+      
           <button
-            class="
-              font-semibold
-              rounded-sm
-              text-dark-blue
-              border border-dark-blue
-              p-3
-              hover:bg-dark-blue hover:text-white
+            :class="
+              pageTracker == 3
+                ? 'bg-blue-400 cursor-not-allowed'
+                : 'bg-dark-blue'
             "
-          >
-            Save to draft
-          </button>
-          <button
-            class="w-auto rounded-sm bg-dark-blue p-3 px-5 text-white"
+            :disabled="pageTracker == 3"
+            class="w-auto rounded-sm p-3 px-5 text-white"
             @click="pageTrackerHandlerNext"
           >
-            <div class="lg:flex hidden text-center">Back</div>
+            <div class="lg:flex hidden text-center">Next</div>
             <div class="lg:hidden block">
               <font-awesome-icon
                 :icon="['fas', 'angle-double-right']"
@@ -137,19 +152,28 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
-  name: 'Test',
+  name: 'documentation',
   props: {},
   data() {
     return {
       page: null,
       pageTracker: 1,
       sideabrContents: [
-        { icon: 'profile', name: 'Personal Details', link: '/' },
-        { icon: 'badge', name: 'Certificates', link: '/' },
-        { icon: 'draft', name: 'Draft', link: '/' },
-        { icon: 'mail', name: 'Contact us', link: '/' },
-        { icon: 'logout', name: 'logout', link: '/' },
+        {
+          icon: 'profile',
+          name: 'Personal Details',
+          link: this.personalDetailHandler,
+        },
+        {
+          icon: 'badge',
+          name: 'Certificates',
+          link: this.certificateHandler,
+        },
+        { icon: 'draft', name: 'Draft', link: this.draftHandler },
+        { icon: 'mail', name: 'Contact us', link: this.contactHandler },
+        { icon: 'logout', name: 'logout', link: this.logoutHandler },
       ],
       pageTag: {
         1: 'Personal Details',
@@ -158,7 +182,10 @@ export default {
       },
     }
   },
-  created() {},
+  computed: {
+    ...mapGetters(['getCurrentCandidate']),
+  },
+  mounted() {},
   methods: {
     // pageSelector() {
     //   switch (this.pageTracker) {
@@ -173,13 +200,25 @@ export default {
 
     pageTrackerHandlerBack() {
       this.pageTracker = this.pageTracker - 1
-
-      console.log(this.pageTracker)
     },
     pageTrackerHandlerNext() {
       this.pageTracker = this.pageTracker + 1
-
-      console.log(this.pageTracker)
+    },
+    personalDetailHandler() {
+      this.pageTracker = 1
+    },
+    certificateHandler() {
+      this.pageTracker = 2
+    },
+    draftHandler() {
+      this.pageTracker = 1
+    },
+    contactHandler() {
+      this.$router.push('/contact')
+    },
+    async logoutHandler() {
+      await this.$fire.auth.signOut()
+      this.$router.push('/admission/login')
     },
   },
 }

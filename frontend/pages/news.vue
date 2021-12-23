@@ -1,7 +1,8 @@
 <template>
   <div>
     <BaseAppHeader />
-    <div class="hidden lg:flex  :relative">
+    <div class="hidden lg:flex relative">
+      <div class="absolute bg-black opacity-40 h-full w-full"></div>
       <img
         src="~/assets/images/news_image.svg"
         alt="news-image"

@@ -51,7 +51,7 @@
               <svg-icon name="mortarboard" class="w-10 h-10"></svg-icon>
             </div>
             <div class="text-dark-blue font-medium text-xl">
-              <div>New account</div>
+              <div>Registered account</div>
               <div class="font-bold text-lg">
                 Egbian College of Science and Technology
               </div>
@@ -75,39 +75,14 @@
                   p-3.5
                   focus:border-blue-400
                 "
-                type="email"
                 v-model="auth.email"
+                type="email"
                 placeholder="example@domain.edu.ng"
               />
             </div>
           </div>
-          <!-- Mobile No Input -->
 
-          <div class="mb-8">
-            <label for="telephone" class="text-gray-600 font-bold">
-              Mobile No
-            </label>
-            <div>
-              <input
-                class="
-                  mt-3
-                  overflow-ellipsis
-                  border
-                  outline-none
-                  border-gray-300
-                  w-full
-                  focus:shadow-md
-                  rounded-4px
-                  p-3.5
-                  focus:border-blue-400
-                "
-                type="tel"
-                v-model="auth.phoneNumber"
-                placeholder="+234 8123 456 789"
-              />
-            </div>
-          </div>
-          <!-- Password Imput -->
+          <!-- Password Input -->
 
           <div class="mb-8">
             <label for="password" class="text-gray-600 font-bold">
@@ -137,7 +112,6 @@
           <!-- Submit input -->
 
           <button
-            @click="Register"
             class="
               bg-dark-blue
               text-white text-center
@@ -150,17 +124,19 @@
               rounded-4px
               p-3.5
             "
+            @click="Login"
           >
-            Create an account
+            Login
           </button>
 
-          <div class="text-center mt-8 pb-20  space-x-4">
-            <span class="text-gray-600"> Already have an account ? </span>
+          <div class="text-center mt-8 mb-20 space-x-4">
+            <span class="text-gray-600"> Dont have an account ? </span>
             <span class="font-bold text-dark-blue mr-3"
-              ><nuxt-link to="/admission/login">Login</nuxt-link></span
+              ><nuxt-link to="/admission/registration"
+                >Register</nuxt-link
+              ></span
             >
-            |
-            <span class="font-bold text-dark-blue"
+            |<span class="font-bold text-dark-blue"
               ><nuxt-link to="/">Homepage</nuxt-link></span
             >
           </div>
@@ -195,7 +171,7 @@
 
 <script>
 export default {
-  name: 'application-registration',
+  name: 'applicationRegistration',
 
   props: {},
   data() {
@@ -203,39 +179,33 @@ export default {
       auth: {
         email: '',
         password: '',
-        phoneNumber: null,
       },
     }
   },
   created() {},
   methods: {
-    async Register() {
+    async Login() {
       const dis = this
 
       await this.$fire.auth
-        .createUserWithEmailAndPassword(this.auth.email, this.auth.password)
+        .signInWithEmailAndPassword(this.auth.email, this.auth.password)
         .then(({ user }) => {
-          this.$notify({
-            title: 'Registered',
-            message: 'Registration Successful',
-            type: 'success',
+          console.log('Login Successfully')
+          this.$notify.success({
+            title: 'Login Sucessfull',
+            message: 'Welcome back!',
           })
-
-          console.log('Acct Created Successfully')
           console.log(user)
-          dis.$store.dispatch('createUser', {
-            id: user.uid,
-            email: dis.auth.email,
-            password: dis.auth.password,
-            phoneNumber: dis.auth.phoneNumber,
-          })
-          dis.$router.push('/admission/login')
+          dis.$store.dispatch('fetchProfile', user)
+          dis.$router.push('/admission/documentation')
         })
         .catch((err) => {
-          this.$notify.error({
-            title: 'Error',
-            message: `${err.message}`,
-          })
+          if (err.message.includes('invalid')) {
+            this.$notify.error({
+              title: 'Error',
+              message: 'Invalid Credentials- Email Or Password',
+            })
+          }
         })
     },
   },
