@@ -50,7 +50,7 @@
               alt=""
             />
             <div class="sidebar-text flex-col">
-              <div class="font-meduim text-xl">Abdur-rasheed Idris</div>
+              <div class="font-meduim text-xl"> {{  getCurrentCandidate ? getCurrentCandidate.fullname : 'loading...'  }}  </div>
               <p class="text-xs">
                 {{
                   getCurrentCandidate ? getCurrentCandidate.email : 'loading...'
@@ -62,8 +62,8 @@
           <div class="space-y-8 mt-5">
             <div v-for="(content, index) in sideabrContents" :key="index">
               <div
-                @click="content.link"
                 class="flex justify-content items-center cursor-pointer"
+                @click="content.link"
               >
                 <img
                   :src="require(`~/assets/images/${content.icon}.svg`)"
@@ -116,18 +116,7 @@
               />
             </div>
           </button>
-          <button
-            class="
-              font-semibold
-              rounded-sm
-              text-dark-blue
-              border border-dark-blue
-              p-3
-              hover:bg-dark-blue hover:text-white
-            "
-          >
-            Save to draft
-          </button>
+      
           <button
             :class="
               pageTracker == 3

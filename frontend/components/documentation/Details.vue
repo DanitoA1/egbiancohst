@@ -5,7 +5,9 @@
       <p class="text-gray-500">Please ensure your fill in correct details</p>
       <div class="font-semibold">
         <span>Registration ID:</span>
-        <span class="text-gray-500"> {{ getCurrentCandidate ? getCurrentCandidate.regId : 'Loading...'}} </span>
+        <span class="text-gray-500">
+          {{ getCurrentCandidate ? getCurrentCandidate.regId : 'Loading...' }}
+        </span>
       </div>
     </div>
     <!-- Step -->
@@ -74,6 +76,7 @@
         </label>
 
         <input
+          v-model="fname"
           class="
             mt-3
             mr-5
@@ -89,7 +92,7 @@
           "
           type="text"
           name="fullName"
-          placeholder="Abdur-rasheed Idris"
+          placeholder="Chinedu Adamu"
         />
       </div>
       <div class="lg:mx-5 mx-0 lg:w-4/12 w-full">
@@ -98,6 +101,7 @@
         </label>
 
         <input
+          v-model="mname"
           class="
             mt-3
             overflow-ellipsis
@@ -157,7 +161,7 @@
         <label for="dob" class="text-gray-600 font-bold"> Date of Birth </label>
 
         <el-date-picker
-          v-model="value2"
+          v-model="dob"
           type="date"
           placeholder="Pick a day"
           :picker-options="pickerOptions"
@@ -190,7 +194,7 @@
           "
           name="localgovt"
         >
-          <option>Ajankara</option>
+          <option>Bosso</option>
         </select>
       </div>
 
@@ -211,24 +215,54 @@
             p-3.5
             focus:border-blue-400
           "
-          name="gender"
+          name="nationality"
+          @change="handleSelectedGender"
         >
-          <option>Male</option>
-          <option>Female</option>
+          <option
+            v-for="(gender, idx) in genderList"
+            :key="idx"
+            :value="gender"
+          >
+            {{ gender }}
+          </option>
         </select>
       </div>
     </div>
+  
+       <button
+            class="
+            bg-blue-600
+              hover:bg-dark-blue
+              text-white text-center
+              my-3
+              
+              overflow-ellipsis
+              border
+              outline-none
+              border-gray-300
+              w-95
+              rounded-4px
+              p-3.5
+            "
+            @click="handleUpdate"
+          >
+            Update
+          </button>
   </div>
 </template>
 
 <script>
 import { countryList } from './CountryNames'
 export default {
-  props : ["getCurrentCandidate"],
+  props: ['getCurrentCandidate'],
   data() {
     return {
+      fname :  this.getCurrentCandidate ? this.getCurrentCandidate.fullname : '',
+      mname :  this.getCurrentCandidate ? this.getCurrentCandidate.middleName : '',
       CountryList: countryList,
-      selectedCountry: 'Nigeria',
+      genderList: ['male', 'female'],
+      selectedCountry:  this.getCurrentCandidate ? this.getCurrentCandidate.country : '',
+      selectedGender:  this.getCurrentCandidate ? this.getCurrentCandidate.gender : 'Select Your Gender',
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now()
@@ -258,13 +292,50 @@ export default {
           },
         ],
       },
-      value2: '',
+      dob:  this.getCurrentCandidate ? this.getCurrentCandidate.dob : 'loading...',
     }
+  },
+
+  mounted() {
+
+    this.sendEvent();
   },
 
   methods: {
     handleSelectedCountry(event) {
       this.selectedCountry = event.target.value
+    },
+    handleSelectedGender(event) {
+      this.selectedGender = event.target.value
+      this.sendEvent();
+    },
+
+    sendEvent() {
+      this.$emit('handleUpdate')
+    },
+
+    // Add a new document in collection "Users"
+    handleUpdate() {
+      this.$fire.firestore
+        .collection('users')
+        .doc(this.getCurrentCandidate.id)
+        .update({
+          country: this.selectedCountry,
+          dob: this.dob,
+          fullname: this.fname,
+          middleName: this.mname,
+          gender: this.selectedGender,
+        })
+        .then(() => {
+          console.log('Document successfully Updated!')
+              this.$notify.success({
+            title: 'Update Sucessfull',
+            message: 'Data Saved!',
+          })
+        })
+        .catch((error) => {
+          console.error('Error writing document: ', error)
+        })
     },
   },
 }

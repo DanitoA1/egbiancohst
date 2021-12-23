@@ -18,7 +18,7 @@
             "
             type="text"
             name="name"
-            placeholder="John Doe"
+            placeholder="Chinedu Adamu Adekunle"
           />
         </div>
         <div class="mb-8">
