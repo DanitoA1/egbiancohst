@@ -133,7 +133,7 @@
             <span class="text-gray-600"> Dont have an account ? </span>
             <span class="font-bold text-dark-blue mr-3"
               ><nuxt-link to="/admission/registration"
-                >Register</nuxt-link
+                >Start Application</nuxt-link
               ></span
             >
             |<span class="font-bold text-dark-blue"

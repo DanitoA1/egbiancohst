@@ -59,7 +59,7 @@
           >
             <div class="hidden lg:flex flex-row items-end space-x-8">
               <nuxt-link to="/about" class="font-semibold">About</nuxt-link>
-              <nuxt-link to="/admission/registration" class="font-semibold"
+              <nuxt-link to="/application-intro" class="font-semibold"
                 >Admission</nuxt-link
               >
               <nuxt-link to="/school/departments" class="font-semibold"
@@ -90,7 +90,7 @@
                       <router-link to="/about"> About </router-link>
                     </li>
                     <li divided class="">
-                      <router-link to="/admission-intro">
+                      <router-link to="/application-intro">
                         Admission
                       </router-link>
                     </li>

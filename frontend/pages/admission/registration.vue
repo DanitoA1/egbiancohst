@@ -57,82 +57,56 @@
               </div>
             </div>
           </div>
+          <!-- FullName -->
+
+          <InputForm
+            v-model="auth.surname"
+            :type="`text`"
+            :label="`Surname*`"
+            :placeholder="`Abdullah`"
+          />
+          <InputForm
+            v-model="auth.middlename"
+            :type="`text`"
+            :label="`Middle Name`"
+            :placeholder="`Ndako`"
+          />
+          <InputForm
+            v-model="auth.lastname"
+            :type="`text`"
+            :label="`Last Name*`"
+            :placeholder="`Chinedu`"
+          />
 
           <!-- Email Input -->
-          <div class="mb-8">
-            <label for="email" class="text-gray-600 font-bold"> Email </label>
-            <div>
-              <input
-                class="
-                  mt-3
-                  overflow-ellipsis
-                  border
-                  outline-none
-                  border-gray-300
-                  w-full
-                  focus:shadow-md
-                  rounded-4px
-                  p-3.5
-                  focus:border-blue-400
-                "
-                type="email"
-                v-model="auth.email"
-                placeholder="example@domain.edu.ng"
-              />
-            </div>
-          </div>
+          <InputForm
+            v-model="auth.email"
+            :type="`email`"
+            :label="`Email*`"
+            :placeholder="`example@mail.co`"
+          />
           <!-- Mobile No Input -->
 
-          <div class="mb-8">
-            <label for="telephone" class="text-gray-600 font-bold">
-              Mobile No
-            </label>
-            <div>
-              <input
-                class="
-                  mt-3
-                  overflow-ellipsis
-                  border
-                  outline-none
-                  border-gray-300
-                  w-full
-                  focus:shadow-md
-                  rounded-4px
-                  p-3.5
-                  focus:border-blue-400
-                "
-                type="tel"
-                v-model="auth.phoneNumber"
-                placeholder="+234 8123 456 789"
-              />
-            </div>
-          </div>
+          <InputForm
+            v-model="auth.phoneNumber"
+            :type="`tel`"
+            :label="`Phone Number`"
+            :placeholder="`+234 81XX XXX XXXX`"
+          />
           <!-- Password Imput -->
 
-          <div class="mb-8">
-            <label for="password" class="text-gray-600 font-bold">
-              Password
-            </label>
-            <div>
-              <input
-                class="
-                  mt-3
-                  overflow-ellipsis
-                  border
-                  outline-none
-                  border-gray-300
-                  w-full
-                  focus:shadow-md
-                  rounded-4px
-                  p-3.5
-                  focus:border-blue-400
-                "
-                type="password"
-                v-model="auth.password"
-                placeholder="Password Input atleast 8 Characters"
-              />
-            </div>
-          </div>
+          <InputForm
+            v-model="auth.password"
+            :type="`password`"
+            :label="`Password*`"
+            :placeholder="`Password`"
+          />
+          <InputForm
+            v-model="auth.confirmpassword"
+            :type="`password`"
+            :label="`Confirm Password*`"
+            :placeholder="`Password`"
+          />
 
           <!-- Submit input -->
 
@@ -154,7 +128,7 @@
             Create an account
           </button>
 
-          <div class="text-center mt-8 pb-20  space-x-4">
+          <div class="text-center mt-8 pb-20 space-x-4">
             <span class="text-gray-600"> Already have an account ? </span>
             <span class="font-bold text-dark-blue mr-3"
               ><nuxt-link to="/admission/login">Login</nuxt-link></span
@@ -203,12 +177,45 @@ export default {
       auth: {
         email: '',
         password: '',
+        confirmpassword: '',
+        surname: '',
+        middlename: '',
+        lastname: '',
         phoneNumber: null,
       },
+      passwordChecker: null,
+      filledField: null,
+      errorMessage: '',
     }
   },
   created() {},
   methods: {
+    formValidator() {
+      this.passwordChecker =
+        this.auth.password === this.auth.confirmpassword ? true : false
+      this.filledField =
+        this.fullname.length > 0 &&
+        this.auth.password.length > 0 &&
+        this.auth.confirmpassword.length > 0 &&
+        this.auth.surname.length > 0 &&
+        this.auth.lastname.length > 0 &&
+        this.auth.email.length > 0
+          ? true
+          : false
+
+      if (this.passwordChecker === false) {
+        this.errorMessage = 'Password Does Not Match'
+      } else if (this.filledField === false) {
+        this.errorMessage = 'Fill all required field'
+      }
+
+      if (this.passwordChecker && this.filledField) {
+        return true
+      } else {
+        return false
+      }
+    },
+
     async Register() {
       const dis = this
 
@@ -227,6 +234,9 @@ export default {
             id: user.uid,
             email: dis.auth.email,
             password: dis.auth.password,
+            surname: dis.auth.surname,
+            middlename: dis.auth.middlename,
+            lastname: dis.auth.lastname,
             phoneNumber: dis.auth.phoneNumber,
           })
           dis.$router.push('/admission/login')

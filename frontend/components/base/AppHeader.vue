@@ -85,7 +85,7 @@
                       <router-link to="/about"> About </router-link>
                     </li>
                     <li divided class="">
-                      <router-link to="/admission-intro">
+                      <router-link to="/application-intro">
                         Admission
                       </router-link>
                     </li>
