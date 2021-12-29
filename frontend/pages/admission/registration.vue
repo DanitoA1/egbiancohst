@@ -111,7 +111,6 @@
           <!-- Submit input -->
 
           <button
-            @click="Register"
             class="
               bg-dark-blue
               text-white text-center
@@ -124,8 +123,9 @@
               rounded-4px
               p-3.5
             "
+            @click="Register"
           >
-            Create an account
+            Start Application
           </button>
 
           <div class="text-center mt-8 pb-20 space-x-4">
@@ -168,6 +168,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 export default {
   name: 'application-registration',
 
@@ -194,11 +195,11 @@ export default {
       this.passwordChecker =
         this.auth.password === this.auth.confirmpassword ? true : false
       this.filledField =
-        this.fullname.length > 0 &&
         this.auth.password.length > 0 &&
         this.auth.confirmpassword.length > 0 &&
         this.auth.surname.length > 0 &&
         this.auth.lastname.length > 0 &&
+        this.auth.phoneNumber.length > 0 &&
         this.auth.email.length > 0
           ? true
           : false
@@ -217,38 +218,47 @@ export default {
     },
 
     async Register() {
+      console.log(this.auth.surname)
+      this.formValidator()
       const dis = this
+      if (this.formValidator()) {
+        await this.$fire.auth
+          .createUserWithEmailAndPassword(this.auth.email, this.auth.password)
+          .then(({ user }) => {
+            this.$notify({
+              title: 'Registered',
+              message: 'Registration Successful',
+              type: 'success',
+            })
 
-      await this.$fire.auth
-        .createUserWithEmailAndPassword(this.auth.email, this.auth.password)
-        .then(({ user }) => {
-          this.$notify({
-            title: 'Registered',
-            message: 'Registration Successful',
-            type: 'success',
+            console.log('Acct Created Successfully')
+            console.log(user)
+            dis.$store.dispatch('createUser', {
+              id: user.uid,
+              email: dis.auth.email,
+              password: dis.auth.password,
+              surname: dis.auth.surname,
+              middlename: dis.auth.middlename,
+              lastname: dis.auth.lastname,
+              phoneNumber: dis.auth.phoneNumber,
+            })
+            dis.$router.push('/admission/login')
           })
-
-          console.log('Acct Created Successfully')
-          console.log(user)
-          dis.$store.dispatch('createUser', {
-            id: user.uid,
-            email: dis.auth.email,
-            password: dis.auth.password,
-            surname: dis.auth.surname,
-            middlename: dis.auth.middlename,
-            lastname: dis.auth.lastname,
-            phoneNumber: dis.auth.phoneNumber,
+          .catch((err) => {
+            this.$notify.error({
+              title: 'Error',
+              message: `${err.message}`,
+            })
           })
-          dis.$router.push('/admission/login')
+      } else {
+        this.$notify.error({
+          title: 'Error',
+          message: `${this.errorMessage}`,
         })
-        .catch((err) => {
-          this.$notify.error({
-            title: 'Error',
-            message: `${err.message}`,
-          })
-        })
+      }
     },
   },
+
 }
 </script>
 

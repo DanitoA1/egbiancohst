@@ -19,6 +19,7 @@
         "
         :type="type"
         :placeholder="placeholder"
+        @input="$emit('input', $event.target.value)"
       />
     </div>
   </div>

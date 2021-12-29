@@ -1,5 +1,6 @@
 const state = () => ({
   currentCandidate: null,
+  loading : true
 })
 
 const actions = {
@@ -32,6 +33,9 @@ const actions = {
       .doc(user.id)
       .onSnapshot((doc) => {
         commit('SET_CURRRENT_CANDIDATE', doc.data())
+        
+        commit('SET_LOADING', false)
+        
       })
   },
 }
@@ -40,10 +44,16 @@ const mutations = {
   SET_CURRRENT_CANDIDATE(state, data) {
     state.currentCandidate = data
   },
+  SET_LOADING(state, data) {
+    state.loading = data
+  },
 }
 const getters = {
   getCurrentCandidate(state) {
     return state.currentCandidate
+  },
+  loadingState(state) {
+    return state.loading
   },
 }
 

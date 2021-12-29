@@ -50,7 +50,13 @@
               alt=""
             />
             <div class="sidebar-text flex-col">
-              <div class="font-meduim text-xl"> {{  getCurrentCandidate ? getCurrentCandidate.fullname : 'loading...'  }}  </div>
+              <div class="font-meduim text-xl">
+                {{
+                  getCurrentCandidate
+                    ? `${getCurrentCandidate.surname}   ${getCurrentCandidate.lastname}`
+                    : 'Loading'
+                }}
+              </div>
               <p class="text-xs">
                 {{
                   getCurrentCandidate ? getCurrentCandidate.email : 'loading...'
@@ -116,7 +122,7 @@
               />
             </div>
           </button>
-      
+
           <button
             :class="
               pageTracker == 3
@@ -152,7 +158,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 export default {
   name: 'documentation',
   props: {},
@@ -183,20 +189,28 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getCurrentCandidate']),
+    ...mapGetters(['getCurrentCandidate',]),
+    ...mapState(['loading']),
   },
-  mounted() {},
+
+  mounted() {
+    this.fullScreenLoading()
+
+      console.log(this.$store.state.loading );
+    
+  },
   methods: {
-    // pageSelector() {
-    //   switch (this.pageTracker) {
-    //     case 1:
-    //       return ( <DocumentationDetails />)
-    //     case 2:
-    //       return (<PSCertificates />)
-    //     default:
-    //       ;<DocumentationDetails />
-    //   }
-    // },
+    fullScreenLoading() {
+      if (this.loading !== false) {
+        this.$loading({
+          lock: true,
+          text: 'Loading',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)',
+        })
+      }
+    },
+ 
 
     pageTrackerHandlerBack() {
       this.pageTracker = this.pageTracker - 1
