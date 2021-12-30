@@ -60,19 +60,19 @@
           <!-- FullName -->
 
           <InputForm
-            v-model="auth.surname"
+            v-model.trim="auth.surname"
             :type="`text`"
             :label="`Surname*`"
             :placeholder="`Abdullah`"
           />
           <InputForm
-            v-model="auth.middlename"
+            v-model.trim="auth.middlename"
             :type="`text`"
             :label="`Middle Name`"
             :placeholder="`Ndako`"
           />
           <InputForm
-            v-model="auth.lastname"
+            v-model.trim="auth.lastname"
             :type="`text`"
             :label="`Last Name*`"
             :placeholder="`Chinedu`"
@@ -80,7 +80,7 @@
 
           <!-- Email Input -->
           <InputForm
-            v-model="auth.email"
+            v-model.trim="auth.email"
             :type="`email`"
             :label="`Email*`"
             :placeholder="`example@mail.co`"
@@ -88,7 +88,7 @@
           <!-- Mobile No Input -->
 
           <InputForm
-            v-model="auth.phoneNumber"
+            v-model.trim="auth.phoneNumber"
             :type="`tel`"
             :label="`Phone Number`"
             :placeholder="`+234 81XX XXX XXXX`"
@@ -96,13 +96,13 @@
           <!-- Password Imput -->
 
           <InputForm
-            v-model="auth.password"
+            v-model.trim="auth.password"
             :type="`password`"
             :label="`Password*`"
             :placeholder="`Password`"
           />
           <InputForm
-            v-model="auth.confirmpassword"
+            v-model.trim="auth.confirmpassword"
             :type="`password`"
             :label="`Confirm Password*`"
             :placeholder="`Password`"
@@ -241,7 +241,8 @@ export default {
               middlename: dis.auth.middlename,
               lastname: dis.auth.lastname,
               phoneNumber: dis.auth.phoneNumber,
-              passportUrl: 'https://www.pikpng.com/pngl/m/5-52254_png-file-user-profile-icon-svg-clipart.png'
+              adminStatus : false,
+              passportUrl: 'https://www.pikpng.com/pngl/m/5-52254_png-file-user-profile-icon-svg-clipart.png',
             })
             dis.$router.push('/admission/login')
           })

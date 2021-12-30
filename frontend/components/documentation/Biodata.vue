@@ -5,7 +5,7 @@
     <div class="grid lg:grid-cols-2 gap-4 mt-10">
       <div class="w-full">
         <InputForm
-          v-model="surname"
+          v-model.trim="surname"
           :type="`text`"
           :label="`Surname`"
           :placeholder="`Abdullah`"
@@ -13,7 +13,7 @@
       </div>
       <div class="w-full">
         <InputForm
-          v-model="middleName"
+          v-model.trim="middleName"
           :type="`text`"
           :label="`Middle Name`"
           :placeholder="`Ndako`"
@@ -21,7 +21,7 @@
       </div>
       <div class="w-full">
         <InputForm
-          v-model="lastName"
+          v-model.trim="lastName"
           :type="`text`"
           :label="`Last Name`"
           :placeholder="`Chinedu`"
@@ -53,7 +53,7 @@
           "
           name="nationality"
           @change="handleSelectedCourse"
-          v-model="selectedCourse"
+          v-model.trim="selectedCourse"
         >
           <option
             v-for="(course, idx) in courseList"
@@ -87,7 +87,7 @@
           "
           name="nationality"
           @change="handleSelectedCountry"
-           v-model="selectedCountry"
+           v-model.trim="selectedCountry"
         >
           <option
             v-for="(country, idx) in CountryList"
@@ -105,7 +105,7 @@
         <label for="localgovt" class="text-gray-600 font-bold"> State </label>
 
         <select
-        v-model="selectedState"
+        v-model.trim="selectedState"
           class="
             mt-3
             mr-5
@@ -129,11 +129,11 @@
       </div>
       <div class="w-full">
         <label for="localgovt" class="text-gray-600 font-bold">
-          Local Government Area
+          Local Government Area -  {{selectedLga}}
         </label>
 
         <select
-          v-model="selectedLga"
+          v-model.trim="selectedLga"
           class="
             mt-3
             mr-5
@@ -149,6 +149,7 @@
           "
           @change="handleSelectedLga"
         >
+        
           <option v-for="(city, idx) in correspondingCities" :key="idx">
             {{ city }}
           </option>
@@ -157,7 +158,7 @@
 
       <div class="w-full">
         <InputForm
-          v-model="dob"
+          v-model.trim="dob"
           :type="`text`"
           :label="`Date 0f birth. ex: (27/12/1990)`"
           :placeholder="`ex: (27/12/1990)`"
@@ -197,7 +198,7 @@
 
             <div class="w-full">
         <InputForm
-          v-model="phoneNumber"
+          v-model.trim="phoneNumber"
           :type="`text`"
           :label="`Phone Number`"
           :placeholder="`070XXXXXXXX`"
@@ -229,18 +230,18 @@
 import { countryList } from './CountryNames'
 import Cities from './Cities'
 export default {
-  props: ['getCurrentCandidate'],
+  props: ['getcurrentCandidateBiodata'],
   data() {
     return {
-      surname: this.getCurrentCandidate ? this.getCurrentCandidate.surname : '',
-      middleName: this.getCurrentCandidate
-        ? this.getCurrentCandidate.middlename
+      surname: this.getcurrentCandidateBiodata ? this.getcurrentCandidateBiodata.surname : '',
+      middleName: this.getcurrentCandidateBiodata
+        ? this.getcurrentCandidateBiodata.middlename
         : '',
-      lastName: this.getCurrentCandidate
-        ? this.getCurrentCandidate.lastname
+      lastName: this.getcurrentCandidateBiodata
+        ? this.getcurrentCandidateBiodata.lastname
         : '',
-      phoneNumber: this.getCurrentCandidate
-        ? this.getCurrentCandidate.phoneNumber
+      phoneNumber: this.getcurrentCandidateBiodata
+        ? this.getcurrentCandidateBiodata.phoneNumber
         : '',
       CountryList: countryList,
       courseList: [
@@ -254,24 +255,24 @@ export default {
         'Medical Laboratory Technology (MLT)',
       ],
       genderList: ['male', 'female'],
-      selectedCountry: this.getCurrentCandidate
-        ? this.getCurrentCandidate.selectedCountry
+      selectedCountry: this.getcurrentCandidateBiodata
+        ? this.getcurrentCandidateBiodata.selectedCountry
         : 'loading...',
-      selectedGender: this.getCurrentCandidate
-        ? this.getCurrentCandidate.selectedGender
+      selectedGender: this.getcurrentCandidateBiodata
+        ? this.getcurrentCandidateBiodata.selectedGender
         : 'Select Your Gender',
-      selectedCourse: this.getCurrentCandidate
-        ? this.getCurrentCandidate.selectedCourse
+      selectedCourse: this.getcurrentCandidateBiodata
+        ? this.getcurrentCandidateBiodata.selectedCourse
         : 'loading..',
 
-      dob: this.getCurrentCandidate
-        ? this.getCurrentCandidate.dob
+      dob: this.getcurrentCandidateBiodata
+        ? this.getcurrentCandidateBiodata.dob
         : 'loading...',
-      selectedLga: this.getCurrentCandidate
-        ? this.getCurrentCandidate.selectedLga
+      selectedLga: this.getcurrentCandidateBiodata
+        ? this.getcurrentCandidateBiodata.selectedLga
         : 'loading...',
-      selectedState: this.getCurrentCandidate
-        ? this.getCurrentCandidate.selectedState
+      selectedState: this.getcurrentCandidateBiodata
+        ? this.getcurrentCandidateBiodata.selectedState
         : 'loading...',
       correspondingCities: [],
       cities: Cities,
@@ -317,7 +318,11 @@ export default {
     }
   },
 
-  mounted() {},
+  created() {
+    if (this.getcurrentCandidateBiodata) {
+      console.log(this.getcurrentCandidateBiodata.selectedLga);
+    }
+  },
 
   methods: {
     pickedState(event) {
@@ -346,7 +351,7 @@ export default {
     handleUpdate() {
       this.$fire.firestore
         .collection('users')
-        .doc(this.getCurrentCandidate.id)
+        .doc(this.getcurrentCandidateBiodata.id).collection('biodata')
         .update({
           selectedCountry: this.selectedCountry,
           dob: this.dob,

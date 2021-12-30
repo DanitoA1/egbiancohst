@@ -1,6 +1,7 @@
 const state = () => ({
   currentCandidate: null,
   loading: true,
+  allCandidates: [],
 })
 
 const actions = {
@@ -33,15 +34,31 @@ const actions = {
       .doc(user.id)
       .onSnapshot((doc) => {
         commit('SET_CURRRENT_CANDIDATE', doc.data())
-       if (doc.data()) {
-        commit('SET_LOADING', false)
-       }
+        if (doc.data()) {
+          commit('SET_LOADING', false)
+        }
       })
-
   },
-  setLoading({commit}){
+  async getAllCandidates({ commit }) {
+    await this.$fire.firestore.collection('users').onSnapshot((data) => {
+      const postArray = []
+
+      try {
+        data.forEach((doc) => {
+          const info = doc.data()
+          info.id = doc.id
+          postArray.push(info)
+        })
+
+        commit('SET_ALLCANDIDATE', postArray)
+      } catch (error) {
+        console.log(error.message)
+      }
+    })
+  },
+  setLoading({ commit }) {
     commit('SET_LOADING', false)
-  }
+  },
 }
 
 const mutations = {
@@ -51,6 +68,9 @@ const mutations = {
   SET_LOADING(state, data) {
     state.loading = data
   },
+  SET_ALLCANDIDATE(state, data){
+    state.allCandidates = data
+  }
 }
 const getters = {
   getCurrentCandidate(state) {

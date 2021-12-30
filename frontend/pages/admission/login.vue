@@ -75,7 +75,7 @@
                   p-3.5
                   focus:border-blue-400
                 "
-                v-model="auth.email"
+                v-model.trim="auth.email"
                 type="email"
                 placeholder="example@domain.edu.ng"
               />
@@ -103,7 +103,7 @@
                   focus:border-blue-400
                 "
                 type="password"
-                v-model="auth.password"
+                v-model.trim="auth.password"
                 placeholder="Password Input atleast 8 Characters"
               />
             </div>

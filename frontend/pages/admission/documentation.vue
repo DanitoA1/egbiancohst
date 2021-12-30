@@ -153,6 +153,7 @@ export default {
   props: {},
   data() {
     return {
+      loadingState : true,
       page: null,
       pageTracker: 1,
       sideabrContents: [
@@ -193,12 +194,16 @@ export default {
     if (this.getCurrentCandidate) {
       this.$store.dispatch('setLoading')
     }
-    console.log(this.$store.state.loading)
+    console.log(this.loading)
       this.fullScreenLoading()
+  },
+  created() {
+    this.loadingState = this.loading === false  ? this.loading : true 
+    console.log(this.loadingState);
   },
   methods: {
     fullScreenLoading() {
-      if (this.loading === '') {
+      if (this.loadingState) {
         this.$loading({
           lock: true,
           text: 'Loading',
