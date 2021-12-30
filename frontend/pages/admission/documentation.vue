@@ -45,8 +45,12 @@
           <!-- SideBar Content -->
           <div class="flex justify-content items-center mb-4">
             <img
-              src="~/assets/images/user-acct.svg"
-              class="h-8 w-8 object-contain mr-4"
+              :src="
+                getCurrentCandidate
+                  ? getCurrentCandidate.passportUrl
+                  : require('~/assets/images/user-acct.svg')
+              "
+              class="h-10 w-10 rounded-full object-contain mr-4"
               alt=""
             />
             <div class="sidebar-text flex-col">
@@ -65,21 +69,20 @@
             </div>
           </div>
 
-          <div class="space-y-8 mt-5">
-            <div v-for="(content, index) in sideabrContents" :key="index">
+          <div class="space-y-4 mt-5">
+            <div v-for="(content, index) in sideabrContents" :key="index"  :class="index+1 == pageTracker ?  'bg-blue-600': null" class="pl-3 py-3 rounded-l-full">
               <div
                 class="flex justify-content items-center cursor-pointer"
                 @click="content.link"
               >
-                <img
-                  :src="require(`~/assets/images/${content.icon}.svg`)"
-                  :alt="content.icon"
-                  :class="[index === 1 ? 'ml-0' : 'ml-1', 'object-contain']"
+                <font-awesome-icon
+                  :icon="['fas', `${content.icon}`]"
+                  class="w-6 text-white h-6"
                 />
                 <div
                   :class="[
                     index > 1 ? 'ml-5' : 'ml-6',
-                    'sidebar-text text-md font-normal',
+                    'sidebar-text text-md font-semibold',
                   ]"
                 >
                   {{ content.name }}
@@ -89,59 +92,42 @@
           </div>
           <!-- SideBar Content Ends -->
         </div>
-
-        <DocumentationDetails
+        <div class="space-y-2">
+          <div class="text-xl font-semibold"><p>Student Admission Form</p></div>
+          <p class="text-gray-500">
+            Please ensure your fill in correct details
+          </p>
+          <div class="font-semibold">
+            <span>Application Number:</span>
+            <span class="text-gray-500">
+              {{
+                getCurrentCandidate ? getCurrentCandidate.regId : 'Loading...'
+              }}
+            </span>
+          </div>
+        </div>
+        <DocumentationUploadPassport
           v-if="pageTracker === 1"
           :getCurrentCandidate="getCurrentCandidate"
         />
-        <DocumentationPSCertificate
+        <DocumentationMakePayment
           v-if="pageTracker === 2"
           :getCurrentCandidate="getCurrentCandidate"
         />
-        <DocumentationBCertificate
+        <DocumentationBiodata
           v-if="pageTracker === 3"
           :getCurrentCandidate="getCurrentCandidate"
         />
+        <DocumentationUploadDoc
+          v-if="pageTracker === 4"
+          :getCurrentCandidate="getCurrentCandidate"
+        />
+        <DocumentationAdminStatus
+          v-if="pageTracker === 5"
+          :getCurrentCandidate="getCurrentCandidate"
+        />
+  
 
-        <div class="flex justify-between text-center mb-20 mr-7">
-          <button
-            :disabled="pageTracker == 1"
-            :class="
-              pageTracker == 1
-                ? 'bg-blue-400 cursor-not-allowed'
-                : 'bg-dark-blue'
-            "
-            class="w-auto rounded-sm p-3 px-5 text-white"
-            @click="pageTrackerHandlerBack"
-          >
-            <div class="lg:flex hidden text-center">Back</div>
-            <div class="lg:hidden block">
-              <font-awesome-icon
-                :icon="['fas', 'angle-double-left']"
-                class="w-6 text-white h-6"
-              />
-            </div>
-          </button>
-
-          <button
-            :class="
-              pageTracker == 3
-                ? 'bg-blue-400 cursor-not-allowed'
-                : 'bg-dark-blue'
-            "
-            :disabled="pageTracker == 3"
-            class="w-auto rounded-sm p-3 px-5 text-white"
-            @click="pageTrackerHandlerNext"
-          >
-            <div class="lg:flex hidden text-center">Next</div>
-            <div class="lg:hidden block">
-              <font-awesome-icon
-                :icon="['fas', 'angle-double-right']"
-                class="w-6 text-white h-6"
-              />
-            </div>
-          </button>
-        </div>
       </div>
 
       <div class="bg-dark-blue hidden lg:flex justify-center items-end">
@@ -168,40 +154,46 @@ export default {
       pageTracker: 1,
       sideabrContents: [
         {
-          icon: 'profile',
-          name: 'Personal Details',
-          link: this.personalDetailHandler,
+          icon: 'camera',
+          name: 'Upload Passport',
+          link: this.uploadPassportHandler,
         },
         {
-          icon: 'badge',
-          name: 'Certificates',
-          link: this.certificateHandler,
+          icon: 'credit-card',
+          name: 'Make Payment',
+          link: this.makePaymentHandler,
         },
-        { icon: 'draft', name: 'Draft', link: this.draftHandler },
-        { icon: 'mail', name: 'Contact us', link: this.contactHandler },
-        { icon: 'logout', name: 'logout', link: this.logoutHandler },
+        { icon: 'user-edit', name: 'Biodata', link: this.biodataHandler },
+        { icon: 'file', name: 'Upload Document', link: this.uploadDocHandler },
+        {
+          icon: 'info-circle',
+          name: 'Admission Status',
+          link: this.adminStatusHandler,
+        },
+        { icon: 'sign-out-alt', name: 'logout', link: this.logoutHandler },
       ],
       pageTag: {
-        1: 'Personal Details',
-        2: 'Certificates',
-        3: 'Certificates',
+        1: 'Upload Passport',
+        2: 'Make Payement',
+        3: 'Biodata',
+        4: 'Upload Document',
+        5: 'Admission Status',
       },
     }
   },
   computed: {
-    ...mapGetters(['getCurrentCandidate',]),
+    ...mapGetters(['getCurrentCandidate']),
     ...mapState(['loading']),
   },
 
   mounted() {
     this.fullScreenLoading()
 
-      console.log(this.$store.state.loading );
-    
+    console.log(this.$store.state.loading)
   },
   methods: {
     fullScreenLoading() {
-      if (this.loading !== false) {
+      if (this.loading === '') {
         this.$loading({
           lock: true,
           text: 'Loading',
@@ -210,26 +202,23 @@ export default {
         })
       }
     },
- 
 
-    pageTrackerHandlerBack() {
-      this.pageTracker = this.pageTracker - 1
-    },
-    pageTrackerHandlerNext() {
-      this.pageTracker = this.pageTracker + 1
-    },
-    personalDetailHandler() {
+    uploadPassportHandler() {
       this.pageTracker = 1
     },
-    certificateHandler() {
+    makePaymentHandler() {
       this.pageTracker = 2
     },
-    draftHandler() {
-      this.pageTracker = 1
+    biodataHandler() {
+      this.pageTracker = 3
     },
-    contactHandler() {
-      this.$router.push('/contact')
+    uploadDocHandler() {
+      this.pageTracker = 4
     },
+    adminStatusHandler() {
+      this.pageTracker = 5
+    },
+
     async logoutHandler() {
       await this.$fire.auth.signOut()
       this.$router.push('/admission/login')

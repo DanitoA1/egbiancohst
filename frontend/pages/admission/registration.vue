@@ -241,6 +241,7 @@ export default {
               middlename: dis.auth.middlename,
               lastname: dis.auth.lastname,
               phoneNumber: dis.auth.phoneNumber,
+              passportUrl: 'https://www.pikpng.com/pngl/m/5-52254_png-file-user-profile-icon-svg-clipart.png'
             })
             dis.$router.push('/admission/login')
           })
