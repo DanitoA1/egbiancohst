@@ -53,6 +53,7 @@
           "
           name="nationality"
           @change="handleSelectedCourse"
+          v-model="selectedCourse"
         >
           <option
             v-for="(course, idx) in courseList"
@@ -86,6 +87,7 @@
           "
           name="nationality"
           @change="handleSelectedCountry"
+           v-model="selectedCountry"
         >
           <option
             v-for="(country, idx) in CountryList"
@@ -103,6 +105,7 @@
         <label for="localgovt" class="text-gray-600 font-bold"> State </label>
 
         <select
+        v-model="selectedState"
           class="
             mt-3
             mr-5
@@ -116,10 +119,9 @@
             p-3.5
             focus:border-blue-400
           "
-          v-model="selectedState"
           @change="pickedState"
         >
-          <option>Please Choose a State</option>
+          <!-- <option>Please Choose a State</option> -->
           <option v-for="(state, idx) in states" :key="idx" :value="state">
             {{ state }}
           </option>
@@ -131,7 +133,7 @@
         </label>
 
         <select
-          v-model="selectedCity"
+          v-model="selectedLga"
           class="
             mt-3
             mr-5
@@ -145,6 +147,7 @@
             p-3.5
             focus:border-blue-400
           "
+          @change="handleSelectedLga"
         >
           <option v-for="(city, idx) in correspondingCities" :key="idx">
             {{ city }}
@@ -153,18 +156,15 @@
       </div>
 
       <div class="w-full">
-        <label for="dob" class="text-gray-600 font-bold"> Date of Birth </label>
-
-        <el-date-picker
+        <InputForm
           v-model="dob"
-          type="date"
-          placeholder="Pick a day"
-          :picker-options="pickerOptions"
-        >
-        </el-date-picker>
+          :type="`text`"
+          :label="`Date 0f birth. ex: (27/12/1990)`"
+          :placeholder="`ex: (27/12/1990)`"
+        />
       </div>
 
-      <div class="w-full relative">
+      <div class="w-full">
         <label for="gender" class="text-gray-600 font-bold"> Gender </label>
 
         <select
@@ -184,6 +184,7 @@
           name="nationality"
           @change="handleSelectedGender"
         >
+          <option>{{ selectedGender }}</option>
           <option
             v-for="(gender, idx) in genderList"
             :key="idx"
@@ -192,6 +193,15 @@
             {{ gender }}
           </option>
         </select>
+      </div>
+
+            <div class="w-full">
+        <InputForm
+          v-model="phoneNumber"
+          :type="`text`"
+          :label="`Phone Number`"
+          :placeholder="`070XXXXXXXX`"
+        />
       </div>
     </div>
 
@@ -229,6 +239,9 @@ export default {
       lastName: this.getCurrentCandidate
         ? this.getCurrentCandidate.lastname
         : '',
+      phoneNumber: this.getCurrentCandidate
+        ? this.getCurrentCandidate.phoneNumber
+        : '',
       CountryList: countryList,
       courseList: [
         'Environmental Health Technicians (EHT)',
@@ -242,46 +255,24 @@ export default {
       ],
       genderList: ['male', 'female'],
       selectedCountry: this.getCurrentCandidate
-        ? this.getCurrentCandidate.country
-        : '',
+        ? this.getCurrentCandidate.selectedCountry
+        : 'loading...',
       selectedGender: this.getCurrentCandidate
-        ? this.getCurrentCandidate.gender
+        ? this.getCurrentCandidate.selectedGender
         : 'Select Your Gender',
-      selectedCourse: '',
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() > Date.now()
-        },
-        shortcuts: [
-          {
-            text: 'Today',
-            onClick(picker) {
-              picker.$emit('pick', new Date())
-            },
-          },
-          {
-            text: 'Yesterday',
-            onClick(picker) {
-              const date = new Date()
-              date.setTime(date.getTime() - 3600 * 1000 * 24)
-              picker.$emit('pick', date)
-            },
-          },
-          {
-            text: 'A week ago',
-            onClick(picker) {
-              const date = new Date()
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
-              picker.$emit('pick', date)
-            },
-          },
-        ],
-      },
+      selectedCourse: this.getCurrentCandidate
+        ? this.getCurrentCandidate.selectedCourse
+        : 'loading..',
+
       dob: this.getCurrentCandidate
         ? this.getCurrentCandidate.dob
         : 'loading...',
-      selectedCity: '',
-      selectedState: '',
+      selectedLga: this.getCurrentCandidate
+        ? this.getCurrentCandidate.selectedLga
+        : 'loading...',
+      selectedState: this.getCurrentCandidate
+        ? this.getCurrentCandidate.selectedState
+        : 'loading...',
       correspondingCities: [],
       cities: Cities,
       states: [
@@ -331,17 +322,24 @@ export default {
   methods: {
     pickedState(event) {
       this.correspondingCities = this.cities[`${event.target.value}`]
-      console.log(this.correspondingCities)
     },
 
     handleSelectedCountry(event) {
       this.selectedCountry = event.target.value
+      console.log(this.selectedCountry)
+    },
+
+    handleSelectedLga(event) {
+      this.selectedLga = event.target.value
+      console.log(this.selectedLga)
     },
     handleSelectedGender(event) {
       this.selectedGender = event.target.value
+      console.log(this.selectedGender)
     },
     handleSelectedCourse(event) {
       this.selectedCourse = event.target.value
+      console.log(this.selectedCourse)
     },
 
     // Add a new document in collection "Users"
@@ -350,11 +348,13 @@ export default {
         .collection('users')
         .doc(this.getCurrentCandidate.id)
         .update({
-          country: this.selectedCountry,
+          selectedCountry: this.selectedCountry,
           dob: this.dob,
-          fullname: this.fname,
-          middleName: this.mname,
-          gender: this.selectedGender,
+          phoneNumber: this.phoneNumber,
+          selectedGender: this.selectedGender,
+          selectedState: this.selectedState,
+          selectedLga: this.selectedLga,
+          selectedCourse: this.selectedCourse,
         })
         .then(() => {
           console.log('Document successfully Updated!')

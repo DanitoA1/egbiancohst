@@ -1,10 +1,10 @@
 const state = () => ({
   currentCandidate: null,
-  loading : true
+  loading: true,
 })
 
 const actions = {
- async onAuthStateChangedAction(state, { authUser, claim }) {
+  async onAuthStateChangedAction(state, { authUser, claim }) {
     if (!authUser) {
       state.commit('SET_CURRRENT_CANDIDATE', null)
       this.$router.push({
@@ -12,11 +12,11 @@ const actions = {
       })
     } else {
       await this.$fire.firestore
-      .collection('users')
-      .doc(authUser.uid)
-      .onSnapshot((doc) => {
-        state.commit('SET_CURRRENT_CANDIDATE', doc.data())
-      })
+        .collection('users')
+        .doc(authUser.uid)
+        .onSnapshot((doc) => {
+          state.commit('SET_CURRRENT_CANDIDATE', doc.data())
+        })
     }
   },
   async createUser({ commit, state, rootState }, user) {
@@ -33,11 +33,15 @@ const actions = {
       .doc(user.id)
       .onSnapshot((doc) => {
         commit('SET_CURRRENT_CANDIDATE', doc.data())
-        
+       if (doc.data()) {
         commit('SET_LOADING', false)
-        
+       }
       })
+
   },
+  setLoading({commit}){
+    commit('SET_LOADING', false)
+  }
 }
 
 const mutations = {

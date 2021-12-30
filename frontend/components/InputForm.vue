@@ -20,6 +20,7 @@
         "
         :type="type"
         :placeholder="placeholder"
+        :value="value"
         @input="$emit('input', $event.target.value)"
       />
     </div>
@@ -32,6 +33,7 @@ export default {
     label: String,
     type: String,
     placeholder: String,
+    value: String
   },
 }
 </script>

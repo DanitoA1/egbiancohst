@@ -70,7 +70,12 @@
           </div>
 
           <div class="space-y-4 mt-5">
-            <div v-for="(content, index) in sideabrContents" :key="index"  :class="index+1 == pageTracker ?  'bg-blue-600': null" class="pl-3 py-3 rounded-l-full">
+            <div
+              v-for="(content, index) in sideabrContents"
+              :key="index"
+              :class="index + 1 == pageTracker ? 'bg-blue-600' : null"
+              class="pl-3 py-3 rounded-l-full"
+            >
               <div
                 class="flex justify-content items-center cursor-pointer"
                 @click="content.link"
@@ -126,8 +131,6 @@
           v-if="pageTracker === 5"
           :getCurrentCandidate="getCurrentCandidate"
         />
-  
-
       </div>
 
       <div class="bg-dark-blue hidden lg:flex justify-center items-end">
@@ -187,9 +190,11 @@ export default {
   },
 
   mounted() {
-    this.fullScreenLoading()
-
+    if (this.getCurrentCandidate) {
+      this.$store.dispatch('setLoading')
+    }
     console.log(this.$store.state.loading)
+      this.fullScreenLoading()
   },
   methods: {
     fullScreenLoading() {
