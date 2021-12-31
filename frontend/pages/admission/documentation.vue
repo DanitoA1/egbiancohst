@@ -50,7 +50,7 @@
                   ? getCurrentCandidate.passportUrl
                   : require('~/assets/images/user-acct.svg')
               "
-              class="h-10 w-10 rounded-full object-contain mr-4"
+              class="h-10 w-10  object-contain mr-4"
               alt=""
             />
             <div class="sidebar-text flex-col">
@@ -203,7 +203,7 @@ export default {
   },
   methods: {
     fullScreenLoading() {
-      if (this.loadingState) {
+      if (this.loadingState === '') {
         this.$loading({
           lock: true,
           text: 'Loading',

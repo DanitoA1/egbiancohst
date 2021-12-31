@@ -47,6 +47,7 @@ const actions = {
         data.forEach((doc) => {
           const info = doc.data()
           info.id = doc.id
+          info.isOpen = false
           postArray.push(info)
         })
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="my-5">
+  <div class="my-5 mx-auto container w-11/12">
           <div class="p-3">
           <div
             v-for="(item, id) in admissionData"
@@ -30,7 +30,7 @@
         border
         outline-none
         border-gray-300
-        w-95
+        w-full
         rounded-4px
         p-3.5
       "

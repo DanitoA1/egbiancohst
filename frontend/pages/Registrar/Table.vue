@@ -1,191 +1,202 @@
 <template>
-  <div class="bg-white shadow-xl rounded-lg px-5 py-3 mb-10">
-    <div class="my-4 items-center grid grid-cols-2">
-      <div class="text-xl font-bold">Applicants</div>
-      <div>
-        <input
-          v-model.trim="searchQuery"
-          class="
-            mr-5
-            overflow-ellipsis
-            border-2
-            outline-none
-            border-gray-300
-            w-full
-            shadow-md
-            rounded-md
-            p-3.5
-            focus:border-blue-400
-          "
-          type="text"
-          placeholder="Search: Application No"
-        />
+  <section>
+    <div class="bg-white shadow-xl rounded-lg px-5 py-3 mb-10">
+      <div class="my-4 items-center grid grid-cols-2">
+        <div class="text-xl font-bold">Applicants</div>
+        <div>
+          <input
+            v-model.trim="searchQuery"
+            class="
+              mr-5
+              overflow-ellipsis
+              border-2
+              outline-none
+              border-gray-300
+              w-full
+              shadow-md
+              rounded-md
+              p-3.5
+              focus:border-blue-400
+            "
+            type="text"
+            placeholder="Search: Application No"
+          />
+        </div>
       </div>
-    </div>
-    <div
-      class="flex border-blue-500 border-b text-blue-500 font-semibold text-lg"
-    >
-      <div class="w-8/12">ِِApplication No</div>
-      <div class="w-2/12">Status</div>
-      <div class="w-2/12">Action</div>
-    </div>
-    <div
-      v-for="(item, idx) in tableData"
-      :key="idx"
-      class="cursor-pointer p-5 border-gray-500 border-b flex flex-col"
-      @click="() => handleActiveFaq(item.id)"
-    >
-      <div class="w-full">
-        <div class="flex">
-          <div class="text-black mb-2 w-8/12 flex">
-            <div v-if="item.isOpen">
-              <font-awesome-icon
-                :icon="['fas', 'angle-up']"
-                class="w-6 mr-4 text-black h-6"
-              />
-            </div>
-            <div v-else>
-              <font-awesome-icon
-                :icon="['fas', 'angle-down']"
-                class="w-6 mr-4 text-black h-6"
-              />
-            </div>
+      <div
+        class="
+          flex
+          border-blue-500 border-b
+          text-blue-500
+          font-semibold
+          text-lg
+        "
+      >
+        <div class="w-8/12">ِِApplication No</div>
+        <div class="w-2/12">Status</div>
+        <div class="w-2/12">Action</div>
+      </div>
+      <div
+        v-for="(item, idx) in resultQuery"
+        :key="idx"
+        class="cursor-pointer p-5 border-gray-500 border-b flex flex-col"
+        @click="() => handleAppication(item.id)"
+      >
+        <div class="w-full">
+          <div class="flex">
+            <div class="text-black mb-2 w-8/12 flex">
+              <div v-if="item.isOpen">
+                <font-awesome-icon
+                  :icon="['fas', 'angle-up']"
+                  class="w-6 mr-4 text-black h-6"
+                />
+              </div>
+              <div v-else>
+                <font-awesome-icon
+                  :icon="['fas', 'angle-down']"
+                  class="w-6 mr-4 text-black h-6"
+                />
+              </div>
 
-            <div class="ml-5 text-gray-900 text-xl font-medium">
-              {{ item.appNo }}
+              <div class="ml-5 text-gray-900 text-xl font-medium">
+                {{ item.regId }}
+              </div>
             </div>
-          </div>
-          <div class="w-2/12">Admitted</div>
-          <div class="w-2/12 flex gap-4">
-            <button
-              class="bg-green-400 rounded-md py-1 px-2 text-white text-lg"
+            <div
+              :class="item.adminStatus ? 'text-green-500' : 'text-red-600'"
+              class="font-bold text-lg w-2/12"
             >
-              Admit
-            </button>
-            <button class="bg-red-400 rounded-md py-1 px-2 text-white text-lg">
-              Reject
-            </button>
+              {{ item.adminStatus ? 'Admitted' : 'Rejected' }}
+            </div>
+            <div class="w-2/12 flex gap-4">
+              <button
+                @click="
+                  (e) => {
+                    admitApplicant(e, item.id)
+                  }
+                "
+                class="bg-green-400 rounded-md py-1 px-2 text-white text-lg"
+              >
+                Admit
+              </button>
+              <button
+                @click="
+                  (e) => {
+                    rejectApplicant(e, item.id)
+                  }
+                "
+                class="bg-red-400 rounded-md py-1 px-2 text-white text-lg"
+              >
+                Reject
+              </button>
+            </div>
           </div>
-        </div>
 
-        <div :class="[item.isOpen ? 'block' : 'hidden', 'ml-11 text-gray-500']">
-          <div class="flex justify-between">
-            <!-- credential  -->
-            <div class="flex flex-col space-y-3 text-lg font-semibold">
-              <div>Surname : {{ item.otherInfo.Surname }}</div>
-              <div>Middlename : {{ item.otherInfo.MiddleName }}</div>
-              <div>Lastname : {{ item.otherInfo.LastName }}</div>
-              <div>nationality : {{ item.otherInfo.Nationality }}</div>
-              <div>state : {{ item.otherInfo.State }}</div>
-              <div>lga : {{ item.otherInfo.LGA }}</div>
-              <div>course : {{ item.otherInfo.Course }}</div>
+          <div
+            :class="[item.isOpen ? 'block' : 'hidden', 'ml-11 text-gray-500']"
+          >
+            <div class="flex justify-between">
+              <!-- credential  -->
+              <div class="flex flex-col space-y-3 text-lg font-semibold">
+                <div>Surname : {{ item.surname }}</div>
+                <div>Middlename : {{ item.middlename }}</div>
+                <div>Lastname : {{ item.lastname }}</div>
+                <div>Course : {{ item.selectedCourse }}</div>
+                <div>Nationality : {{ item.selectedCountry }}</div>
+                <div>State : {{ item.selectedState }}</div>
+                <div>LGA : {{ item.selectedLga }}</div>
+                <div>Gender : {{ item.selectedGender }}</div>
+              </div>
+              <!-- passport  -->
+              <div>
+                <img
+                  :src="item.passportUrl"
+                  class="object-center h-52 w-52 object-contain"
+                  alt=""
+                />
+              </div>
             </div>
-            <!-- passport  -->
-            <div>
-              {{ item.passport }}
-            </div>
+            Docs:
+            <span
+              class="bg-blue-200 px-2 text-center rounded-2xl underline"
+              @click="
+                (e) => {
+                  showDoc(e, item.scert)
+                }
+              "
+            >
+              SSCE
+            </span>
+            <span
+              class="bg-blue-200 px-2 text-center rounded-2xl underline"
+              @click="
+                (e) => {
+                  showDoc(e, item.pcert)
+                }
+              "
+            >
+              Pry Cert
+            </span>
+            <span
+              class="bg-blue-200 px-2 text-center rounded-2xl underline"
+              @click="
+                (e) => {
+                  showDoc(e, item.bcert)
+                }
+              "
+              >Birth Cert</span
+            >
+            <span
+              class="bg-blue-200 px-2 text-center rounded-2xl underline"
+              @click="
+                (e) => {
+                  showDoc(e, item.testimonial)
+                }
+              "
+              >Testimonial</span
+            >
           </div>
-          Docs:
-          <span class="bg-blue-200 px-2 text-center rounded-2xl">{{
-            item.otherInfo.docs[0]
-          }}</span>
-          <span class="bg-blue-200 px-2 text-center rounded-2xl">{{
-            item.otherInfo.docs[1]
-          }}</span>
-          <span class="bg-blue-200 px-2 text-center rounded-2xl">{{
-            item.otherInfo.docs[2]
-          }}</span>
-          <span class="bg-blue-200 px-2 text-center rounded-2xl">{{
-            item.otherInfo.docs[3]
-          }}</span>
         </div>
       </div>
     </div>
-  </div>
+    <Modal :modalImage="modalImage" v-if="showModal" :handleClose="handleClose" />
+  </section>
 </template>
 
 <script>
+import Modal from './Modal.vue'
 export default {
-  props: ['getcurrentCandidateBiodata', 'allCandidates'],
+  components: { Modal },
+  props: ['getCurrentCandidate', 'allCandidates'],
   data() {
     return {
+      showModal: false,
+      modalImage: 'hello',
       isActive: false,
       searchQuery: '',
-      tableData: [
-        {
-          id: 1,
-          isOpen: false,
-          appNo: '12346',
-          otherInfo: {
-            Surname: 'Surname',
-            MiddleName: 'MiddleName',
-            LastName: 'LastName',
-            Nationality: 'Nationality',
-            State: 'State',
-            LGA: 'selectedLga',
-            Course: 'course',
-            Passport: 'passport',
-            docs: ['scert', 'pcert', 'bcert', 'testimonial'],
-          },
-        },
-        {
-          id: 2,
-          isOpen: false,
-          appNo: '12346',
-          otherInfo: {
-            Surname: 'Surname',
-            MiddleName: 'MiddleName',
-            LastName: 'LastName',
-            Nationality: 'Nationality',
-            State: 'State',
-            LGA: 'selectedLga',
-            course: 'course',
-            passport: 'passport',
-            docs: ['scert', 'pcert', 'bcert', 'testimonial'],
-          },
-        },
-        {
-          id: 3,
-          isOpen: false,
-          appNo: '12346',
-          otherInfo: {
-            Surname: 'Surname',
-            MiddleName: 'MiddleName',
-            LastName: 'LastName',
-            Nationality: 'Nationality',
-            State: 'State',
-            LGA: 'selectedLga',
-            course: 'course',
-            passport: 'passport',
-            docs: ['scert', 'pcert', 'bcert', 'testimonial'],
-          },
-        },
-        {
-          id: 4,
-          isOpen: false,
-          appNo: '12346',
-          otherInfo: {
-            Surname: 'Surname',
-            MiddleName: 'MiddleName',
-            LastName: 'LastName',
-            Nationality: 'Nationality',
-            State: 'State',
-            LGA: 'selectedLga',
-            course: 'course',
-            passport: 'passport',
-            docs: ['scert', 'pcert', 'bcert', 'testimonial'],
-          },
-        },
-      ],
+      totalCandidates: this.allCandidates,
     }
+  },
+
+  computed: {
+    resultQuery() {
+      if (this.searchQuery && this.totalCandidates) {
+        return this.totalCandidates.filter((item) => {
+          return item.regId
+            .toLowerCase()
+            .includes(this.searchQuery.toLowerCase())
+        })
+      } else {
+        return this.totalCandidates
+      }
+    },
   },
   created() {
     this.$store.dispatch('getAllCandidates')
   },
-
   methods: {
-    handleActiveFaq(id) {
-      this.tableData.map((item) => {
+    handleAppication(id) {
+      this.resultQuery.map((item) => {
         if (item.id === id) {
           item.isOpen = !item.isOpen
           return true
@@ -194,6 +205,43 @@ export default {
           return true
         }
       })
+    },
+    async admitApplicant(event, id) {
+      event.stopPropagation()
+
+      const ref = this.$fire.firestore.collection('users').doc(id)
+      await ref
+        .update({ adminStatus: true })
+        .then(() => {
+          this.$notify.success({
+            title: 'Update Sucessfull',
+            message: 'Applicant Admitted!',
+          })
+        })
+        .catch((err) => console.log(err.message))
+    },
+    async rejectApplicant(event, id) {
+      event.stopPropagation()
+
+      const ref = this.$fire.firestore.collection('users').doc(id)
+      await ref
+        .update({ adminStatus: false })
+        .then(() => {
+          this.$notify.success({
+            title: 'Update Sucessfull',
+            message: 'Applicant Rejected!',
+          })
+        })
+        .catch((err) => console.log(err.message))
+    },
+    showDoc(e, payload) {
+      e.stopPropagation()
+      this.modalImage = payload
+      this.showModal = true
+
+    },
+    handleClose() {
+      this.showModal = !this.showModal
     },
   },
 }

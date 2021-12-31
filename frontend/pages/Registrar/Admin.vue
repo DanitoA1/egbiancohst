@@ -1,5 +1,6 @@
 <template>
   <div class="mx-auto container w-11/12">
+      <modal v-if="showModal" />
     <div
       class="
         flex flex-col
@@ -33,7 +34,9 @@
           :icon="['fas', `user`]"
           class="w-6 mr-4 text-white h-6"
         />
-        <span>{{ admin }} </span>
+        <span
+          >{{ getCurrentCandidate ? getCurrentCandidate.email : 'Admin' }}
+        </span>
       </div>
       <div>
         <button
@@ -99,8 +102,8 @@
     </div>
 
     <Table
-      :getcurrentCandidate="getcurrentCandidate ? getcurrentCandidate : null  " 
-      :allCandidates="allCandidates ? allCandidates : null"
+      :getCurrentCandidate="getCurrentCandidate"
+      :allCandidates="allCandidates"
     />
   </div>
 </template>
@@ -113,7 +116,8 @@ export default {
 
   data() {
     return {
-      admin: '',
+         showModal: true,
+      admin: 'Admin',
       applicants: [
         {
           status: 'Applicants',
@@ -123,13 +127,13 @@ export default {
         },
         {
           status: 'Admitted ',
-          count: 65,
+          count: 0,
           icon: 'check-circle',
           bg: 'bg-green-300',
         },
         {
           status: 'Rejected ',
-          count: 35,
+          count: 0,
           icon: 'ban',
           bg: 'bg-red-300',
         },
@@ -138,16 +142,27 @@ export default {
   },
   computed: {
     ...mapGetters(['getCurrentCandidate']),
-    ...mapState(['allCandidates'])
+    ...mapState(['allCandidates']),
+    getAdmittedCandidates() {
+      return this.allCandidates.filter((item) => item.adminStatus)
+    },
+    getRejectedCandidates() {
+      return this.allCandidates.filter((item) => !item.adminStatus )
+    },
   },
   created() {
     this.$store.dispatch('getAllCandidates')
-    if (this.getcurrentCandidate) {
-      this.admin = this.getcurrentCandidate.email
-      console.log(this.allCandidates);
-     this.applicants[0].count = this.allCandidates ? this.allCandidates.length : 0
-    }
+    this.applicants[0].count = this.allCandidates
+      ? this.allCandidates.length
+      : 0
+    this.applicants[1].count = this.getAdmittedCandidates
+      ? this.getAdmittedCandidates.length
+      : 0
+    this.applicants[2].count = this.getRejectedCandidates
+      ? this.getRejectedCandidates.length
+      : 0
 
+      console.log(this.getAdmittedCandidates);
   },
 
   methods: {

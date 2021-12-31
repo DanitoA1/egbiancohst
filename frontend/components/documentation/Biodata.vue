@@ -230,18 +230,18 @@
 import { countryList } from './CountryNames'
 import Cities from './Cities'
 export default {
-  props: ['getcurrentCandidateBiodata'],
+  props: ['getCurrentCandidate'],
   data() {
     return {
-      surname: this.getcurrentCandidateBiodata ? this.getcurrentCandidateBiodata.surname : '',
-      middleName: this.getcurrentCandidateBiodata
-        ? this.getcurrentCandidateBiodata.middlename
+      surname: this.getCurrentCandidate ? this.getCurrentCandidate.surname : '',
+      middleName: this.getCurrentCandidate
+        ? this.getCurrentCandidate.middlename
         : '',
-      lastName: this.getcurrentCandidateBiodata
-        ? this.getcurrentCandidateBiodata.lastname
+      lastName: this.getCurrentCandidate
+        ? this.getCurrentCandidate.lastname
         : '',
-      phoneNumber: this.getcurrentCandidateBiodata
-        ? this.getcurrentCandidateBiodata.phoneNumber
+      phoneNumber: this.getCurrentCandidate
+        ? this.getCurrentCandidate.phoneNumber
         : '',
       CountryList: countryList,
       courseList: [
@@ -255,24 +255,24 @@ export default {
         'Medical Laboratory Technology (MLT)',
       ],
       genderList: ['male', 'female'],
-      selectedCountry: this.getcurrentCandidateBiodata
-        ? this.getcurrentCandidateBiodata.selectedCountry
+      selectedCountry: this.getCurrentCandidate
+        ? this.getCurrentCandidate.selectedCountry
         : 'loading...',
-      selectedGender: this.getcurrentCandidateBiodata
-        ? this.getcurrentCandidateBiodata.selectedGender
+      selectedGender: this.getCurrentCandidate
+        ? this.getCurrentCandidate.selectedGender
         : 'Select Your Gender',
-      selectedCourse: this.getcurrentCandidateBiodata
-        ? this.getcurrentCandidateBiodata.selectedCourse
+      selectedCourse: this.getCurrentCandidate
+        ? this.getCurrentCandidate.selectedCourse
         : 'loading..',
 
-      dob: this.getcurrentCandidateBiodata
-        ? this.getcurrentCandidateBiodata.dob
+      dob: this.getCurrentCandidate
+        ? this.getCurrentCandidate.dob
         : 'loading...',
-      selectedLga: this.getcurrentCandidateBiodata
-        ? this.getcurrentCandidateBiodata.selectedLga
+      selectedLga: this.getCurrentCandidate
+        ? this.getCurrentCandidate.selectedLga
         : 'loading...',
-      selectedState: this.getcurrentCandidateBiodata
-        ? this.getcurrentCandidateBiodata.selectedState
+      selectedState: this.getCurrentCandidate
+        ? this.getCurrentCandidate.selectedState
         : 'loading...',
       correspondingCities: [],
       cities: Cities,
@@ -319,9 +319,7 @@ export default {
   },
 
   created() {
-    if (this.getcurrentCandidateBiodata) {
-      console.log(this.getcurrentCandidateBiodata.selectedLga);
-    }
+ 
   },
 
   methods: {
@@ -351,7 +349,7 @@ export default {
     handleUpdate() {
       this.$fire.firestore
         .collection('users')
-        .doc(this.getcurrentCandidateBiodata.id).collection('biodata')
+        .doc(this.getCurrentCandidate.id)
         .update({
           selectedCountry: this.selectedCountry,
           dob: this.dob,
