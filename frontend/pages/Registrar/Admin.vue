@@ -1,6 +1,6 @@
 <template>
   <div class="mx-auto container w-11/12">
-      <modal v-if="showModal" />
+      <RegistrarModal v-if="showModal" />
     <div
       class="
         flex flex-col
@@ -35,7 +35,7 @@
           class="w-6 mr-4 text-white h-6"
         />
         <span
-          >{{ getCurrentCandidate ? getCurrentCandidate.email : 'Admin' }}
+          >{{ this.$fire.auth.currentUser ? this.$fire.auth.currentUser.email : 'Admin' }}
         </span>
       </div>
       <div>
@@ -101,7 +101,7 @@
       </div>
     </div>
 
-    <Table
+    <RegistrarTable
       :getCurrentCandidate="getCurrentCandidate"
       :allCandidates="allCandidates"
     />
@@ -110,13 +110,12 @@
 
 <script>
 import { mapGetters, mapState } from 'vuex'
-import Table from './Table.vue'
 export default {
-  components: { Table },
+
 
   data() {
     return {
-         showModal: true,
+         showModal: false,
       admin: 'Admin',
       applicants: [
         {
@@ -162,7 +161,6 @@ export default {
       ? this.getRejectedCandidates.length
       : 0
 
-      console.log(this.getAdmittedCandidates);
   },
 
   methods: {

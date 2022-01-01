@@ -51,9 +51,7 @@ export default {
   data() {
     return {}
   },
-created() {
-console.log(this.modalImage);
-},
+
   methods: {},
 }
 </script>
