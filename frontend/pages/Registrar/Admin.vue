@@ -35,7 +35,7 @@
           class="w-6 mr-4 text-white h-6"
         />
         <span
-          >{{ this.$fire.auth.currentUser ? this.$fire.auth.currentUser.email : 'Admin' }}
+          >{{ getCurrentAdmin }}
         </span>
       </div>
       <div>
@@ -148,6 +148,9 @@ export default {
     getRejectedCandidates() {
       return this.allCandidates.filter((item) => !item.adminStatus )
     },
+    getCurrentAdmin(){
+      return this.$fire.auth.currentUser ? this.$fire.auth.currentUser.email : 'Admin'
+    }
   },
   created() {
     this.$store.dispatch('getAllCandidates')
