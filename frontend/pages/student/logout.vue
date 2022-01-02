@@ -5,7 +5,7 @@
 <script>
 export default {
     mounted() {
-        this.$fire.auth.signout();
+        this.$fire.auth.signOut();
         this.$router.push('/student/login')
     }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="mx-auto container w-11/12">
-      <RegistrarModal v-if="showModal" />
+    <RegistrarModal v-if="showModal" />
     <div
       class="
         flex flex-col
@@ -34,9 +34,7 @@
           :icon="['fas', `user`]"
           class="w-6 mr-4 text-white h-6"
         />
-        <span
-          >{{ getCurrentAdmin }}
-        </span>
+        <span>{{ getCurrentAdmin }} </span>
       </div>
       <div>
         <button
@@ -101,21 +99,16 @@
       </div>
     </div>
 
-    <RegistrarTable
-      :getCurrentCandidate="getCurrentCandidate"
-      :allCandidates="allCandidates"
-    />
+    <RegistrarTable :allCandidates="allCandidates" />
   </div>
 </template>
 
 <script>
 import { mapGetters, mapState } from 'vuex'
 export default {
-
-
   data() {
     return {
-         showModal: false,
+      showModal: false,
       admin: 'Admin',
       applicants: [
         {
@@ -137,6 +130,7 @@ export default {
           bg: 'bg-red-300',
         },
       ],
+      loading: true,
     }
   },
   computed: {
@@ -146,11 +140,13 @@ export default {
       return this.allCandidates.filter((item) => item.adminStatus)
     },
     getRejectedCandidates() {
-      return this.allCandidates.filter((item) => !item.adminStatus )
+      return this.allCandidates.filter((item) => !item.adminStatus)
     },
-    getCurrentAdmin(){
-      return this.$fire.auth.currentUser ? this.$fire.auth.currentUser.email : 'Admin'
-    }
+    getCurrentAdmin() {
+      return this.$fire.auth.currentUser
+        ? this.$fire.auth.currentUser.email
+        : 'Admin'
+    },
   },
   created() {
     this.$store.dispatch('getAllCandidates')
@@ -163,8 +159,12 @@ export default {
     this.applicants[2].count = this.getRejectedCandidates
       ? this.getRejectedCandidates.length
       : 0
-
+    if (this.allCandidates) {
+      this.loading = false
+    }
+    console.log(this.loading);
   },
+ 
 
   methods: {
     async signOut() {

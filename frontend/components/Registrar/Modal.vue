@@ -11,9 +11,10 @@
         inset-0
         bg-opacity-50
         px-10
-      
+      cursor-pointer
         fixed
       "
+    @click="handleClose"
     >
       <div
         class="

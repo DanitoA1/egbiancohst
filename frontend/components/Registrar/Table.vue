@@ -30,17 +30,24 @@
           text-blue-500
           font-semibold
           text-lg
+          pb-3
         "
       >
         <div class="w-8/12">ِِApplication No</div>
         <div class="w-2/12">Status</div>
         <div class="w-2/12">Action</div>
       </div>
+
       <div
         v-for="(item, idx) in resultQuery"
         :key="idx"
-        class="cursor-pointer p-5 border-gray-500 border-b flex flex-col"
-        @click="() => handleAppication(item.id)"
+        :class=" idx !== resultQuery.length - 1 ? 'border-b border-gray-500' : null "
+        class="cursor-pointer overflow-x w-full px-1 py-5 flex flex-col"
+        @click="
+          () => {
+            handleAppication(item.id)
+          }
+        "
       >
         <div class="w-full">
           <div class="flex">
@@ -116,58 +123,65 @@
                 />
               </div>
             </div>
-            Docs:
-            <span
-              class="bg-blue-200 px-2 text-center rounded-2xl underline"
-              @click="
-                (e) => {
-                  showDoc(e, item.scert)
-                }
-              "
-            >
-              SSCE
-            </span>
-            <span
-              class="bg-blue-200 px-2 text-center rounded-2xl underline"
-              @click="
-                (e) => {
-                  showDoc(e, item.pcert)
-                }
-              "
-            >
-              Pry Cert
-            </span>
-            <span
-              class="bg-blue-200 px-2 text-center rounded-2xl underline"
-              @click="
-                (e) => {
-                  showDoc(e, item.bcert)
-                }
-              "
-              >Birth Cert</span
-            >
-            <span
-              class="bg-blue-200 px-2 text-center rounded-2xl underline"
-              @click="
-                (e) => {
-                  showDoc(e, item.testimonial)
-                }
-              "
-              >Testimonial</span
-            >
+            <span class='text-lg font-semibold'> Docs:</span>
+            <div class="flex space-x-4">
+              <div
+                class="bg-blue-200 px-2 text-center rounded-2xl underline"
+                @click="
+                  (e) => {
+                    showDoc(e, item.scert)
+                  }
+                "
+              >
+                SSCE
+              </div>
+              <div
+                class="bg-blue-200 px-2 text-center rounded-2xl underline"
+                @click="
+                  (e) => {
+                    showDoc(e, item.pcert)
+                  }
+                "
+              >
+                Pry Cert
+              </div>
+              <div
+                class="bg-blue-200 px-2 text-center rounded-2xl underline"
+                @click="
+                  (e) => {
+                    showDoc(e, item.bcert)
+                  }
+                "
+              >
+                Birth Cert
+              </div>
+              <div
+                class="bg-blue-200 px-2 text-center rounded-2xl underline"
+                @click="
+                  (e) => {
+                    showDoc(e, item.testimonial)
+                  }
+                "
+              >
+                Testimonial
+              </div>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
-    <Modal :modalImage="modalImage" v-if="showModal" :handleClose="handleClose" />
+    <RegistrarModal
+      :modalImage="modalImage"
+      v-if="showModal"
+      :handleClose="handleClose"
+    />
   </section>
 </template>
 
 <script>
-import Modal from './Modal.vue'
 export default {
-  components: { Modal },
-  props: ['getCurrentCandidate', 'allCandidates'],
+  props: ['allCandidates'],
   data() {
     return {
       showModal: false,
@@ -238,7 +252,6 @@ export default {
       e.stopPropagation()
       this.modalImage = payload
       this.showModal = true
-
     },
     handleClose() {
       this.showModal = !this.showModal
