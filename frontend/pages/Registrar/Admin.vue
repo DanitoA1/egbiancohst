@@ -162,10 +162,13 @@ export default {
     if (this.allCandidates) {
       this.loading = false
     }
-    console.log(this.loading);
+    console.log(this.loading)
   },
- 
-
+  beforeMount() {
+    if (!this.$fire.auth.currentUser) {
+      this.$router.push('/registrar/login')
+    }
+  },
   methods: {
     async signOut() {
       await this.$fire.auth.signOut().then((ref) => {

@@ -1,14 +1,16 @@
 <template>
   <div>
     <div class="font-bold mt-10 mb-6">Upload Your Passport</div>
-
     <div class="flex justify-center">
       <img
-        :src="
-                getCurrentCandidate
-                  ? getCurrentCandidate.passportUrl
-                  : require('~/assets/images/user-acct.svg')
-              "
+        v-if="getCurrentCandidate"
+        :src="getCurrentCandidate.passportUrl"
+        class="object-center h-520 w-52 object-contain"
+        alt=""
+      />
+      <img
+        v-else
+        :src="require('~/assets/images/user-acct.svg')"
         class="object-center h-520 w-52 object-contain"
         alt=""
       />
@@ -42,7 +44,9 @@ export default {
   props: ['getCurrentCandidate'],
 
   data() {
-    return {}
+    return {
+      currentCandidate: null,
+    }
   },
 
   methods: {

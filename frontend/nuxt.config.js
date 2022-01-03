@@ -28,7 +28,10 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '@/plugins/element-ui',
-   '@/plugins/persistedState.client.js' 
+   '@/plugins/persistedState.client.js',
+   '@/plugins/flutterwave.client.js',
+   '@/plugins/vueprint.client.js'
+
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

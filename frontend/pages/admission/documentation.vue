@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen">
-    <header class="fixed z-50 px-2 py-2 flex items-center bg-black w-screen">
+    <header class="fixed z-20 px-2 py-2 flex items-center bg-black w-screen">
       <span class="mr-10">
         <router-link to="/">
           <img
@@ -244,7 +244,7 @@ export default {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  z-index: 30;
+  z-index: 15;
 }
 .sidebar-text {
   display: none;

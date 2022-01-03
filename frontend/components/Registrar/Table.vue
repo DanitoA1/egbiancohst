@@ -124,7 +124,7 @@
               </div>
             </div>
             <span class='text-lg font-semibold'> Docs:</span>
-            <div class="flex space-x-4">
+            <div class="flex space-x-3">
               <div
                 class="bg-blue-200 px-2 text-center rounded-2xl underline"
                 @click="

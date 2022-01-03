@@ -87,7 +87,7 @@
           "
           name="nationality"
           @change="handleSelectedCountry"
-           v-model.trim="selectedCountry"
+          v-model.trim="selectedCountry"
         >
           <option
             v-for="(country, idx) in CountryList"
@@ -105,7 +105,7 @@
         <label for="localgovt" class="text-gray-600 font-bold"> State </label>
 
         <select
-        v-model.trim="selectedState"
+          v-model.trim="selectedState"
           class="
             mt-3
             mr-5
@@ -129,7 +129,7 @@
       </div>
       <div class="w-full">
         <label for="localgovt" class="text-gray-600 font-bold">
-          Local Government Area -  {{selectedLga}}
+          Local Government Area - {{ selectedLga }}
         </label>
 
         <select
@@ -149,7 +149,6 @@
           "
           @change="handleSelectedLga"
         >
-        
           <option v-for="(city, idx) in correspondingCities" :key="idx">
             {{ city }}
           </option>
@@ -196,7 +195,7 @@
         </select>
       </div>
 
-            <div class="w-full">
+      <div class="w-full">
         <InputForm
           v-model.trim="phoneNumber"
           :type="`text`"
@@ -223,6 +222,29 @@
     >
       Update
     </button>
+
+    <button
+      class="
+        bg-blue-600
+        hover:bg-dark-blue
+        text-white text-center
+        my-6
+        border
+        outline-none
+        border-gray-300
+        w-full
+        rounded-4px
+        p-3.5
+      "
+      @click="handlePreview"
+    >
+      Preview
+    </button>
+    <DocumentationPreviewModal
+      :previewData="previewData"
+      v-if="showModal"
+      :handleClose="handleClose"
+    />
   </div>
 </template>
 
@@ -233,6 +255,8 @@ export default {
   props: ['getCurrentCandidate'],
   data() {
     return {
+      showModal: false,
+      previewData: null,
       surname: this.getCurrentCandidate ? this.getCurrentCandidate.surname : '',
       middleName: this.getCurrentCandidate
         ? this.getCurrentCandidate.middlename
@@ -318,10 +342,6 @@ export default {
     }
   },
 
-  created() {
- 
-  },
-
   methods: {
     pickedState(event) {
       this.correspondingCities = this.cities[`${event.target.value}`]
@@ -369,6 +389,13 @@ export default {
         .catch((error) => {
           console.error('Error writing document: ', error)
         })
+    },
+    handlePreview() {
+      this.showModal = true
+      this.previewData = this.getCurrentCandidate
+    },
+    handleClose() {
+      this.showModal = false
     },
   },
 }
