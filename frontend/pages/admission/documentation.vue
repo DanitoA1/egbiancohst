@@ -50,7 +50,7 @@
                   ? getCurrentCandidate.passportUrl
                   : require('~/assets/images/user-acct.svg')
               "
-              class="h-10 w-10  object-contain mr-4"
+              class="h-10 w-10 object-contain mr-4"
               alt=""
             />
             <div class="sidebar-text flex-col">
@@ -153,7 +153,7 @@ export default {
   props: {},
   data() {
     return {
-      loadingState : true,
+      loadingState: true,
       page: null,
       pageTracker: 1,
       sideabrContents: [
@@ -194,12 +194,14 @@ export default {
     if (this.getCurrentCandidate) {
       this.$store.dispatch('setLoading')
     }
-    console.log(this.loading)
-      this.fullScreenLoading()
+
+    this.fullScreenLoading()
   },
-  created() {
-    this.loadingState = this.loading === false  ? this.loading : true 
-    console.log(this.loadingState);
+
+  beforeMount() {
+    if (!this.$fire.auth.currentUser) {
+      this.$router.push('/admission/login')
+    }
   },
   methods: {
     fullScreenLoading() {

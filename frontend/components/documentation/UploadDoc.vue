@@ -1,25 +1,48 @@
 <template>
   <div class="my-5">
-    <comp-upload-doc
-      :doctype="`scert`"
-      :label="`Waec or Neco or Nabteb`"
-      :handlerUpload="uploadScert"
-    />
-    <comp-upload-doc
-      :doctype="`pcert`"
-      :label="`Primary School Certificate`"
-      :handlerUpload="uploadPcert"
-    />
-    <comp-upload-doc
-      :doctype="`testimonial`"
-      :label="`Testimonial`"
-      :handlerUpload="uploadTestimonial"
-    />
-    <comp-upload-doc
-      :doctype="`bcert`"
-      :label="`Birth Certificate or Age Declaration`"
-      :handlerUpload="uploadBcert"
-    />
+    <div v-if="getCurrentCandidate.paymentStatus">
+      <comp-upload-doc
+        :doctype="`scert`"
+        :label="`Waec or Neco or Nabteb`"
+        :handlerUpload="uploadScert"
+      />
+      <comp-upload-doc
+        :doctype="`pcert`"
+        :label="`Primary School Certificate`"
+        :handlerUpload="uploadPcert"
+      />
+      <comp-upload-doc
+        :doctype="`testimonial`"
+        :label="`Testimonial`"
+        :handlerUpload="uploadTestimonial"
+      />
+      <comp-upload-doc
+        :doctype="`bcert`"
+        :label="`Birth Certificate or Age Declaration`"
+        :handlerUpload="uploadBcert"
+      />
+    </div>
+    <div
+      v-else
+      class="
+        px-3
+        py-7
+        my-10
+        text-red-500
+        bg-red-300
+        border border-red-500
+        w-11/12
+        justify-center
+        text-xl
+        font-bold
+      "
+    >
+      <font-awesome-icon
+        :icon="['fas', `info-circle`]"
+        class="text-white text-lg mr-5"
+      />
+      <span>Payment required for this action </span>
+    </div>
   </div>
 </template>
 

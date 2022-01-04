@@ -114,6 +114,7 @@ export default {
         .catch((err) => console.log(err.message))
     },
     makePayment() {
+      const thisRef = this
       this.$launchFlutterwave({
         tx_ref: Date.now(),
         amount: this.amount,
@@ -128,8 +129,7 @@ export default {
           // specified callback function
           console.log(data)
           if (data.status === 'successful') {
-            this.paymentUpdate()
-            this.$router.push('/admission/documentation')
+            thisRef.paymentUpdate();
           }
         },
         customizations: {

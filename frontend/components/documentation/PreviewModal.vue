@@ -24,14 +24,15 @@
           flex flex-col
           rounded-sm
           shadow-md
-          w-full
+          lg:w-full
+          max-w-3xl
           h-full
           px-16
           lg:m-20
           my-20
           py-4
           z-50
-          overflow-y-auto
+          overflow-auto
         "
       >
         <div
