@@ -17,13 +17,13 @@ var transporter = nodemailer.createTransport({
 })
 // Create and Deploy Your First Cloud Functions
 // https://firebase.google.com/docs/functions/write-firebase-functions
-
+const getYear = new Date()
 const newDate = getYear.getFullYear().toString()
 function reverseString(currentYear) {
   return currentYear.split('').reverse().join('')
 }
 const reversedYear = reverseString(newDate)
- function regIdGenerator () {
+function regIdGenerator() {
   // get applicant array length
 
   const empty = []
