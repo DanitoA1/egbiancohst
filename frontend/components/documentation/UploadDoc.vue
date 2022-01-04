@@ -1,5 +1,7 @@
 <template>
   <div class="my-5">
+    <Loading v-if="loading" />
+
     <div v-if="getCurrentCandidate.paymentStatus">
       <comp-upload-doc
         :doctype="`scert`"
@@ -51,12 +53,19 @@ import { mapGetters } from 'vuex'
 
 import CompUploadDoc from './CompUploadDoc.vue'
 export default {
+  data() {
+    return {
+      loading: false,
+    }
+  },
   components: { CompUploadDoc },
   computed: {
     ...mapGetters(['getCurrentCandidate']),
   },
   methods: {
     handleUpdateScert(payload) {
+      this.loading = !this.loading
+
       this.$fire.firestore
         .collection('users')
         .doc(this.getCurrentCandidate.id)
@@ -64,6 +73,8 @@ export default {
           scert: payload,
         })
         .then(() => {
+          this.loading = !this.loading
+
           console.log('Document successfully Updated!')
           this.$notify.success({
             title: 'Document successfully Updated',
@@ -97,6 +108,8 @@ export default {
         })
     },
     handleUpdatePcert(payload) {
+      this.loading = !this.loading
+
       this.$fire.firestore
         .collection('users')
         .doc(this.getCurrentCandidate.id)
@@ -104,6 +117,8 @@ export default {
           pcert: payload,
         })
         .then(() => {
+          this.loading = !this.loading
+
           console.log('Document successfully Updated!')
           this.$notify.success({
             title: 'Document successfully Updated',
@@ -137,6 +152,8 @@ export default {
         })
     },
     handleUpdateBcert(payload) {
+      this.loading = !this.loading
+
       this.$fire.firestore
         .collection('users')
         .doc(this.getCurrentCandidate.id)
@@ -144,6 +161,8 @@ export default {
           bcert: payload,
         })
         .then(() => {
+          this.loading = !this.loading
+
           console.log('Document successfully Updated!')
           this.$notify.success({
             title: 'Document successfully Updated',
@@ -177,6 +196,8 @@ export default {
         })
     },
     handleUpdateTestimonial(payload) {
+      this.loading = !this.loading
+
       this.$fire.firestore
         .collection('users')
         .doc(this.getCurrentCandidate.id)
@@ -184,6 +205,8 @@ export default {
           testimonial: payload,
         })
         .then(() => {
+          this.loading = !this.loading
+
           console.log('Document successfully Updated!')
           this.$notify.success({
             title: 'Document successfully Updated',

@@ -1,4 +1,4 @@
-export const countryList = [
+{ "countryList" : [
 	
 	"Afghanistan",
 	"Albania",
@@ -249,4 +249,5 @@ export const countryList = [
 	"Zambia",
 	"Zimbabwe",
 	"Åland Islands"
-];
+]
+}

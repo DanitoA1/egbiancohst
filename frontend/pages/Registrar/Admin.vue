@@ -1,6 +1,8 @@
 <template>
   <div class="mx-auto container w-11/12">
     <RegistrarModal v-if="showModal" />
+        <Loading v-if="loading" />
+
     <div
       class="
         flex flex-col
@@ -108,6 +110,7 @@ import { mapGetters, mapState } from 'vuex'
 export default {
   data() {
     return {
+      loading: true,
       showModal: false,
       admin: 'Admin',
       applicants: [
@@ -130,7 +133,7 @@ export default {
           bg: 'bg-red-300',
         },
       ],
-      loading: true,
+  
     }
   },
   computed: {
@@ -162,7 +165,7 @@ export default {
     if (this.allCandidates) {
       this.loading = false
     }
-    console.log(this.loading)
+    
   },
   beforeMount() {
     if (!this.$fire.auth.currentUser) {

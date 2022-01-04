@@ -242,6 +242,7 @@ export default {
               lastname: dis.auth.lastname,
               phoneNumber: dis.auth.phoneNumber,
               adminStatus : false,
+              paymentStatus : false,
               passportUrl: 'https://www.pikpng.com/pngl/m/5-52254_png-file-user-profile-icon-svg-clipart.png',
             })
             dis.$router.push('/admission/login')

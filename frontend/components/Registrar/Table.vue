@@ -1,8 +1,29 @@
 <template>
   <section>
     <div class="bg-white shadow-xl rounded-lg px-5 py-3 mb-10">
-      <div class="my-4 items-center grid grid-cols-2">
-        <div class="text-xl font-bold">Applicants</div>
+      <div class="my-4 items-center grid grid-cols-2 gap-4">
+        <div class="flex justify-between">
+          <div class="text-xl font-bold">Applicants</div>
+          <div>
+            <button
+              @click="exportTable"
+              class="
+                bg-blue-500
+                p-3
+                rounded-md
+                text-white
+                font-semibold
+                hover:bg-blue-600
+              "
+            >
+              <font-awesome-icon
+                :icon="['fas', 'download']"
+                class="animate-bounce w-6 mr-2 text-white h-6"
+              />
+              Export Table
+            </button>
+          </div>
+        </div>
         <div>
           <input
             v-model.trim="searchQuery"
@@ -41,7 +62,9 @@
       <div
         v-for="(item, idx) in resultQuery"
         :key="idx"
-        :class=" idx !== resultQuery.length - 1 ? 'border-b border-gray-500' : null "
+        :class="
+          idx !== resultQuery.length - 1 ? 'border-b border-gray-500' : null
+        "
         class="cursor-pointer overflow-x w-full px-1 py-5 flex flex-col"
         @click="
           () => {
@@ -123,52 +146,53 @@
                 />
               </div>
             </div>
-            <span class='text-lg font-semibold'> Docs:</span>
-            <div class="flex space-x-3">
-              <div
-                class="bg-blue-200 px-2 text-center rounded-2xl underline"
-                @click="
-                  (e) => {
-                    showDoc(e, item.scert)
-                  }
-                "
-              >
-                SSCE
-              </div>
-              <div
-                class="bg-blue-200 px-2 text-center rounded-2xl underline"
-                @click="
-                  (e) => {
-                    showDoc(e, item.pcert)
-                  }
-                "
-              >
-                Pry Cert
-              </div>
-              <div
-                class="bg-blue-200 px-2 text-center rounded-2xl underline"
-                @click="
-                  (e) => {
-                    showDoc(e, item.bcert)
-                  }
-                "
-              >
-                Birth Cert
-              </div>
-              <div
-                class="bg-blue-200 px-2 text-center rounded-2xl underline"
-                @click="
-                  (e) => {
-                    showDoc(e, item.testimonial)
-                  }
-                "
-              >
-                Testimonial
+            <div class="flex gap-3">
+              <span class="text-lg font-semibold"> Docs:</span>
+              <div class="flex space-x-3">
+                <div
+                  class="bg-blue-200 px-2 text-center rounded-2xl underline"
+                  @click="
+                    (e) => {
+                      showDoc(e, item.scert)
+                    }
+                  "
+                >
+                  SSCE
+                </div>
+                <div
+                  class="bg-blue-200 px-2 text-center rounded-2xl underline"
+                  @click="
+                    (e) => {
+                      showDoc(e, item.pcert)
+                    }
+                  "
+                >
+                  Pry Cert
+                </div>
+                <div
+                  class="bg-blue-200 px-2 text-center rounded-2xl underline"
+                  @click="
+                    (e) => {
+                      showDoc(e, item.bcert)
+                    }
+                  "
+                >
+                  Birth Cert
+                </div>
+                <div
+                  class="bg-blue-200 px-2 text-center rounded-2xl underline"
+                  @click="
+                    (e) => {
+                      showDoc(e, item.testimonial)
+                    }
+                  "
+                >
+                  Testimonial
+                </div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
     <RegistrarModal
@@ -180,6 +204,18 @@
 </template>
 
 <script>
+/* eslint-disable */
+
+function wrapCsvValue(val, formatFn) {
+  let formatted = formatFn !== void 0 ? formatFn(val) : val
+
+  formatted =
+    formatted === void 0 || formatted === null ? '' : String(formatted)
+
+  formatted = formatted.split('"').join('""')
+
+  return `"${formatted}"`
+}
 export default {
   props: ['allCandidates'],
   data() {
@@ -189,6 +225,39 @@ export default {
       isActive: false,
       searchQuery: '',
       totalCandidates: this.allCandidates,
+      columns: [
+        {
+          name: 'app_no',
+          label: 'Application No',
+          field: 'app_no',
+        },
+        {
+          name: 'name',
+          label: 'Appicant Name',
+          field: (row) => row.name,
+        },
+        {
+          name: 'course',
+          label: 'Course',
+          field: 'course',
+        },
+        {
+          name: 'stete',
+          label: 'State',
+          field: 'state',
+        },
+        {
+          name: 'lga',
+          label: 'LGA',
+          field: 'lga',
+        },
+        {
+          name: 'status',
+          label: 'Admin Status',
+          field: 'status',
+        },
+      ],
+      data: [],
     }
   },
 
@@ -207,6 +276,7 @@ export default {
   },
   created() {
     this.$store.dispatch('getAllCandidates')
+    this.getApplicantData()
   },
   methods: {
     handleAppication(id) {
@@ -255,6 +325,55 @@ export default {
     },
     handleClose() {
       this.showModal = !this.showModal
+    },
+    downloadCSVFile(csv, filename) {
+      let csv_file, download_link
+
+      csv_file = new Blob([csv], { type: 'text/csv' })
+
+      download_link = document.createElement('a')
+
+      download_link.download = filename
+
+      download_link.href = window.URL.createObjectURL(csv_file)
+
+      download_link.style.display = 'none'
+
+      document.body.appendChild(download_link)
+
+      download_link.click()
+    },
+    exportTable() {
+      // naive encoding to csv format
+      const content = [this.columns.map((col) => wrapCsvValue(col.label))]
+        .concat(
+          this.data.map((row) =>
+            this.columns
+              .map((col) =>
+                wrapCsvValue(
+                  typeof col.field === 'function'
+                    ? col.field(row)
+                    : row[col.field === void 0 ? col.name : col.field],
+                  col.format
+                )
+              )
+              .join(',')
+          )
+        )
+        .join('\r\n')
+      this.downloadCSVFile(content, 'Applicants.csv')
+    },
+    getApplicantData() {
+      this.allCandidates.map((item) => {
+        this.data.push({
+          app_no: item.regId,
+          name: `${item.surname} ${item.middlename} ${item.lastname}`,
+          course: item.selectedCourse,
+          state: item.selectedState,
+          lga: item.selectedLga,
+          status: item.adminStatus ? 'Admitted' : 'Not admitted',
+        })
+      })
     },
   },
 }

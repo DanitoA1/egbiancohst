@@ -1,5 +1,7 @@
 <template>
   <div>
+    <Loading v-if="loading" />
+
     <div class="font-bold mt-10 mb-6">Upload Your Passport</div>
     <div class="flex justify-center">
       <img
@@ -46,11 +48,13 @@ export default {
   data() {
     return {
       currentCandidate: null,
+      loading: false,
     }
   },
 
   methods: {
     handleUpdate(payload) {
+      this.loading = !this.loading
       this.$fire.firestore
         .collection('users')
         .doc(this.getCurrentCandidate.id)
@@ -58,6 +62,7 @@ export default {
           passportUrl: payload,
         })
         .then(() => {
+          this.loading = !this.loading
           console.log('Document successfully Updated!')
           this.$notify.success({
             title: 'Passport Upload Sucessfully',
