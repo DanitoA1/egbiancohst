@@ -39,7 +39,7 @@
                 "
               >
                 <div class="lg:flex hidden">
-                  Egbian College of Science and Technology
+                  Egbian College of Sciences  and Technology
                 </div>
                 <div class="lg:hidden flex tracking-widest">ECHST</div>
               </h1>

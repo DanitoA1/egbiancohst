@@ -25,7 +25,7 @@
             <div>
               <h1 class="header-text">How did we start?</h1>
               <p class="text-dark-700 font-normal text-lg">
-                Information on how egbian college of science and technology is
+                Information on how Egbian College of Sciences  and technology is
                 structure and explore our life long history with the community.
                 Our leadership, management and endowement as an independent
                 entity that operate efficiently.
@@ -52,7 +52,7 @@
                <div>
               <h1 class="header-text">How did we start?</h1>
               <p class="text-dark-700 font-normal text-lg">
-                Information on how egbian college of science and technology is
+                Information on how Egbian College of Sciences  and technology is
                 structure and explore our life long history with the community.
                 Our leadership, management and endowement as an independent
                 entity that operate efficiently.

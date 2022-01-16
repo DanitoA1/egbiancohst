@@ -208,6 +208,57 @@
               :placeholder="`070XXXXXXXX`"
             />
           </div>
+
+          <div class="w-full">
+            <InputForm
+              v-model.trim="email"
+              :type="`text`"
+              :label="`Student Email`"
+              :placeholder="``"
+            />
+          </div>
+
+          <div class="w-full">
+            <InputForm
+              v-model.trim="address"
+              :type="`text`"
+              :label="`Address`"
+              :placeholder="``"
+            />
+          </div>
+          <div class="w-full">
+            <InputForm
+              v-model.trim="nextOfKin.name"
+              :type="`text`"
+              :label="`Next of Kin(Name)`"
+              :placeholder="``"
+            />
+          </div>
+          <div class="w-full">
+            <InputForm
+              v-model.trim="nextOfKin.address"
+              :type="`text`"
+              :label="`Next of Kin(Address)`"
+              :placeholder="``"
+            />
+          </div>
+
+          <div class="w-full">
+            <InputForm
+              v-model.trim="nextOfKin.phoneNumber"
+              :type="`text`"
+              :label="`Next of Kin(Phone)`"
+              :placeholder="`070XXXXXXXX`"
+            />
+          </div>
+          <div class="w-full">
+            <InputForm
+              v-model.trim="nextOfKin.email"
+              :type="`text`"
+              :label="`Next of Kin(Email)`"
+              :placeholder="`Example@email.com`"
+            />
+          </div>
         </div>
 
         <button
@@ -296,6 +347,22 @@ export default {
       phoneNumber: this.getCurrentCandidate
         ? this.getCurrentCandidate.phoneNumber
         : '',
+      address: this.getCurrentCandidate ? this.getCurrentCandidate.address : '',
+      nextOfKin: {
+        name: this.getCurrentCandidate
+          ? this.getCurrentCandidate.nextOfKin.name
+          : '',
+        address: this.getCurrentCandidate
+          ? this.getCurrentCandidate.nextOfKin.address
+          : '',
+        phoneNumber: this.getCurrentCandidate
+          ? this.getCurrentCandidate.nextOfKin.phoneNumber
+          : '',
+        email: this.getCurrentCandidate
+          ? this.getCurrentCandidate.nextOfKin.email
+          : '',
+      },
+      email: this.getCurrentCandidate ? this.getCurrentCandidate.email : '',
       CountryList: CountryNames.countryList,
       courseList: [
         'Environmental Health Technicians (EHT)',
@@ -310,23 +377,21 @@ export default {
       genderList: ['male', 'female'],
       selectedCountry: this.getCurrentCandidate
         ? this.getCurrentCandidate.selectedCountry
-        : 'loading...',
+        : '',
       selectedGender: this.getCurrentCandidate
         ? this.getCurrentCandidate.selectedGender
-        : 'Select Your Gender',
+        : '',
       selectedCourse: this.getCurrentCandidate
         ? this.getCurrentCandidate.selectedCourse
-        : 'loading..',
+        : '',
 
-      dob: this.getCurrentCandidate
-        ? this.getCurrentCandidate.dob
-        : 'loading...',
+      dob: this.getCurrentCandidate ? this.getCurrentCandidate.dob : '',
       selectedLga: this.getCurrentCandidate
         ? this.getCurrentCandidate.selectedLga
-        : 'loading...',
+        : '',
       selectedState: this.getCurrentCandidate
         ? this.getCurrentCandidate.selectedState
-        : 'loading...',
+        : '',
       correspondingCities: [],
       cities: Cities,
       states: [
@@ -403,6 +468,9 @@ export default {
         .collection('users')
         .doc(this.getCurrentCandidate.id)
         .update({
+          surname: this.surname,
+          middlename: this.middleName,
+          lastname: this.lastName,
           selectedCountry: this.selectedCountry,
           dob: this.dob,
           phoneNumber: this.phoneNumber,
@@ -410,6 +478,13 @@ export default {
           selectedState: this.selectedState,
           selectedLga: this.selectedLga,
           selectedCourse: this.selectedCourse,
+          address: this.address,
+          nextOfKin: {
+            name: this.nextOfKin.name,
+            address: this.nextOfKin.address,
+            phoneNumber: this.nextOfKin.phoneNumber,
+            email: this.nextOfKin.email,
+          },
         })
         .then(() => {
           this.loading = false

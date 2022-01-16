@@ -61,7 +61,7 @@ export default {
       faqArray: [
         {
           id: 1,
-          question: 'Where is Egbian College of Science and Technology?',
+          question: 'Where is Egbian College of Sciences  and Technology?',
           answer:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci, commodo id eros, adipiscing est venenati s velit lorem. Mauris integer feugiat dolor sceleris que porttitor sagittis senectus commodo habitas se. Consequat netus commodo massa urna, vulpu tate pellentesque ultrices rhoncus rutrum. Nam eni m vestibulum blandit neque morbi.',
           isOpen: false,

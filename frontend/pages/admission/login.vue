@@ -53,7 +53,7 @@
             <div class="text-dark-blue font-medium text-xl">
               <div>Registered account</div>
               <div class="font-bold text-lg">
-                Egbian College of Science and Technology
+                Egbian College of Sciences  and Technology
               </div>
             </div>
           </div>

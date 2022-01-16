@@ -32,7 +32,7 @@
             <div class="flex flex-col mr-3">
                   <h1 class="font-semibold text-white lg:text-black lg:text-2xl text-base ">
               <div class="lg:flex hidden">
-                Egbian College of Science and Technology
+                Egbian College of Sciences  and Technology
               </div>
               <div class="lg:hidden flex tracking-widest">ECHST</div>
               </h1>

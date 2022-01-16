@@ -53,7 +53,7 @@
             <div class="text-dark-blue font-medium text-xl">
               <div>New account</div>
               <div class="font-bold text-lg">
-                Egbian College of Science and Technology
+                Egbian College of Sciences and Technology
               </div>
             </div>
           </div>
@@ -241,9 +241,24 @@ export default {
               middlename: dis.auth.middlename,
               lastname: dis.auth.lastname,
               phoneNumber: dis.auth.phoneNumber,
-              adminStatus : false,
-              paymentStatus : false,
-              passportUrl: 'https://www.pikpng.com/pngl/m/5-52254_png-file-user-profile-icon-svg-clipart.png',
+              adminStatus: false,
+              paymentStatus: false,
+              passportUrl:
+                'https://www.pikpng.com/pngl/m/5-52254_png-file-user-profile-icon-svg-clipart.png',
+              selectedCountry: '',
+              dob: '',
+              phoneNumber: '',
+              selectedGender: '',
+              selectedState: '',
+              selectedLga: '',
+              selectedCourse: '',
+              address: '',
+              nextOfKin: {
+                name: '',
+                address: '',
+                phoneNumber: '',
+                email: '',
+              },
             })
             dis.$router.push('/admission/login')
           })
@@ -261,7 +276,6 @@ export default {
       }
     },
   },
-
 }
 </script>
 
