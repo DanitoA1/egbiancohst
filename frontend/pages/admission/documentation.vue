@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen">
-    <header class="fixed z-50 px-2 py-2 flex items-center bg-black w-screen">
+    <header class="fixed z-20 px-2 py-2 flex items-center bg-black w-screen">
       <span class="mr-10">
         <router-link to="/">
           <img
@@ -45,12 +45,22 @@
           <!-- SideBar Content -->
           <div class="flex justify-content items-center mb-4">
             <img
-              src="~/assets/images/user-acct.svg"
-              class="h-8 w-8 object-contain mr-4"
+              :src="
+                getCurrentCandidate
+                  ? getCurrentCandidate.passportUrl
+                  : require('~/assets/images/user-acct.svg')
+              "
+              class="h-10 w-10 object-contain mr-4"
               alt=""
             />
             <div class="sidebar-text flex-col">
-              <div class="font-meduim text-xl"> {{  getCurrentCandidate ? getCurrentCandidate.fullname : 'loading...'  }}  </div>
+              <div class="font-meduim text-xl">
+                {{
+                  getCurrentCandidate
+                    ? `${getCurrentCandidate.surname}   ${getCurrentCandidate.lastname}`
+                    : 'Loading'
+                }}
+              </div>
               <p class="text-xs">
                 {{
                   getCurrentCandidate ? getCurrentCandidate.email : 'loading...'
@@ -59,21 +69,25 @@
             </div>
           </div>
 
-          <div class="space-y-8 mt-5">
-            <div v-for="(content, index) in sideabrContents" :key="index">
+          <div class="space-y-4 mt-5">
+            <div
+              v-for="(content, index) in sideabrContents"
+              :key="index"
+              :class="index + 1 == pageTracker ? 'bg-blue-600' : null"
+              class="pl-3 py-3 rounded-l-full"
+            >
               <div
                 class="flex justify-content items-center cursor-pointer"
                 @click="content.link"
               >
-                <img
-                  :src="require(`~/assets/images/${content.icon}.svg`)"
-                  :alt="content.icon"
-                  :class="[index === 1 ? 'ml-0' : 'ml-1', 'object-contain']"
+                <font-awesome-icon
+                  :icon="['fas', `${content.icon}`]"
+                  class="w-6 text-white h-6"
                 />
                 <div
                   :class="[
                     index > 1 ? 'ml-5' : 'ml-6',
-                    'sidebar-text text-md font-normal',
+                    'sidebar-text text-md font-semibold',
                   ]"
                 >
                   {{ content.name }}
@@ -83,59 +97,40 @@
           </div>
           <!-- SideBar Content Ends -->
         </div>
-
-        <DocumentationDetails
+        <div class="space-y-2">
+          <div class="text-xl font-semibold"><p>Student Admission Form</p></div>
+          <p class="text-gray-500">
+            Please ensure your fill in correct details
+          </p>
+          <div class="font-semibold">
+            <span>Application Number:</span>
+            <span class="text-gray-500">
+              {{
+                getCurrentCandidate ? getCurrentCandidate.regId : 'Loading...'
+              }}
+            </span>
+          </div>
+        </div>
+        <DocumentationUploadPassport
           v-if="pageTracker === 1"
           :getCurrentCandidate="getCurrentCandidate"
         />
-        <DocumentationPSCertificate
+        <DocumentationMakePayment
           v-if="pageTracker === 2"
           :getCurrentCandidate="getCurrentCandidate"
         />
-        <DocumentationBCertificate
+        <DocumentationBiodata
           v-if="pageTracker === 3"
           :getCurrentCandidate="getCurrentCandidate"
         />
-
-        <div class="flex justify-between text-center mb-20 mr-7">
-          <button
-            :disabled="pageTracker == 1"
-            :class="
-              pageTracker == 1
-                ? 'bg-blue-400 cursor-not-allowed'
-                : 'bg-dark-blue'
-            "
-            class="w-auto rounded-sm p-3 px-5 text-white"
-            @click="pageTrackerHandlerBack"
-          >
-            <div class="lg:flex hidden text-center">Back</div>
-            <div class="lg:hidden block">
-              <font-awesome-icon
-                :icon="['fas', 'angle-double-left']"
-                class="w-6 text-white h-6"
-              />
-            </div>
-          </button>
-      
-          <button
-            :class="
-              pageTracker == 3
-                ? 'bg-blue-400 cursor-not-allowed'
-                : 'bg-dark-blue'
-            "
-            :disabled="pageTracker == 3"
-            class="w-auto rounded-sm p-3 px-5 text-white"
-            @click="pageTrackerHandlerNext"
-          >
-            <div class="lg:flex hidden text-center">Next</div>
-            <div class="lg:hidden block">
-              <font-awesome-icon
-                :icon="['fas', 'angle-double-right']"
-                class="w-6 text-white h-6"
-              />
-            </div>
-          </button>
-        </div>
+        <DocumentationUploadDoc
+          v-if="pageTracker === 4"
+          :getCurrentCandidate="getCurrentCandidate"
+        />
+        <DocumentationAdminStatus
+          v-if="pageTracker === 5"
+          :getCurrentCandidate="getCurrentCandidate"
+        />
       </div>
 
       <div class="bg-dark-blue hidden lg:flex justify-center items-end">
@@ -152,70 +147,90 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 export default {
   name: 'documentation',
   props: {},
   data() {
     return {
+      loadingState: true,
       page: null,
       pageTracker: 1,
       sideabrContents: [
         {
-          icon: 'profile',
-          name: 'Personal Details',
-          link: this.personalDetailHandler,
+          icon: 'camera',
+          name: 'Upload Passport',
+          link: this.uploadPassportHandler,
         },
         {
-          icon: 'badge',
-          name: 'Certificates',
-          link: this.certificateHandler,
+          icon: 'credit-card',
+          name: 'Make Payment',
+          link: this.makePaymentHandler,
         },
-        { icon: 'draft', name: 'Draft', link: this.draftHandler },
-        { icon: 'mail', name: 'Contact us', link: this.contactHandler },
-        { icon: 'logout', name: 'logout', link: this.logoutHandler },
+        { icon: 'user-edit', name: 'Biodata', link: this.biodataHandler },
+        { icon: 'file', name: 'Upload Document', link: this.uploadDocHandler },
+        {
+          icon: 'info-circle',
+          name: 'Admission Status',
+          link: this.adminStatusHandler,
+        },
+        { icon: 'sign-out-alt', name: 'logout', link: this.logoutHandler },
       ],
       pageTag: {
-        1: 'Personal Details',
-        2: 'Certificates',
-        3: 'Certificates',
+        1: 'Upload Passport',
+        2: 'Make Payement',
+        3: 'Biodata',
+        4: 'Upload Document',
+        5: 'Admission Status',
       },
     }
   },
   computed: {
     ...mapGetters(['getCurrentCandidate']),
+    ...mapState(['loading']),
   },
-  mounted() {},
-  methods: {
-    // pageSelector() {
-    //   switch (this.pageTracker) {
-    //     case 1:
-    //       return ( <DocumentationDetails />)
-    //     case 2:
-    //       return (<PSCertificates />)
-    //     default:
-    //       ;<DocumentationDetails />
-    //   }
-    // },
 
-    pageTrackerHandlerBack() {
-      this.pageTracker = this.pageTracker - 1
+  mounted() {
+    if (this.getCurrentCandidate) {
+      this.$store.dispatch('setLoading')
+    }
+
+    this.fullScreenLoading()
+  },
+
+  beforeMount() {
+    if (!this.$fire.auth.currentUser) {
+      this.$router.push('/admission/login')
+    }
+  },
+  methods: {
+    fullScreenLoading() {
+      if (this.loadingState === '') {
+        this.$loading({
+          lock: true,
+          text: 'Loading',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)',
+        })
+      }
     },
-    pageTrackerHandlerNext() {
-      this.pageTracker = this.pageTracker + 1
-    },
-    personalDetailHandler() {
+
+    uploadPassportHandler() {
       this.pageTracker = 1
     },
-    certificateHandler() {
+    makePaymentHandler() {
       this.pageTracker = 2
     },
-    draftHandler() {
-      this.pageTracker = 1
+    biodataHandler() {
+      this.pageTracker = 3
     },
-    contactHandler() {
-      this.$router.push('/contact')
+    uploadDocHandler() {
+      this.pageTracker = 4
     },
+    adminStatusHandler() {
+      this.pageTracker = 5
+    },
+
     async logoutHandler() {
       await this.$fire.auth.signOut()
       this.$router.push('/admission/login')
@@ -231,7 +246,7 @@ export default {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  z-index: 30;
+  z-index: 15;
 }
 .sidebar-text {
   display: none;

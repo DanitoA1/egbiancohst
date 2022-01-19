@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="login ">
+    <div class="login">
       <div
         class="
           bg-gray-100
@@ -14,8 +14,10 @@
           px-10
         "
       >
-        <div class="bg-white rounded-sm shadow-md w-auto h-auto px-16 mx-5 py-4">
-          <p class="text-xl font-bold mb-10 text-center">Student Portal</p>
+        <div
+          class="bg-white rounded-md shadow-md w-auto h-auto px-16 mx-5 py-4"
+        >
+          <p class="text-xl font-bold mb-10 text-center">Admin Portal</p>
 
           <div class="mb-10">
             <label for="email" class="text-gray-600 font-semibold">
@@ -29,7 +31,7 @@
                   border
                   outline-none
                   border-gray-300
-                  w-full
+                  w-80
                   focus:shadow-md
                   rounded-4px
                   p-3.5
@@ -55,15 +57,14 @@
                   border
                   outline-none
                   border-gray-300
-                  w-full
+                  w-80
                   focus:shadow-md
                   rounded-4px
                   p-3.5
                   focus:border-blue-400
                 "
                 type="password"
-         
-                 v-model.trim="auth.password"
+                v-model.trim="auth.password"
                 placeholder="Your Secret Pin"
               />
             </div>
@@ -75,7 +76,7 @@
           </div>
 
           <button
-            @click="login"
+            @click="Login"
             class="
               bg-dark-blue
               text-white text-center
@@ -94,10 +95,6 @@
           </button>
 
           <div class="text-center">
-            <span class="text-gray-600"> Already have an account ? </span>
-            <span class="font-bold text-dark-blue"
-              ><a href="/admission/registration"> Create account </a></span
-            >|
             <span class="font-bold text-dark-blue"
               ><a href="/"> Homepage </a></span
             >
@@ -112,22 +109,39 @@
 export default {
   data() {
     return {
-      auth : {
-        email : '',
-        password : ''
-      }
+      auth: {
+        email: '',
+        password: '',
+      },
     }
   },
   methods: {
-    login(){
+    async Login() {
       const dis = this
-      this.$fire.auth.signInWithEmailAndPassword(this.auth.email, this.auth.password).then( user => {
-        dis.$router.push('/student/dashboard')
-        console.log(user);
-      }).catch(err => {
-        alert(err)
-      })
-    }
+
+      await this.$fire.auth
+        .signInWithEmailAndPassword(this.auth.email, this.auth.password)
+        .then(({ user }) => {
+          console.log('Login Successfully')
+          this.$notify.success({
+            title: 'Login Sucessfull',
+            message: 'Welcome back!',
+          })
+          console.log(user)
+          dis.$store.dispatch('fetchProfile', user)
+          dis.$store.dispatch('getAllCandidates')
+
+          dis.$router.push('/registrar/admin')
+        })
+        .catch((err) => {
+          if (err.message.includes('invalid')) {
+            this.$notify.error({
+              title: 'Error',
+              message: 'Invalid Credentials- Email Or Password',
+            })
+          }
+        })
+    },
   },
 }
 </script>

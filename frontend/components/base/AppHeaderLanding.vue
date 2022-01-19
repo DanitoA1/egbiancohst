@@ -39,11 +39,11 @@
                 "
               >
                 <div class="lg:flex hidden">
-                  Egbian College of Science and Technology
+                  Egbian College of Sciences  and Technology
                 </div>
                 <div class="lg:hidden flex tracking-widest">ECHST</div>
               </h1>
-              <p class="text-gray-500 lg:text-lg text-sm">Minna, Nigeria</p>
+              <p class="text-gray-500 lg:text-lg text-sm">Egbian, Nigeria</p>
             </div>
           </div>
           <div
@@ -59,7 +59,7 @@
           >
             <div class="hidden lg:flex flex-row items-end space-x-8">
               <nuxt-link to="/about" class="font-semibold">About</nuxt-link>
-              <nuxt-link to="/admission/registration" class="font-semibold"
+              <nuxt-link to="/application-intro" class="font-semibold"
                 >Admission</nuxt-link
               >
               <nuxt-link to="/school/departments" class="font-semibold"
@@ -77,9 +77,9 @@
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path d="M5 6.70215H27V8.70215H5V6.70215Z" fill="black" />
-                  <path d="M5 15.7021H27V17.7021H5V15.7021Z" fill="black" />
-                  <path d="M5 24.7021H27V26.7021H5V24.7021Z" fill="black" />
+                  <path d="M5 6.70215H27V8.70215H5V6.70215Z" fill="#fff" />
+                  <path d="M5 15.7021H27V17.7021H5V15.7021Z" fill="#fff" />
+                  <path d="M5 24.7021H27V26.7021H5V24.7021Z" fill="#fff" />
                 </svg>
               </div>
 
@@ -90,7 +90,7 @@
                       <router-link to="/about"> About </router-link>
                     </li>
                     <li divided class="">
-                      <router-link to="/admission/registration">
+                      <router-link to="/application-intro">
                         Admission
                       </router-link>
                     </li>
@@ -132,14 +132,7 @@ export default {
       direction: 'rtl',
     }
   },
-  methods: { 
-    async sayHello() {
-      const sayHelloFunc = await this.$fire.functions.httpsCallable('sayHello')
-      sayHelloFunc({name : 'Alley'}).then((result) => {
-        console.log(result)
-      })
-    },
-  },
+  methods: {},
 }
 </script>
 <style scoped>

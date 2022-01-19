@@ -121,7 +121,7 @@
         />
         <div class="ml-6">
           <h1 class="text-3xl roboto font-extrabold text-dark-500">
-            We offered the following courses at Egbian college of science and
+            We offered the following courses at Egbian College of Sciences  and
             Technology
           </h1>
           <div

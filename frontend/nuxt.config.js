@@ -4,14 +4,14 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Egbian College of Science And Technology',
+    title: 'Egbian College of Sciences  And Technology',
     htmlAttrs: {
       lang: 'en'
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Egbian College of Science And Technology' },
+      { hid: 'description', name: 'description', content: 'Egbian College of Sciences  And Technology' },
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
@@ -28,7 +28,10 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '@/plugins/element-ui',
-   '@/plugins/persistedState.client.js' 
+   '@/plugins/persistedState.client.js',
+   '@/plugins/flutterwave.client.js',
+   '@/plugins/vueprint.client.js'
+
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

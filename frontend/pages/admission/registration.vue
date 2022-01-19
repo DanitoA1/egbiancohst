@@ -53,91 +53,64 @@
             <div class="text-dark-blue font-medium text-xl">
               <div>New account</div>
               <div class="font-bold text-lg">
-                Egbian College of Science and Technology
+                Egbian College of Sciences and Technology
               </div>
             </div>
           </div>
+          <!-- FullName -->
+
+          <InputForm
+            v-model.trim="auth.surname"
+            :type="`text`"
+            :label="`Surname*`"
+            :placeholder="`Abdullah`"
+          />
+          <InputForm
+            v-model.trim="auth.middlename"
+            :type="`text`"
+            :label="`Middle Name`"
+            :placeholder="`Ndako`"
+          />
+          <InputForm
+            v-model.trim="auth.lastname"
+            :type="`text`"
+            :label="`Last Name*`"
+            :placeholder="`Chinedu`"
+          />
 
           <!-- Email Input -->
-          <div class="mb-8">
-            <label for="email" class="text-gray-600 font-bold"> Email </label>
-            <div>
-              <input
-                class="
-                  mt-3
-                  overflow-ellipsis
-                  border
-                  outline-none
-                  border-gray-300
-                  w-full
-                  focus:shadow-md
-                  rounded-4px
-                  p-3.5
-                  focus:border-blue-400
-                "
-                type="email"
-                v-model="auth.email"
-                placeholder="example@domain.edu.ng"
-              />
-            </div>
-          </div>
+          <InputForm
+            v-model.trim="auth.email"
+            :type="`email`"
+            :label="`Email*`"
+            :placeholder="`example@mail.co`"
+          />
           <!-- Mobile No Input -->
 
-          <div class="mb-8">
-            <label for="telephone" class="text-gray-600 font-bold">
-              Mobile No
-            </label>
-            <div>
-              <input
-                class="
-                  mt-3
-                  overflow-ellipsis
-                  border
-                  outline-none
-                  border-gray-300
-                  w-full
-                  focus:shadow-md
-                  rounded-4px
-                  p-3.5
-                  focus:border-blue-400
-                "
-                type="tel"
-                v-model="auth.phoneNumber"
-                placeholder="+234 8123 456 789"
-              />
-            </div>
-          </div>
+          <InputForm
+            v-model.trim="auth.phoneNumber"
+            :type="`tel`"
+            :label="`Phone Number`"
+            :placeholder="`+234 81XX XXX XXXX`"
+          />
           <!-- Password Imput -->
 
-          <div class="mb-8">
-            <label for="password" class="text-gray-600 font-bold">
-              Password
-            </label>
-            <div>
-              <input
-                class="
-                  mt-3
-                  overflow-ellipsis
-                  border
-                  outline-none
-                  border-gray-300
-                  w-full
-                  focus:shadow-md
-                  rounded-4px
-                  p-3.5
-                  focus:border-blue-400
-                "
-                type="password"
-                v-model="auth.password"
-                placeholder="Password Input atleast 8 Characters"
-              />
-            </div>
-          </div>
+          <InputForm
+            v-model.trim="auth.password"
+            :type="`password`"
+            :label="`Password*`"
+            :placeholder="`Password`"
+          />
+          <InputForm
+            v-model.trim="auth.confirmpassword"
+            :type="`password`"
+            :label="`Confirm Password*`"
+            :placeholder="`Password`"
+          />
 
           <!-- Submit input -->
 
           <button
-            @click="Register"
             class="
               bg-dark-blue
               text-white text-center
@@ -150,11 +123,12 @@
               rounded-4px
               p-3.5
             "
+            @click="Register"
           >
-            Create an account
+            Start Application
           </button>
 
-          <div class="text-center mt-8 pb-20  space-x-4">
+          <div class="text-center mt-8 pb-20 space-x-4">
             <span class="text-gray-600"> Already have an account ? </span>
             <span class="font-bold text-dark-blue mr-3"
               ><nuxt-link to="/admission/login">Login</nuxt-link></span
@@ -194,6 +168,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 export default {
   name: 'application-registration',
 
@@ -203,40 +178,102 @@ export default {
       auth: {
         email: '',
         password: '',
+        confirmpassword: '',
+        surname: '',
+        middlename: '',
+        lastname: '',
         phoneNumber: null,
       },
+      passwordChecker: null,
+      filledField: null,
+      errorMessage: '',
     }
   },
   created() {},
   methods: {
+    formValidator() {
+      this.passwordChecker =
+        this.auth.password === this.auth.confirmpassword ? true : false
+      this.filledField =
+        this.auth.password.length > 0 &&
+        this.auth.confirmpassword.length > 0 &&
+        this.auth.surname.length > 0 &&
+        this.auth.lastname.length > 0 &&
+        this.auth.phoneNumber.length > 0 &&
+        this.auth.email.length > 0
+          ? true
+          : false
+
+      if (this.passwordChecker === false) {
+        this.errorMessage = 'Password Does Not Match'
+      } else if (this.filledField === false) {
+        this.errorMessage = 'Fill all required field'
+      }
+
+      if (this.passwordChecker && this.filledField) {
+        return true
+      } else {
+        return false
+      }
+    },
+
     async Register() {
+      console.log(this.auth.surname)
+      this.formValidator()
       const dis = this
+      if (this.formValidator()) {
+        await this.$fire.auth
+          .createUserWithEmailAndPassword(this.auth.email, this.auth.password)
+          .then(({ user }) => {
+            this.$notify({
+              title: 'Registered',
+              message: 'Registration Successful',
+              type: 'success',
+            })
 
-      await this.$fire.auth
-        .createUserWithEmailAndPassword(this.auth.email, this.auth.password)
-        .then(({ user }) => {
-          this.$notify({
-            title: 'Registered',
-            message: 'Registration Successful',
-            type: 'success',
+            console.log('Acct Created Successfully')
+            console.log(user)
+            dis.$store.dispatch('createUser', {
+              id: user.uid,
+              email: dis.auth.email,
+              password: dis.auth.password,
+              surname: dis.auth.surname,
+              middlename: dis.auth.middlename,
+              lastname: dis.auth.lastname,
+              phoneNumber: dis.auth.phoneNumber,
+              adminStatus: false,
+              paymentStatus: false,
+              passportUrl:
+                'https://www.pikpng.com/pngl/m/5-52254_png-file-user-profile-icon-svg-clipart.png',
+              selectedCountry: '',
+              dob: '',
+              phoneNumber: '',
+              selectedGender: '',
+              selectedState: '',
+              selectedLga: '',
+              selectedCourse: '',
+              address: '',
+              nextOfKin: {
+                name: '',
+                address: '',
+                phoneNumber: '',
+                email: '',
+              },
+            })
+            dis.$router.push('/admission/login')
           })
-
-          console.log('Acct Created Successfully')
-          console.log(user)
-          dis.$store.dispatch('createUser', {
-            id: user.uid,
-            email: dis.auth.email,
-            password: dis.auth.password,
-            phoneNumber: dis.auth.phoneNumber,
+          .catch((err) => {
+            this.$notify.error({
+              title: 'Error',
+              message: `${err.message}`,
+            })
           })
-          dis.$router.push('/admission/login')
+      } else {
+        this.$notify.error({
+          title: 'Error',
+          message: `${this.errorMessage}`,
         })
-        .catch((err) => {
-          this.$notify.error({
-            title: 'Error',
-            message: `${err.message}`,
-          })
-        })
+      }
     },
   },
 }

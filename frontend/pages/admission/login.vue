@@ -53,7 +53,7 @@
             <div class="text-dark-blue font-medium text-xl">
               <div>Registered account</div>
               <div class="font-bold text-lg">
-                Egbian College of Science and Technology
+                Egbian College of Sciences  and Technology
               </div>
             </div>
           </div>
@@ -75,7 +75,7 @@
                   p-3.5
                   focus:border-blue-400
                 "
-                v-model="auth.email"
+                v-model.trim="auth.email"
                 type="email"
                 placeholder="example@domain.edu.ng"
               />
@@ -103,7 +103,7 @@
                   focus:border-blue-400
                 "
                 type="password"
-                v-model="auth.password"
+                v-model.trim="auth.password"
                 placeholder="Password Input atleast 8 Characters"
               />
             </div>
@@ -133,7 +133,7 @@
             <span class="text-gray-600"> Dont have an account ? </span>
             <span class="font-bold text-dark-blue mr-3"
               ><nuxt-link to="/admission/registration"
-                >Register</nuxt-link
+                >Start Application</nuxt-link
               ></span
             >
             |<span class="font-bold text-dark-blue"

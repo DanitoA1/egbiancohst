@@ -26,7 +26,7 @@
       </div>
       <div class="flex lg:flex-row flex-col justify-between text-white roboto py-16">
         <p class="font-light text-xl self-center lg:mt-0 mt-10 order-last   lg:order-first">
-          {{ currentYear }} Egbian College of Science and Technology
+          {{ currentYear }} Egbian College of Sciences  and Technology
         </p>
         <div class="flex flex-row ">
           <svg-icon name="facebook" class="w-8 h-8"></svg-icon>
