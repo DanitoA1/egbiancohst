@@ -217,13 +217,32 @@ export default {
       }
     },
 
+      async register({ commit }, credentials) {
+    commit("SET_LOADING", true);
+    try {
+      await this.$axios.post("/v1/api/applicant/", credentials).then((res) => {
+        commit("SET_LOADING", false);
+        this.$router.replace("/welcome");
+      });
+    } catch (error) {
+      commit("SET_LOADING", false);
+      commit("SET_ERROR", error.message);
+
+      if (error.response.status === 422) {
+        this.$toast.error("The email has already been taken");
+      }
+    }
+  },
+
     async Register() {
       console.log(this.auth.surname)
       this.formValidator()
       const dis = this
       if (this.formValidator()) {
-        await this.$fire.auth
-          .createUserWithEmailAndPassword(this.auth.email, this.auth.password)
+
+
+        
+        await  this.$axios.post("/v1/api/applicant/", credentials)
           .then(({ user }) => {
             this.$notify({
               title: 'Registered',

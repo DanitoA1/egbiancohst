@@ -19,6 +19,8 @@ export default {
     ]
   },
 
+  loading: { color: "#0A369D" },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     'element-ui/lib/theme-chalk/index.css',
@@ -29,8 +31,9 @@ export default {
   plugins: [
     '@/plugins/element-ui',
    '@/plugins/persistedState.client.js',
-   '@/plugins/flutterwave.client.js',
-   '@/plugins/vueprint.client.js'
+   '@/plugins/vueprint.client.js',
+   { src: "~/plugins/vuelidate.client.js" },
+
 
   ],
 
@@ -44,8 +47,7 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/stylelint
     '@nuxtjs/stylelint-module',
-    // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss',
+  
   ],
 
   fontawesome : {
@@ -60,40 +62,39 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/svg-sprite',
-    [
-      '@nuxtjs/firebase',
-      {
-        config: {
-          apiKey: "AIzaSyDjVpfFH4Z69Uo0KhjxCM4abW6mmsHRQSk",
-          authDomain: "project-egbiancohst.firebaseapp.com",
-          projectId: "project-egbiancohst",
-          storageBucket: "project-egbiancohst.appspot.com",
-          messagingSenderId: "921999027341",
-          appId: "1:921999027341:web:33165c4f8cbb75725586c4"
-        },
-        services: {
-          auth:  {
-            persistence: 'local', // default
-            initialize: {
-              onAuthStateChangedAction: 'onAuthStateChangedAction',
-              subscribeManually: false
-            },
-            ssr: false, // default
-          },
-          firestore: true,
-          functions: true,
-          storage: true,
-          database: true,
-        }
-      }
-    ]
+    'nuxt-paystack',
+    '@nuxtjs/auth-next',
+    "vue-toastification/nuxt",
+    "cookie-universal-nuxt",
+    "@nuxt/postcss8"
+   
   ],
 
-router : {
-  middleware : ['auth']
+
+axios: {
+  baseUrl: process.env.API_HOST_LOCAL,
 },
-
-
+auth: {
+  strategies: {
+    local: {
+      token: {
+        property: 'accessToken',
+        global: true,
+        // required: true,
+        type: 'Bearer' //this automagically inject Bearer Token into all API request(Needed or not)
+      },
+      user: {
+        property: 'result',
+        autoFetch: true
+      },
+      endpoints: {
+        login: { url: '/user/login', method: 'post'},
+        logout: false,
+        user: { url: '/user', method: 'get'}
+      }
+    }
+  }
+},
 
   svgSprite: {
     // manipulate module options
@@ -101,16 +102,17 @@ router : {
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {
-    baseURL:'http://localhost:5000/graphql'
-  },
 
-  env: {
-    baseUrl: process.env.BASE_URL || 'http://localhost:5000'
-  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
+
   build: {
     transpile: [/^element-ui/],
-  }
+    postcss: {
+      plugins: {
+        tailwindcss: {},
+        autoprefixer: {},
+      },
+    },
+  },
 }
