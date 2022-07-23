@@ -1,3 +1,5 @@
+/*eslint-disable */
+
 module.exports = {
   content: [
     "./components/**/*.{js,vue,ts}",
@@ -12,7 +14,7 @@ module.exports = {
         'dark-blue': '#0A369D',
         'dark-500': '#4F4F4F',
         'dark-700': '#828282',
-        'icon-container' : '#DFDFFF',
+        'icon-container': '#DFDFFF',
         'hod' : '#FFF2EB',
         'provost' : '#FFE7E8',
         'prof' : '#D3E0FF',

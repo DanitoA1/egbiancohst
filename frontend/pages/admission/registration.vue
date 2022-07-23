@@ -1,24 +1,11 @@
+<!-- eslint-disable -->
 <template>
   <div class="">
+    <UILoader v-if="loading" />
     <div class="flex lg:flex-row flex-col">
       <!-- Dark Blue Half Section -->
       <div
-        class="
-          h-screen
-          w-1/3
-          hidden
-          bg-dark-blue
-          lg:flex
-          flex-col
-          py-40
-          pl-16
-          pr-10
-          text-white
-          space-y-7
-          relative
-          top-0
-          bottom-0
-        "
+        class="h-screen w-1/3 hidden bg-dark-blue lg:flex flex-col py-40 pl-16 pr-10 text-white space-y-7 relative top-0 bottom-0"
       >
         <div class="absolute bottom-0 left-0">
           <nuxt-link to="/">
@@ -57,76 +44,130 @@
               </div>
             </div>
           </div>
-          <!-- FullName -->
+          <!-- Email -->
 
-          <InputForm
-            v-model.trim="auth.surname"
-            :type="`text`"
-            :label="`Surname*`"
-            :placeholder="`Abdullah`"
-          />
-          <InputForm
-            v-model.trim="auth.middlename"
-            :type="`text`"
-            :label="`Middle Name`"
-            :placeholder="`Ndako`"
-          />
-          <InputForm
-            v-model.trim="auth.lastname"
-            :type="`text`"
-            :label="`Last Name*`"
-            :placeholder="`Chinedu`"
-          />
+          <div class="mt-4">
+            <label class="text-gray-600 font-bold"> Email </label>
+            <input
+              v-model.trim="email"
+              class="mt-1 mr-5 overflow-ellipsis outline-none border w-full rounded-md p-3.5"
+              type="email"
+              name="email"
+              placeholder="example@mail.com"
+            />
+            <small
+              v-if="!$v.email.required && $v.email.$dirty"
+              class="text-red-500"
+              >Email is required!</small
+            >
+            <small v-if="!$v.email.email" class="text-red-500"
+              >Invalid email address
+            </small>
+          </div>
 
-          <!-- Email Input -->
-          <InputForm
-            v-model.trim="auth.email"
-            :type="`email`"
-            :label="`Email*`"
-            :placeholder="`example@mail.co`"
-          />
-          <!-- Mobile No Input -->
+          <!-- Phone Number -->
 
-          <InputForm
-            v-model.trim="auth.phoneNumber"
-            :type="`tel`"
-            :label="`Phone Number`"
-            :placeholder="`+234 81XX XXX XXXX`"
-          />
-          <!-- Password Imput -->
+          <div class="mt-4">
+            <label class="text-gray-600 font-bold"> Phone Number </label>
+            <input
+              v-model.trim="phoneNumber"
+              class="mt-1 mr-5 overflow-ellipsis outline-none border w-full rounded-md p-3.5"
+              type="phone"
+              name="email"
+              placeholder="+234 81XX XXX XXXX"
+            />
+            <small
+              v-if="!$v.phoneNumber.required && $v.phoneNumber.$dirty"
+              class="text-red-500"
+              >Phonenumber is required!</small
+            >
+            <small v-if="!$v.phoneNumber.numeric" class="text-red-500"
+              >Phonenumber must be a number</small
+            >
+          </div>
 
-          <InputForm
-            v-model.trim="auth.password"
-            :type="`password`"
-            :label="`Password*`"
-            :placeholder="`Password`"
-          />
-          <InputForm
-            v-model.trim="auth.confirmpassword"
-            :type="`password`"
-            :label="`Confirm Password*`"
-            :placeholder="`Password`"
-          />
+          <!-- Password -->
+
+          <div class="mt-4">
+            <label class="text-gray-600 font-bold"> Password </label>
+            <div
+              class="flex items-center space-x-1 mt-1 mr-5 overflow-ellipsis border w-full rounded p-3.5"
+            >
+              <input
+                v-model.trim="password"
+                class="outline-none bg-transparent flex-1"
+                :type="type1"
+                name="password"
+                placeholder="*********"
+              />
+              <div
+                class="cursor-pointer text-sm font-medium text-blue-500"
+                @click="showPassword1"
+              >
+                <span v-if="type1 === 'password'">SHOW</span>
+                <span v-else>HIDE</span>
+              </div>
+            </div>
+            <small
+              v-if="!$v.password.required && $v.password.$dirty"
+              class="me-auto text-red-500"
+            >
+              Password is required!
+            </small>
+            <small v-if="!$v.password.minLength" class="me-auto text-red-500">
+              Password must be between 8 characters and above
+            </small>
+          </div>
+          <!-- Repeat Password -->
+
+          <div class="mt-4">
+            <label class="text-gray-600 font-bold"> Repeat Password </label>
+            <div
+              class="flex items-center space-x-1 mt-1 mr-5 overflow-ellipsis border w-full rounded p-3.5"
+            >
+              <input
+                v-model.trim="confirmPassword"
+                class="outline-none bg-transparent flex-1"
+                :type="type2"
+                name="password"
+                placeholder="*********"
+              />
+              <div
+                class="cursor-pointer text-sm font-medium text-blue-500"
+                @click="showPassword2"
+              >
+                <span v-if="type2 === 'password'">SHOW</span>
+                <span v-else>HIDE</span>
+              </div>
+            </div>
+            <small
+              v-if="!$v.confirmPassword.required && $v.confirmPassword.$dirty"
+              class="me-auto text-red-500"
+            >
+              Confirm Password is required!
+            </small>
+            <small
+              v-if="!$v.confirmPassword.sameAsPassword"
+              class="me-auto text-red-500"
+            >
+              Passwords does not tally
+            </small>
+          </div>
 
           <!-- Submit input -->
-
-          <button
-            class="
-              bg-dark-blue
-              text-white text-center
-              mt-3
-              overflow-ellipsis
-              border
-              outline-none
-              border-gray-300
-              w-full
-              rounded-4px
-              p-3.5
-            "
-            @click="Register"
-          >
-            Start Application
-          </button>
+          <div v-if="!successReg" class="w-full mt-4">
+            <button
+              :disabled="loading"
+              class="bg-dark-blue text-white text-center mt-3 overflow-ellips border w-full rounded p-3.5"
+              @click="submitForm"
+            >
+              Start Application
+            </button>
+          </div>
+          <div v-else class="success">
+            Congrats 🎊 your account is ready, please check your mail to find
+            your login details and further instructions
+          </div>
 
           <div class="text-center mt-8 pb-20 space-x-4">
             <span class="text-gray-600"> Already have an account ? </span>
@@ -143,14 +184,7 @@
         <!-- Right Section -->
         <div class="lg:w-4/12 px-5 order-first lg:order-last w-full mt-4 mr-8">
           <div
-            class="
-              flex
-              justify-end
-              items-center
-              text-dark-blue
-              font-bold
-              text-sm
-            "
+            class="flex justify-end items-center text-dark-blue font-bold text-sm"
           >
             <div class="mr-2">
               <svg-icon name="help" class="w-8 h-8"></svg-icon>
@@ -169,137 +203,114 @@
 
 <script>
 /* eslint-disable */
+import { validationMixin } from 'vuelidate'
+import {
+  required,
+  minLength,
+  email,
+  sameAs,
+  numeric,
+} from 'vuelidate/lib/validators'
 export default {
-  name: 'application-registration',
-
+  name: 'ApplicationRegistration',
+  mixins: [validationMixin],
+  validations: {
+    email: { required, email },
+    phoneNumber: { required, numeric },
+    password: {
+      required,
+      minLength: minLength(8),
+    },
+    confirmPassword: {
+      required,
+      minLength: minLength(8),
+      sameAsPassword: sameAs('password'),
+    },
+  },
   props: {},
   data() {
     return {
-      auth: {
-        email: '',
-        password: '',
-        confirmpassword: '',
-        surname: '',
-        middlename: '',
-        lastname: '',
-        phoneNumber: null,
-      },
-      passwordChecker: null,
-      filledField: null,
-      errorMessage: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      phoneNumber: null,
+      successReg: false,
+      type1: 'password',
+      type2: 'password',
+      loading: false,
     }
   },
-  created() {},
+  // mounted() {
+  //   this.$auth.logout()
+  // },
   methods: {
-    formValidator() {
-      this.passwordChecker =
-        this.auth.password === this.auth.confirmpassword ? true : false
-      this.filledField =
-        this.auth.password.length > 0 &&
-        this.auth.confirmpassword.length > 0 &&
-        this.auth.surname.length > 0 &&
-        this.auth.lastname.length > 0 &&
-        this.auth.phoneNumber.length > 0 &&
-        this.auth.email.length > 0
-          ? true
-          : false
-
-      if (this.passwordChecker === false) {
-        this.errorMessage = 'Password Does Not Match'
-      } else if (this.filledField === false) {
-        this.errorMessage = 'Fill all required field'
+    async register() {
+      const auth = {
+        email: this.email,
+        password: this.password,
+        phone: this.phoneNumber,
       }
+      if (!navigator.onLine) {
+        this.$toast.error('Check your internet connection')
+      }
+      try {
+        this.loading = true
+        await this.$axios.post('/api/v1/applicant/', auth).then((res) => {
+          console.log(res)
 
-      if (this.passwordChecker && this.filledField) {
-        return true
+          this.$toast.success('Registration Successful')
+          this.loading = false
+          this.successReg = true
+        })
+      } catch (error) {
+        console.log(error)
+        if (error.response) {
+          this.$toast.error(error.response.data.message)
+        }
+
+        this.loading = false
+      }
+    },
+    showPassword1() {
+      if (this.type1 === 'password') {
+        this.type1 = 'text'
       } else {
-        return false
+        this.type1 = 'password'
+      }
+    },
+    showPassword2() {
+      if (this.type2 === 'password') {
+        this.type2 = 'text'
+      } else {
+        this.type2 = 'password'
       }
     },
 
-      async register({ commit }, credentials) {
-    commit("SET_LOADING", true);
-    try {
-      await this.$axios.post("/v1/api/applicant/", credentials).then((res) => {
-        commit("SET_LOADING", false);
-        this.$router.replace("/welcome");
-      });
-    } catch (error) {
-      commit("SET_LOADING", false);
-      commit("SET_ERROR", error.message);
-
-      if (error.response.status === 422) {
-        this.$toast.error("The email has already been taken");
-      }
-    }
-  },
-
-    async Register() {
-      console.log(this.auth.surname)
-      this.formValidator()
-      const dis = this
-      if (this.formValidator()) {
-
-
-        
-        await  this.$axios.post("/v1/api/applicant/", credentials)
-          .then(({ user }) => {
-            this.$notify({
-              title: 'Registered',
-              message: 'Registration Successful',
-              type: 'success',
-            })
-
-            console.log('Acct Created Successfully')
-            console.log(user)
-            dis.$store.dispatch('createUser', {
-              id: user.uid,
-              email: dis.auth.email,
-              password: dis.auth.password,
-              surname: dis.auth.surname,
-              middlename: dis.auth.middlename,
-              lastname: dis.auth.lastname,
-              phoneNumber: dis.auth.phoneNumber,
-              adminStatus: false,
-              paymentStatus: false,
-              passportUrl:
-                'https://www.pikpng.com/pngl/m/5-52254_png-file-user-profile-icon-svg-clipart.png',
-              selectedCountry: '',
-              dob: '',
-              phoneNumber: '',
-              selectedGender: '',
-              selectedState: '',
-              selectedLga: '',
-              selectedCourse: '',
-              address: '',
-              nextOfKin: {
-                name: '',
-                address: '',
-                phoneNumber: '',
-                email: '',
-              },
-            })
-            dis.$router.push('/admission/login')
-          })
-          .catch((err) => {
-            this.$notify.error({
-              title: 'Error',
-              message: `${err.message}`,
-            })
-          })
-      } else {
-        this.$notify.error({
-          title: 'Error',
-          message: `${this.errorMessage}`,
-        })
+    submitForm() {
+      this.$v.$touch()
+      if (!this.$v.$invalid) {
+        this.register()
       }
     },
   },
 }
 </script>
 
+<!-- eslint-disable -->
 <style scoped>
 .reg-container::-webkit-scrollbar {
   display: none;
+}
+.success {
+  margin: 16px 0;
+  padding: 16px;
+  background: #e6ffe9;
+  border: 2px solid #07b128;
+  border-radius: 9px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  color: #49cb5c;
 }
 </style>

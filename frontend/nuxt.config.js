@@ -1,3 +1,5 @@
+/*eslint-disable */
+
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -72,25 +74,22 @@ export default {
 
 
 axios: {
-  baseUrl: process.env.API_HOST_LOCAL,
+  baseUrl: process.env.API_HOST_DEV,
 },
 auth: {
   strategies: {
     local: {
       token: {
-        property: 'accessToken',
+        property: 'token',
         global: true,
         // required: true,
         type: 'Bearer' //this automagically inject Bearer Token into all API request(Needed or not)
       },
-      user: {
-        property: 'result',
-        autoFetch: true
-      },
+    
       endpoints: {
-        login: { url: '/user/login', method: 'post'},
+        login: { url: '/account/auth/applicant/', method: 'post'},
         logout: false,
-        user: { url: '/user', method: 'get'}
+        user: false
       }
     }
   }
