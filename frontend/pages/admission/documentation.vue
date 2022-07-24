@@ -1,4 +1,7 @@
+<!-- eslint-disable -->
 <template>
+  <!-- <UILoader v-if="loading" /> -->
+
   <div class="h-screen">
     <header class="fixed z-20 px-2 py-2 flex items-center bg-black w-screen">
       <span class="mr-10">
@@ -10,14 +13,7 @@
           /> </router-link
       ></span>
       <div
-        class="
-          font-medium
-          py-3
-          text-white text-xl
-          pr-6
-          border-r-2 border-white
-          mr-6
-        "
+        class="font-medium py-3 text-white text-xl pr-6 border-r-2 border-white mr-6"
       >
         <p class="lg:flex hidden">Egbian College of Health and Technology</p>
         <p class="flex lg:hidden">ECHST</p>
@@ -28,26 +24,14 @@
     <main class="grid lg:grid-cols-2">
       <div class="overflow-y-scroll form-page bg-white h-screen pt-20 pl-22">
         <div
-          class="
-            fixed
-            z-8
-            h-screen
-            left-0
-            inset-y-0
-            pt-20
-            pl-3
-            sidebar
-            text-white
-            bg-dark-blue
-            flex flex-col
-          "
+          class="fixed z-8 h-screen left-0 inset-y-0 pt-20 pl-3 sidebar text-white bg-dark-blue flex flex-col"
         >
           <!-- SideBar Content -->
           <div class="flex justify-content items-center mb-4">
             <img
               :src="
-                getCurrentCandidate
-                  ? getCurrentCandidate.passportUrl
+                userData
+                  ? userData.passportUrl
                   : require('~/assets/images/user-acct.svg')
               "
               class="h-10 w-10 object-contain mr-4"
@@ -56,15 +40,13 @@
             <div class="sidebar-text flex-col">
               <div class="font-meduim text-xl">
                 {{
-                  getCurrentCandidate
-                    ? `${getCurrentCandidate.surname}   ${getCurrentCandidate.lastname}`
+                  userData
+                    ? `${userData.surname}   ${userData.lastname}`
                     : 'Loading'
                 }}
               </div>
               <p class="text-xs">
-                {{
-                  getCurrentCandidate ? getCurrentCandidate.email : 'loading...'
-                }}
+                {{ userData ? userData.email : 'loading...' }}
               </p>
             </div>
           </div>
@@ -105,31 +87,23 @@
           <div class="font-semibold">
             <span>Application Number:</span>
             <span class="text-gray-500">
-              {{
-                getCurrentCandidate ? getCurrentCandidate.regId : 'Loading...'
-              }}
+              {{ userData ? userData.user.username : 'Loading...' }}
             </span>
           </div>
         </div>
         <DocumentationUploadPassport
           v-if="pageTracker === 1"
-          :getCurrentCandidate="getCurrentCandidate"
+          :userData="userData"
         />
         <DocumentationMakePayment
           v-if="pageTracker === 2"
-          :getCurrentCandidate="getCurrentCandidate"
+          :userData="userData"
         />
-        <DocumentationBiodata
-          v-if="pageTracker === 3"
-          :getCurrentCandidate="getCurrentCandidate"
-        />
-        <DocumentationUploadDoc
-          v-if="pageTracker === 4"
-          :getCurrentCandidate="getCurrentCandidate"
-        />
+        <DocumentationBiodata v-if="pageTracker === 3" :userData="userData" />
+        <DocumentationUploadDoc v-if="pageTracker === 4" :userData="userData" />
         <DocumentationAdminStatus
           v-if="pageTracker === 5"
-          :getCurrentCandidate="getCurrentCandidate"
+          :userData="userData"
         />
       </div>
 
@@ -147,9 +121,11 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+/* eslint-disable */
+import { mapActions, mapState } from 'vuex'
 export default {
   name: 'documentation',
+  middleware: 'auth',
   props: {},
   data() {
     return {
@@ -186,35 +162,14 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getCurrentCandidate']),
-    ...mapState(['loading']),
+    ...mapState(['userData', 'userData']),
   },
 
   mounted() {
-    if (this.getCurrentCandidate) {
-      this.$store.dispatch('setLoading')
-    }
-
-    this.fullScreenLoading()
+    console.log(this.userData)
   },
 
-  beforeMount() {
-    if (!this.$fire.auth.currentUser) {
-      this.$router.push('/admission/login')
-    }
-  },
   methods: {
-    fullScreenLoading() {
-      if (this.loadingState === '') {
-        this.$loading({
-          lock: true,
-          text: 'Loading',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)',
-        })
-      }
-    },
-
     uploadPassportHandler() {
       this.pageTracker = 1
     },
@@ -230,10 +185,10 @@ export default {
     adminStatusHandler() {
       this.pageTracker = 5
     },
-
-    async logoutHandler() {
-      await this.$fire.auth.signOut()
-      this.$router.push('/admission/login')
+    ...mapActions(['logOut']),
+    logoutHandler() {
+      this.logOut()
+   
     },
   },
 }

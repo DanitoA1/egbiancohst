@@ -2,8 +2,8 @@
 
 export default {
   // Target: https://go.nuxtjs.dev/config-target
-  target: 'static',
-
+  ssr: true,
+  target: 'server',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'Egbian College of Sciences  And Technology',
@@ -65,7 +65,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/svg-sprite',
     'nuxt-paystack',
-    '@nuxtjs/auth-next',
+    // '@nuxtjs/auth-next',
     "vue-toastification/nuxt",
     "cookie-universal-nuxt",
     "@nuxt/postcss8"
@@ -76,24 +76,24 @@ export default {
 axios: {
   baseUrl: process.env.API_HOST_DEV,
 },
-auth: {
-  strategies: {
-    local: {
-      token: {
-        property: 'token',
-        global: true,
-        // required: true,
-        type: 'Bearer' //this automagically inject Bearer Token into all API request(Needed or not)
-      },
+// auth: {
+//   strategies: {
+//     local: {
+//       token: {
+//         property: 'token',
+//         global: true,
+//         // required: true,
+//         type: 'Bearer' //this automagically inject Bearer Token into all API request(Needed or not)
+//       },
     
-      endpoints: {
-        login: { url: '/account/auth/applicant/', method: 'post'},
-        logout: false,
-        user: false
-      }
-    }
-  }
-},
+//       endpoints: {
+//         login: { url: '/account/auth/applicant/', method: 'post'},
+//         logout: false,
+//         user: false
+//       }
+//     }
+//   }
+// },
 
   svgSprite: {
     // manipulate module options

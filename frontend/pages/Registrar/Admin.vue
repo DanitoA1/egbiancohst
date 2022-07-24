@@ -1,18 +1,11 @@
+<!-- eslint-disable -->
 <template>
   <div class="mx-auto container w-11/12">
     <RegistrarModal v-if="showModal" />
-        <Loading v-if="loading" />
+    <Loading v-if="loading" />
 
     <div
-      class="
-        flex flex-col
-        items-center
-        justify
-        space-y-4
-        border-b border-gray-400
-        pb-3
-        text-center
-      "
+      class="flex flex-col items-center justify space-y-4 border-b border-gray-400 pb-3 text-center"
     >
       <div class="py-2 text-4xl uppercase">
         Egbian College of Health and Technology
@@ -40,17 +33,7 @@
       </div>
       <div>
         <button
-          class="
-            bg-dark-blue
-            text-white text-center
-            overflow-ellipsis
-            border
-            outline-none
-            border-gray-300
-            font-bold
-            rounded-lg
-            p-3
-          "
+          class="bg-dark-blue text-white text-center overflow-ellipsis border outline-none border-gray-300 font-bold rounded-lg p-3"
           @click="signOut"
         >
           <font-awesome-icon
@@ -65,20 +48,7 @@
       <div
         v-for="(item, idx) in applicants"
         :key="idx"
-        class="
-          stat-box
-          p-8
-          my-5
-          rounded-xl
-          transition-all
-          cursor-pointer
-          transform
-          hover:-translate-y-2
-          duration-300
-          bg-blue-100
-          max-w-lg
-          shadow-lg
-        "
+        class="stat-box p-8 my-5 rounded-xl transition-all cursor-pointer transform hover:-translate-y-2 duration-300 bg-blue-100 max-w-lg shadow-lg"
       >
         <div class="stat-icon flex flex-col space-y-6">
           <div class="text-2xl text-blue-500 font-semibold">
@@ -106,8 +76,11 @@
 </template>
 
 <script>
+/* eslint-disable */
 import { mapGetters, mapState } from 'vuex'
 export default {
+  middleware: 'auth',
+  name: 'Admin',
   data() {
     return {
       loading: true,
@@ -133,7 +106,6 @@ export default {
           bg: 'bg-red-300',
         },
       ],
-  
     }
   },
   computed: {
@@ -165,7 +137,6 @@ export default {
     if (this.allCandidates) {
       this.loading = false
     }
-    
   },
   beforeMount() {
     if (!this.$fire.auth.currentUser) {

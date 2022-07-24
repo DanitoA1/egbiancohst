@@ -1,17 +1,8 @@
+<!-- eslint-disable -->
 <template>
   <div class="h-screen">
     <header
-      class="
-        fixed
-        z-50
-        px-5
-        py-2
-        flex
-        justify-between
-        items-center
-        bg-dark-blue
-        w-screen
-      "
+      class="fixed z-50 px-5 py-2 flex justify-between items-center bg-dark-blue w-screen"
     >
       <div class="flex items-center">
         <span class="mr-10">
@@ -43,7 +34,9 @@
     </header>
 
     <main class="grid">
-      <div   class="transition duration-300 overflow-y-scroll form-page bg-white h-screen pt-20 pl-20 ">
+      <div
+        class="transition duration-300 overflow-y-scroll form-page bg-white h-screen pt-20 pl-20"
+      >
         <div
           :class="[
             drawer ? 'openAside' : '',
@@ -93,9 +86,11 @@
 </template>
 
 <script>
+/* eslint-disable */
 export default {
-  name: 'Dashboard',
-  props: {},
+  name: 'StudentDashboard',
+  middleware: 'auth',
+
   data() {
     return {
       drawer: false,
@@ -169,10 +164,10 @@ export default {
 .sidebar-text {
   display: none;
 }
-.sidebar:hover .sidebar-text  {
+.sidebar:hover .sidebar-text {
   display: flex;
 }
-.sidebar.openAside .sidebar-text  {
+.sidebar.openAside .sidebar-text {
   display: flex;
 }
 .form-page::-webkit-scrollbar,

@@ -141,10 +141,14 @@
 
 <script>
 /* eslint-disable */
+import Cookies from 'js-cookie'
+import getUser from '@/Utils/getUser'
+
 import { validationMixin } from 'vuelidate'
 import { required, minLength } from 'vuelidate/lib/validators'
 export default {
   name: 'ApplicationRegistration',
+
   mixins: [validationMixin],
   validations: {
     username: { required },
@@ -178,8 +182,28 @@ export default {
       try {
         this.loading = true
         await this.$axios.post('/account/auth/applicant/', auth).then((res) => {
-          console.log(res)
-          this.$router.push('/admission/documentation')
+          this.$cookies.set('token', res.data.data.token)
+          const { id } = res.data.data
+          const { user_type } = res.data.data.user
+          const { redirectUrl } = this.$store.state
+          getUser(this.$axios, this.$store, this.$cookies, id)
+          if (redirectUrl !== '/') {
+            if (user_type === 'applicant') {
+              this.$router.push('/admission/documentation')
+            }
+            if (user_type === 'student') {
+              this.$router.push('/student/dashboard')
+            }
+            if (user_type === 'lecturer') {
+              this.$router.push('/school/staffs')
+            }
+            if (user_type === 'admin') {
+              this.$router.push('/registrar/admin')
+            }
+          } else {
+            this.$router.push(redirectUrl)
+          }
+
           this.$toast.success('Login Successful')
           this.loading = false
         })
@@ -215,5 +239,4 @@ export default {
 .reg-container::-webkit-scrollbar {
   display: none;
 }
-
 </style>

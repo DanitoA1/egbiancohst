@@ -27,6 +27,7 @@
     "datatables.net": "^1.11.3",
     "element-ui": "^2.15.3",
     "eslint": "^8.12.0",
+    "js-cookie": "^3.0.1",
     "lightvue": "^0.4.8",
     "moment": "^2.29.1",
     "nuxt": "^2.15.7",
