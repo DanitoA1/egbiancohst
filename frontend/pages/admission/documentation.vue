@@ -188,7 +188,6 @@ export default {
     ...mapActions(['logOut']),
     logoutHandler() {
       this.logOut()
-   
     },
   },
 }

@@ -1,6 +1,6 @@
 <!-- eslint-disable -->
 <template>
-  <div class="mx-auto container w-11/12">
+  <!-- <div class="mx-auto container w-11/12">
     <RegistrarModal v-if="showModal" />
     <Loading v-if="loading" />
 
@@ -72,7 +72,8 @@
     </div>
 
     <RegistrarTable :allCandidates="allCandidates" />
-  </div>
+  </div> -->
+  <div>Hi</div>
 </template>
 
 <script>
@@ -108,52 +109,43 @@ export default {
       ],
     }
   },
-  computed: {
-    ...mapGetters(['getCurrentCandidate']),
-    ...mapState(['allCandidates']),
-    getAdmittedCandidates() {
-      return this.allCandidates.filter((item) => item.adminStatus)
-    },
-    getRejectedCandidates() {
-      return this.allCandidates.filter((item) => !item.adminStatus)
-    },
-    getCurrentAdmin() {
-      return this.$fire.auth.currentUser
-        ? this.$fire.auth.currentUser.email
-        : 'Admin'
-    },
-  },
-  created() {
-    this.$store.dispatch('getAllCandidates')
-    this.applicants[0].count = this.allCandidates
-      ? this.allCandidates.length
-      : 0
-    this.applicants[1].count = this.getAdmittedCandidates
-      ? this.getAdmittedCandidates.length
-      : 0
-    this.applicants[2].count = this.getRejectedCandidates
-      ? this.getRejectedCandidates.length
-      : 0
-    if (this.allCandidates) {
-      this.loading = false
-    }
-  },
-  beforeMount() {
-    if (!this.$fire.auth.currentUser) {
-      this.$router.push('/registrar/login')
-    }
-  },
+  // computed: {
+  //   ...mapGetters(['getCurrentCandidate']),
+  //   ...mapState(['allCandidates']),
+  //   getAdmittedCandidates() {
+  //     return this.allCandidates.filter((item) => item.adminStatus)
+  //   },
+  //   getRejectedCandidates() {
+  //     return this.allCandidates.filter((item) => !item.adminStatus)
+  //   },
+  //   getCurrentAdmin() {
+  //     return this.$fire.auth.currentUser
+  //       ? this.$fire.auth.currentUser.email
+  //       : 'Admin'
+  //   },
+  // },
+  // created() {
+  //   this.$store.dispatch('getAllCandidates')
+  //   this.applicants[0].count = this.allCandidates
+  //     ? this.allCandidates.length
+  //     : 0
+  //   this.applicants[1].count = this.getAdmittedCandidates
+  //     ? this.getAdmittedCandidates.length
+  //     : 0
+  //   this.applicants[2].count = this.getRejectedCandidates
+  //     ? this.getRejectedCandidates.length
+  //     : 0
+  //   if (this.allCandidates) {
+  //     this.loading = false
+  //   }
+  // },
+  // beforeMount() {
+  //   if (!this.$fire.auth.currentUser) {
+  //     this.$router.push('/registrar/login')
+  //   }
+  // },
   methods: {
-    async signOut() {
-      await this.$fire.auth.signOut().then((ref) => {
-        this.$notify.success({
-          title: 'Logout Sucessfull',
-          message: 'Bye. Later!',
-        })
-      })
-
-      this.$router.push('/registrar/login')
-    },
+   
   },
 }
 </script>

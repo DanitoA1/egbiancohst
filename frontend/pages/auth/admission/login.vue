@@ -148,7 +148,7 @@ import { validationMixin } from 'vuelidate'
 import { required, minLength } from 'vuelidate/lib/validators'
 export default {
   name: 'ApplicationRegistration',
-
+  middleware: 'guest',
   mixins: [validationMixin],
   validations: {
     username: { required },
@@ -171,7 +171,7 @@ export default {
   //   this.$auth.logout()
   // },
   methods: {
-    async register() {
+    async login() {
       const auth = {
         username: this.username,
         password: this.password,
@@ -182,29 +182,24 @@ export default {
       try {
         this.loading = true
         await this.$axios.post('/account/auth/applicant/', auth).then((res) => {
-          this.$cookies.set('token', res.data.data.token)
           const { id } = res.data.data
           const { user_type } = res.data.data.user
-          const { redirectUrl } = this.$store.state
+          this.$cookies.set('token', res.data.data.token)
+          this.$cookies.set('user_type', user_type)
+          const redirectUrl = this.$cookies.get('redirect')
           getUser(this.$axios, this.$store, this.$cookies, id)
-          if (redirectUrl !== '/') {
-            if (user_type === 'applicant') {
+          if (user_type.toLowerCase().includes('applicant')) {
+            if (redirectUrl) {
+              this.$router.push(redirectUrl)
+            } else {
               this.$router.push('/admission/documentation')
             }
-            if (user_type === 'student') {
-              this.$router.push('/student/dashboard')
-            }
-            if (user_type === 'lecturer') {
-              this.$router.push('/school/staffs')
-            }
-            if (user_type === 'admin') {
-              this.$router.push('/registrar/admin')
-            }
-          } else {
-            this.$router.push(redirectUrl)
-          }
 
-          this.$toast.success('Login Successful')
+            this.$toast.success('Login Successful')
+          } else {
+            this.$toast.error('Permission denied, user is not an applicant')
+          }
+          this.$cookies.remove('redirect')
           this.loading = false
         })
       } catch (error) {
@@ -227,7 +222,7 @@ export default {
     submitForm() {
       this.$v.$touch()
       if (!this.$v.$invalid) {
-        this.register()
+        this.login()
       }
     },
   },

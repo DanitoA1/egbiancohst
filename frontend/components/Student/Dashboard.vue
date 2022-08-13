@@ -1,3 +1,5 @@
+<!-- eslint-disable -->
+
 <template>
   <div>
     <div class="my-4 px-8">
@@ -91,6 +93,7 @@
     </div>
   </div>
 </template>
+<!-- eslint-disable -->
 
 <script>
 export default {

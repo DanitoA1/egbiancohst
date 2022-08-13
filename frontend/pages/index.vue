@@ -1,8 +1,9 @@
+<!-- eslint-disable -->
 <template>
   <div>
     <BaseAppHeaderLanding />
 
-    <section class="hero ">
+    <section class="hero">
       <el-carousel :interval="5000" arrow="always">
         <el-carousel-item v-for="item in 8" :key="item">
           <img
@@ -15,15 +16,7 @@
     </section>
 
     <div
-      class="
-        landing
-      my-10
-        text-center
-        flex flex-col
-        font-semibold
-        justify-center
-        text-black
-      "
+      class="landing my-10 text-center flex flex-col font-semibold justify-center text-black"
     >
       <h1 class="lg:text-8xl text-5xl mx-auto playfair">Unleashing</h1>
       <h1 class="lg:text-8xl text-5xl mx-auto playfair mt-4">
@@ -97,20 +90,13 @@
             We provide you with a personalized program that is research-backed
             and builds on the experince brought by our experts.
           </p>
-        <nuxt-link to="/about">
-          <button
-            class="
-              bg-dark-blue
-              text-white
-              py-3.5
-              px-10
-              mt-12
-              rounded-md
-              text-2xl
-            "
+          <nuxt-link to="/about">
+            <button
+              class="bg-dark-blue text-white py-3.5 px-10 mt-12 rounded-md text-2xl"
+            >
+              Explore more
+            </button></nuxt-link
           >
-            Explore more
-          </button></nuxt-link>
         </div>
       </div>
       <div class="grid lg:grid-cols-2 gap-x-32 my-40">
@@ -121,7 +107,7 @@
         />
         <div class="ml-6">
           <h1 class="text-3xl roboto font-extrabold text-dark-500">
-            We offered the following courses at Egbian College of Sciences  and
+            We offered the following courses at Egbian College of Sciences and
             Technology
           </h1>
           <div
@@ -146,6 +132,8 @@
 </template>
 
 <script>
+/* eslint-disable */
+
 export default {
   data() {
     return {
@@ -161,6 +149,7 @@ export default {
       ],
     }
   },
+
 }
 </script>
 <style>
