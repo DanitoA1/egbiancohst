@@ -1,8 +1,11 @@
+<!-- eslint-disable -->
+
 <template>
   <div class="my-5">
     <Loading v-if="loading" />
 
-    <div v-if="getCurrentCandidate.paymentStatus">
+    <!-- <div v-if="getCurrentCandidate.paymentStatus"> -->
+    <div v-if="true">
       <comp-upload-doc
         :doctype="`scert`"
         :label="`Waec or Neco or Nabteb`"
@@ -26,18 +29,7 @@
     </div>
     <div
       v-else
-      class="
-        px-3
-        py-7
-        my-10
-        text-red-500
-        bg-red-300
-        border border-red-500
-        w-11/12
-        justify-center
-        text-xl
-        font-bold
-      "
+      class="px-3 py-7 my-10 text-red-500 bg-red-300 border border-red-500 w-11/12 justify-center text-xl font-bold"
     >
       <font-awesome-icon
         :icon="['fas', `info-circle`]"
@@ -49,7 +41,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+/* eslint-disable */
+
+import { mapState } from 'vuex'
 
 import CompUploadDoc from './CompUploadDoc.vue'
 export default {
@@ -60,184 +54,103 @@ export default {
   },
   components: { CompUploadDoc },
   computed: {
-    ...mapGetters(['getCurrentCandidate']),
+    ...mapState(['userData']),
   },
   methods: {
-    handleUpdateScert(payload) {
-      this.loading = !this.loading
-
-      this.$fire.firestore
-        .collection('users')
-        .doc(this.getCurrentCandidate.id)
-        .update({
-          scert: payload,
-        })
-        .then(() => {
-          this.loading = !this.loading
-
-          console.log('Document successfully Updated!')
-          this.$notify.success({
-            title: 'Document successfully Updated',
-            message: 'Data Saved!',
-          })
-        })
-        .catch((error) => {
-          console.error('Error writing document: ', error)
-        })
-    },
     uploadScert(e) {
       const file = e.target.files[0]
-      console.log(file)
-      const storageRef = this.$fire.storage.ref()
-      const thisRef = storageRef.child('Applicants/' + file.name)
-      thisRef
-        .put(file)
-        .then((snapshot) => {
-          console.log(snapshot)
-          console.log('Document successfully Updated!')
-        })
-        .then((res) => {
-          thisRef
-            .getDownloadURL()
-            .then((imageUrl) => {
-              this.handleUpdateScert(imageUrl)
-            })
-            .catch((error) => {
-              console.log(error)
-            })
-        })
-    },
-    handleUpdatePcert(payload) {
-      this.loading = !this.loading
+      // const imageUrl = URL.createObjectURL(file)
+      let formData = new FormData()
+      formData.append('picture', file)
+      try {
+        this.loading = true
+        this.$axios
+          .put(`/api/v1/applicant/${this.userData.id}/`, passport)
+          .then((res) => {
+            console.log(res)
 
-      this.$fire.firestore
-        .collection('users')
-        .doc(this.getCurrentCandidate.id)
-        .update({
-          pcert: payload,
-        })
-        .then(() => {
-          this.loading = !this.loading
-
-          console.log('Document successfully Updated!')
-          this.$notify.success({
-            title: 'Document successfully Updated',
-            message: 'Data Saved!',
+            this.$toast.success('Certificate Uploaded Sucessfully')
+            this.loading = false
           })
-        })
-        .catch((error) => {
-          console.error('Error writing document: ', error)
-        })
+      } catch (error) {
+        this.loading = false
+        console.log(error)
+        if (error.response) {
+          this.$toast.error(error.response.data.message)
+        }
+      }
     },
+
     uploadPcert(e) {
       const file = e.target.files[0]
-      console.log(file)
-      const storageRef = this.$fire.storage.ref()
-      const thisRef = storageRef.child('Applicants/' + file.name)
-      thisRef
-        .put(file)
-        .then((snapshot) => {
-          console.log(snapshot)
-          console.log('Document successfully Updated!')
-        })
-        .then((res) => {
-          thisRef
-            .getDownloadURL()
-            .then((imageUrl) => {
-              this.handleUpdatePcert(imageUrl)
-            })
-            .catch((error) => {
-              console.log(error)
-            })
-        })
-    },
-    handleUpdateBcert(payload) {
-      this.loading = !this.loading
+      // const imageUrl = URL.createObjectURL(file)
+      let formData = new FormData()
+      formData.append('picture', file)
+      try {
+        this.loading = true
+        this.$axios
+          .put(`/api/v1/applicant/${this.userData.id}/`, passport)
+          .then((res) => {
+            console.log(res)
 
-      this.$fire.firestore
-        .collection('users')
-        .doc(this.getCurrentCandidate.id)
-        .update({
-          bcert: payload,
-        })
-        .then(() => {
-          this.loading = !this.loading
-
-          console.log('Document successfully Updated!')
-          this.$notify.success({
-            title: 'Document successfully Updated',
-            message: 'Data Saved!',
+            this.$toast.success('Certificate Uploaded Sucessfully')
+            this.loading = false
           })
-        })
-        .catch((error) => {
-          console.error('Error writing document: ', error)
-        })
+      } catch (error) {
+        this.loading = false
+        console.log(error)
+        if (error.response) {
+          this.$toast.error(error.response.data.message)
+        }
+      }
     },
+
     uploadBcert(e) {
       const file = e.target.files[0]
-      console.log(file)
-      const storageRef = this.$fire.storage.ref()
-      const thisRef = storageRef.child('Applicants/' + file.name)
-      thisRef
-        .put(file)
-        .then((snapshot) => {
-          console.log(snapshot)
-          console.log('Document successfully Updated!')
-        })
-        .then((res) => {
-          thisRef
-            .getDownloadURL()
-            .then((imageUrl) => {
-              this.handleUpdateBcert(imageUrl)
-            })
-            .catch((error) => {
-              console.log(error)
-            })
-        })
-    },
-    handleUpdateTestimonial(payload) {
-      this.loading = !this.loading
+      // const imageUrl = URL.createObjectURL(file)
+      let formData = new FormData()
+      formData.append('picture', file)
+      try {
+        this.loading = true
+        this.$axios
+          .put(`/api/v1/applicant/${this.userData.id}/`, passport)
+          .then((res) => {
+            console.log(res)
 
-      this.$fire.firestore
-        .collection('users')
-        .doc(this.getCurrentCandidate.id)
-        .update({
-          testimonial: payload,
-        })
-        .then(() => {
-          this.loading = !this.loading
-
-          console.log('Document successfully Updated!')
-          this.$notify.success({
-            title: 'Document successfully Updated',
-            message: 'Data Saved!',
+            this.$toast.success('Certificate Uploaded Sucessfully')
+            this.loading = false
           })
-        })
-        .catch((error) => {
-          console.error('Error writing document: ', error)
-        })
+      } catch (error) {
+        this.loading = false
+        console.log(error)
+        if (error.response) {
+          this.$toast.error(error.response.data.message)
+        }
+      }
     },
+
     uploadTestimonial(e) {
       const file = e.target.files[0]
-      console.log(file)
-      const storageRef = this.$fire.storage.ref()
-      const thisRef = storageRef.child('Applicants/' + file.name)
-      thisRef
-        .put(file)
-        .then((snapshot) => {
-          console.log(snapshot)
-          console.log('Document successfully Updated!')
-        })
-        .then((res) => {
-          thisRef
-            .getDownloadURL()
-            .then((imageUrl) => {
-              this.handleUpdateTestimonial(imageUrl)
-            })
-            .catch((error) => {
-              console.log(error)
-            })
-        })
+      // const imageUrl = URL.createObjectURL(file)
+      let formData = new FormData()
+      formData.append('picture', file)
+      try {
+        this.loading = true
+        this.$axios
+          .put(`/api/v1/applicant/${this.userData.id}/`, passport)
+          .then((res) => {
+            console.log(res)
+
+            this.$toast.success('Certificate Uploaded Sucessfully')
+            this.loading = false
+          })
+      } catch (error) {
+        this.loading = false
+        console.log(error)
+        if (error.response) {
+          this.$toast.error(error.response.data.message)
+        }
+      }
     },
   },
 }

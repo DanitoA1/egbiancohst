@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 <template>
   <div>
     <Loading v-if="loading" />
@@ -5,8 +6,8 @@
     <div class="font-bold mt-10 mb-6">Upload Your Passport</div>
     <div class="flex justify-center">
       <img
-        v-if="getCurrentCandidate"
-        :src="getCurrentCandidate.passportUrl"
+        v-if="userData"
+        :src="userData.picture"
         class="object-center h-520 w-52 object-contain"
         alt=""
       />
@@ -17,23 +18,10 @@
         alt=""
       />
     </div>
-    <input hidden type="file" id="pscert" @change="uploadImage" />
-    <label class="cursor-pointer text-dark-blue" for="pscert">
+    <input hidden type="file" id="image" @change="uploadImage" />
+    <label class="cursor-pointer text-dark-blue" for="image">
       <span
-        class="
-          bg-blue-600
-          hover:bg-dark-blue
-          text-white text-center
-          my-4
-          overflow-ellipsis
-          border
-          outline-none
-          border-gray-300
-          w-95
-          block
-          rounded-4px
-          p-3.5
-        "
+        class="bg-blue-600 hover:bg-dark-blue text-white text-center my-4 overflow-ellipsis border outline-none border-gray-300 w-95 block rounded-4px p-3.5"
       >
         Upload Passport
       </span></label
@@ -42,58 +30,46 @@
 </template>
 
 <script>
+/* eslint-disable */
+import { mapState } from 'vuex'
 export default {
-  props: ['getCurrentCandidate'],
-
   data() {
     return {
       currentCandidate: null,
       loading: false,
     }
   },
+  computed: {
+    ...mapState(['userData']),
+  },
 
   methods: {
-    handleUpdate(payload) {
-      this.loading = !this.loading
-      this.$fire.firestore
-        .collection('users')
-        .doc(this.getCurrentCandidate.id)
-        .update({
-          passportUrl: payload,
-        })
-        .then(() => {
-          this.loading = !this.loading
-          console.log('Document successfully Updated!')
-          this.$notify.success({
-            title: 'Passport Upload Sucessfully',
-            message: 'Data Saved!',
+    handleUpdate(passport) {
+      try {
+        this.loading = true
+        this.$axios
+          .put(`/api/v1/applicant/${this.userData.id}/`, passport)
+          .then((res) => {
+            console.log(res)
+
+            this.$toast.success('Passport Uploaded Sucessfully')
+            this.loading = false
           })
-        })
-        .catch((error) => {
-          console.error('Error writing document: ', error)
-        })
+      } catch (error) {
+        console.log(error)
+        this.loading = false
+        if (error.response) {
+          this.$toast.error(error.response.data.message)
+        }
+
+      }
     },
     uploadImage(e) {
       const file = e.target.files[0]
-      console.log(file)
-      const storageRef = this.$fire.storage.ref()
-      const thisRef = storageRef.child('Applicants/' + file.name)
-      thisRef
-        .put(file)
-        .then((snapshot) => {
-          console.log(snapshot)
-          console.log('Uploaded Image Successfully!')
-        })
-        .then((res) => {
-          thisRef
-            .getDownloadURL()
-            .then((imageUrl) => {
-              this.handleUpdate(imageUrl)
-            })
-            .catch((error) => {
-              console.log(error)
-            })
-        })
+      // const imageUrl = URL.createObjectURL(file)
+      let formData = new FormData()
+      formData.append('picture', file)
+      this.handleUpdate(formData)
     },
   },
 }

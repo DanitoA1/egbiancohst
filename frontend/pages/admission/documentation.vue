@@ -31,7 +31,7 @@
             <img
               :src="
                 userData
-                  ? userData.passportUrl
+                  ? userData.picture
                   : require('~/assets/images/user-acct.svg')
               "
               class="h-10 w-10 object-contain mr-4"
@@ -41,7 +41,7 @@
               <div class="font-meduim text-xl">
                 {{
                   userData
-                    ? `${userData.surname}   ${userData.lastname}`
+                    ? `${userData.first_name}   ${userData.last_name}`
                     : 'Loading'
                 }}
               </div>
@@ -162,7 +162,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['userData', 'userData']),
+    ...mapState(['userData']),
   },
 
   mounted() {

@@ -1,8 +1,11 @@
+<!-- eslint-disable -->
+
 <template>
   <div>
     <Loading v-if="loading" />
     <div class="w-95">
-      <div v-if="getCurrentCandidate.paymentStatus">
+      <!-- <div v-if="userData.paymentStatus"> -->
+      <div v-if="true">
         <!-- Names -->
 
         <div class="grid lg:grid-cols-2 gap-4 mt-10">
@@ -41,19 +44,7 @@
             </label>
 
             <select
-              class="
-                mt-3
-                mr-5
-                overflow-ellipsis
-                border-2
-                outline-none
-                border-gray-300
-                w-full
-                shadow-md
-                rounded-md
-                p-3.5
-                focus:border-blue-400
-              "
+              class="mt-3 mr-5 overflow-ellipsis border-2 outline-none border-gray-300 w-full shadow-md rounded-md p-3.5 focus:border-blue-400"
               name="nationality"
               @change="handleSelectedCourse"
               v-model.trim="selectedCourse"
@@ -75,19 +66,7 @@
             </label>
 
             <select
-              class="
-                mt-3
-                mr-5
-                overflow-ellipsis
-                border-2
-                outline-none
-                border-gray-300
-                w-full
-                shadow-md
-                rounded-md
-                p-3.5
-                focus:border-blue-400
-              "
+              class="mt-3 mr-5 overflow-ellipsis border-2 outline-none border-gray-300 w-full shadow-md rounded-md p-3.5 focus:border-blue-400"
               name="nationality"
               @change="handleSelectedCountry"
               v-model.trim="selectedCountry"
@@ -111,19 +90,7 @@
 
             <select
               v-model.trim="selectedState"
-              class="
-                mt-3
-                mr-5
-                overflow-ellipsis
-                border-2
-                outline-none
-                border-gray-300
-                w-full
-                shadow-md
-                rounded-md
-                p-3.5
-                focus:border-blue-400
-              "
+              class="mt-3 mr-5 overflow-ellipsis border-2 outline-none border-gray-300 w-full shadow-md rounded-md p-3.5 focus:border-blue-400"
               @change="pickedState"
             >
               <!-- <option>Please Choose a State</option> -->
@@ -139,19 +106,7 @@
 
             <select
               v-model.trim="selectedLga"
-              class="
-                mt-3
-                mr-5
-                overflow-ellipsis
-                border-2
-                outline-none
-                border-gray-300
-                w-full
-                shadow-md
-                rounded-md
-                p-3.5
-                focus:border-blue-400
-              "
+              class="mt-3 mr-5 overflow-ellipsis border-2 outline-none border-gray-300 w-full shadow-md rounded-md p-3.5 focus:border-blue-400"
               @change="handleSelectedLga"
             >
               <option v-for="(city, idx) in correspondingCities" :key="idx">
@@ -173,19 +128,7 @@
             <label for="gender" class="text-gray-600 font-bold"> Gender </label>
 
             <select
-              class="
-                mt-3
-                mr-5
-                overflow-ellipsis
-                border-2
-                outline-none
-                border-gray-300
-                w-full
-                shadow-md
-                rounded-md
-                p-3.5
-                focus:border-blue-400
-              "
+              class="mt-3 mr-5 overflow-ellipsis border-2 outline-none border-gray-300 w-full shadow-md rounded-md p-3.5 focus:border-blue-400"
               name="nationality"
               @change="handleSelectedGender"
             >
@@ -226,7 +169,7 @@
               :placeholder="``"
             />
           </div>
-          <div class="w-full">
+          <!-- <div class="w-full">
             <InputForm
               v-model.trim="nextOfKin.name"
               :type="`text`"
@@ -258,40 +201,18 @@
               :label="`Next of Kin(Email)`"
               :placeholder="`Example@email.com`"
             />
-          </div>
+          </div> -->
         </div>
 
         <button
-          class="
-            bg-blue-600
-            hover:bg-dark-blue
-            text-white text-center
-            my-6
-            border
-            outline-none
-            border-gray-300
-            w-full
-            rounded-4px
-            p-3.5
-          "
+          class="bg-blue-600 hover:bg-dark-blue text-white text-center my-6 border outline-none border-gray-300 w-full rounded-4px p-3.5"
           @click="handleUpdate"
         >
           Update
         </button>
 
         <button
-          class="
-            bg-blue-600
-            hover:bg-dark-blue
-            text-white text-center
-            my-6
-            border
-            outline-none
-            border-gray-300
-            w-full
-            rounded-4px
-            p-3.5
-          "
+          class="bg-blue-600 hover:bg-dark-blue text-white text-center my-6 border outline-none border-gray-300 w-full rounded-4px p-3.5"
           @click="handlePreview"
         >
           Preview
@@ -299,18 +220,7 @@
       </div>
       <div
         v-else
-        class="
-          px-3
-          py-7
-          my-10
-          text-red-500
-          bg-red-300
-          border border-red-500
-          w-11/12
-          justify-center
-          text-xl
-          font-bold
-        "
+        class="px-3 py-7 my-10 text-red-500 bg-red-300 border border-red-500 w-11/12 justify-center text-xl font-bold"
       >
         <font-awesome-icon
           :icon="['fas', `info-circle`]"
@@ -328,41 +238,37 @@
 </template>
 
 <script>
+/* eslint-disable */
+import { mapState } from 'vuex'
 import CountryNames from './CountryNames'
 import Cities from './Cities'
 export default {
-  props: ['getCurrentCandidate'],
+  name: 'BioData',
   data() {
     return {
       loading: false,
       showModal: false,
       previewData: null,
-      surname: this.getCurrentCandidate ? this.getCurrentCandidate.surname : '',
-      middleName: this.getCurrentCandidate
-        ? this.getCurrentCandidate.middlename
-        : '',
-      lastName: this.getCurrentCandidate
-        ? this.getCurrentCandidate.lastname
-        : '',
-      phoneNumber: this.getCurrentCandidate
-        ? this.getCurrentCandidate.phoneNumber
-        : '',
-      address: this.getCurrentCandidate ? this.getCurrentCandidate.address : '',
-      nextOfKin: {
-        name: this.getCurrentCandidate
-          ? this.getCurrentCandidate.nextOfKin.name
-          : '',
-        address: this.getCurrentCandidate
-          ? this.getCurrentCandidate.nextOfKin.address
-          : '',
-        phoneNumber: this.getCurrentCandidate
-          ? this.getCurrentCandidate.nextOfKin.phoneNumber
-          : '',
-        email: this.getCurrentCandidate
-          ? this.getCurrentCandidate.nextOfKin.email
-          : '',
-      },
-      email: this.getCurrentCandidate ? this.getCurrentCandidate.email : '',
+      surname: this.userData ? this.userData.first_name : '',
+      middleName: this.userData ? this.userData.middle_name : '',
+      lastName: this.userData ? this.userData.last_name : '',
+      phoneNumber: this.userData ? this.userData.phone : '',
+      address: this.userData ? this.userData.address : '',
+      // nextOfKin: {
+      //   name: this.userData
+      //     ? this.userData.nextOfKin.name
+      //     : '',
+      //   address: this.userData
+      //     ? this.userData.nextOfKin.address
+      //     : '',
+      //   phoneNumber: this.userData
+      //     ? this.userData.nextOfKin.phone
+      //     : '',
+      //   email: this.userData
+      //     ? this.userData.nextOfKin.email
+      //     : '',
+      // },
+      email: this.userData ? this.userData.email : '',
       CountryList: CountryNames.countryList,
       courseList: [
         'Environmental Health Technicians (EHT)',
@@ -375,23 +281,13 @@ export default {
         'Medical Laboratory Technology (MLT)',
       ],
       genderList: ['male', 'female'],
-      selectedCountry: this.getCurrentCandidate
-        ? this.getCurrentCandidate.selectedCountry
-        : '',
-      selectedGender: this.getCurrentCandidate
-        ? this.getCurrentCandidate.selectedGender
-        : '',
-      selectedCourse: this.getCurrentCandidate
-        ? this.getCurrentCandidate.selectedCourse
-        : '',
+      selectedCountry: this.userData ? this.userData.selectedCountry : '',
+      selectedGender: this.userData ? this.userData.selectedGender : '',
+      selectedCourse: this.userData ? this.userData.selectedCourse : '',
 
-      dob: this.getCurrentCandidate ? this.getCurrentCandidate.dob : '',
-      selectedLga: this.getCurrentCandidate
-        ? this.getCurrentCandidate.selectedLga
-        : '',
-      selectedState: this.getCurrentCandidate
-        ? this.getCurrentCandidate.selectedState
-        : '',
+      dob: this.userData ? this.userData.dob : '',
+      selectedLga: this.userData ? this.userData.selectedLga : '',
+      selectedState: this.userData ? this.userData.selectedState : '',
       correspondingCities: [],
       cities: Cities,
       states: [
@@ -436,6 +332,9 @@ export default {
     }
   },
 
+  computed: {
+    ...mapState(['userData']),
+  },
   methods: {
     pickedState(event) {
       this.correspondingCities = this.cities[`${event.target.value}`]
@@ -462,45 +361,69 @@ export default {
     // Add a new document in collection "Users"
 
     handleUpdate() {
-      this.loading = !this.loading
+      const department = {
+        id: 1,
+        name: 'physics',
+        short_name: 'phy',
+        faculty: {
+          id: 1,
+          name: 'physical science',
+        },
+      }
+      const updatedData = {
+        first_name: this.surname,
+        middle_name: this.middleName,
+        last_name: this.lastName,
+        nationality: this.selectedCountry,
+        dob: this.dob,
+        phone: this.phoneNumber,
+        gender: this.selectedGender,
+        state: this.selectedState,
+        lga: this.selectedLga,
+        department: this.selectedCourse,
+        address: this.address,
 
-      this.$fire.firestore
-        .collection('users')
-        .doc(this.getCurrentCandidate.id)
-        .update({
-          surname: this.surname,
-          middlename: this.middleName,
-          lastname: this.lastName,
-          selectedCountry: this.selectedCountry,
-          dob: this.dob,
-          phoneNumber: this.phoneNumber,
-          selectedGender: this.selectedGender,
-          selectedState: this.selectedState,
-          selectedLga: this.selectedLga,
-          selectedCourse: this.selectedCourse,
-          address: this.address,
-          nextOfKin: {
-            name: this.nextOfKin.name,
-            address: this.nextOfKin.address,
-            phoneNumber: this.nextOfKin.phoneNumber,
-            email: this.nextOfKin.email,
-          },
-        })
-        .then(() => {
-          this.loading = false
-          console.log('Document successfully Updated!')
-          this.$notify.success({
-            title: 'Update Sucessfull',
-            message: 'Data Saved!',
+        // nextOfKin: {
+        //   name: this.nextOfKin.name,
+        //   address: this.nextOfKin.address,
+        //   phoneNumber: this.nextOfKin.phoneNumber,
+        //   email: this.nextOfKin.email,
+        // },
+      }
+
+      try {
+        this.loading = true
+        this.$axios
+          .put(`/api/v1/applicant/${this.userData.id}/`, updatedData)
+          .then((res) => {
+            console.log(res)
+
+            this.$toast.success('Biodata updated sucessfully')
+            this.loading = false
           })
-        })
-        .catch((error) => {
-          console.error('Error writing document: ', error)
-        })
+      } catch (error) {
+        console.log(error)
+        this.loading = false
+        if (error.response) {
+          this.$toast.error(error.response.data.message)
+        }
+      }
+
+      // .then(() => {
+      //   this.loading = false
+      //   console.log('Document successfully Updated!')
+      //   this.$notify.success({
+      //     title: 'Update Sucessfull',
+      //     message: 'Data Saved!',
+      //   })
+      // })
+      // .catch((error) => {
+      //   console.error('Error writing document: ', error)
+      // })
     },
     handlePreview() {
       this.showModal = true
-      this.previewData = this.getCurrentCandidate
+      this.previewData = this.userData
     },
     handleClose() {
       this.showModal = false

@@ -109,7 +109,7 @@
     </div>
 
     <div class="flex justify-center">
-      <nuxt-link to="/admission/login">
+      <nuxt-link to="/auth/admission/login">
         <button
           class="
             bg-blue-600

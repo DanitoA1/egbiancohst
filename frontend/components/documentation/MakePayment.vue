@@ -1,6 +1,7 @@
 <template>
   <div class="my-5 mx-auto container w-11/12">
-    <div v-if="!getCurrentCandidate.paymentStatus">
+    <!-- <div v-if="!userData.paymentStatus"> -->
+    <div v-if="true">
       <div class="p-3">
         <div
           v-for="(item, id) in admissionData"
@@ -23,37 +24,14 @@
       </div>
       <button
         @click="makePayment"
-        class="
-          bg-blue-600
-          hover:bg-dark-blue
-          text-white text-center
-          my-3
-          overflow-ellipsis
-          border
-          outline-none
-          border-gray-300
-          w-full
-          rounded-4px
-          p-3.5
-        "
+        class="bg-blue-600 hover:bg-dark-blue text-white text-center my-3 overflow-ellipsis border outline-none border-gray-300 w-full rounded-4px p-3.5"
       >
         Make Payment
       </button>
     </div>
     <div
       v-else
-      class="
-        px-3
-        py-7
-        my-10
-        text-green-500
-        bg-green-200
-        border border-green-500
-        w-11/12
-        justify-center
-        text-base
-        font-medium
-      "
+      class="px-3 py-7 my-10 text-green-500 bg-green-200 border border-green-500 w-11/12 justify-center text-base font-medium"
     >
       <font-awesome-icon
         :icon="['fas', `check-circle`]"
@@ -65,11 +43,14 @@
 </template>
 
 <script>
+/* eslint-disable */
+import * as util from '@/Utils/helper_function'
+
 export default {
-  props: ['getCurrentCandidate'],
+  props: ['userData'],
   data() {
     return {
-      amount: 15000,
+      amount: 100,
       admissionData: [
         {
           key: 'Amout',
@@ -77,15 +58,11 @@ export default {
         },
         {
           key: 'Aplication Number',
-          value: this.getCurrentCandidate
-            ? this.getCurrentCandidate.regId
-            : 'Loading',
+          value: this.userData ? this.userData.user.username : 'Loading',
         },
         {
           key: 'Candidate Name',
-          value: this.getCurrentCandidate
-            ? this.getCurrentCandidate.surname
-            : 'Loading',
+          value: this.userData ? this.userData.first_name : 'Loading',
         },
         {
           key: 'Payment Category',
@@ -99,43 +76,33 @@ export default {
     }
   },
   methods: {
-    async paymentUpdate() {
-      const ref = this.$fire.firestore
-        .collection('users')
-        .doc(this.getCurrentCandidate.id)
-      await ref
-        .update({ paymentStatus: true })
-        .then(() => {
-          this.$notify.success({
-            title: 'Payment Sucessfull',
-            message: 'Continue with Documentation!',
-          })
-        })
-        .catch((err) => console.log(err.message))
-    },
-    makePayment() {
-      const thisRef = this
-      this.$launchFlutterwave({
-        tx_ref: Date.now(),
-        amount: this.amount,
+    async makePayment() {
+      //paystack payment
+      this.$paystack({
+        // key: process.env.PAYSTACK_KEY, // Replace with your public key.
+        email: this.loggedInUser.email,
+        amount: util.calculateTotalCost(amountNaira),
+        ref: Date.now(),
         currency: 'NGN',
-        payment_options: 'card,mobilemoney,ussd',
-        customer: {
-          email: this.getCurrentCandidate.email,
-          phonenumber: this.getCurrentCandidate.phoneNumber,
-          name: `${this.getCurrentCandidate.surname} ${this.getCurrentCandidate.middlename} ${this.getCurrentCandidate.lastname}`,
-        },
-        callback(data) {
-          // specified callback function
+        // metadata: {
+        //   items: this.paystackMetadata,
+        // },
+        callback: async (data) => {
           console.log(data)
-          if (data.status === 'successful') {
-            thisRef.paymentUpdate();
+
+          if (data.status === 'success') {
+            // await this.$swal(
+            //   "Congratulations",
+            //   `Payment Successful`,
+            //   "success"
+            // );
+            //Update applicant payment status
+          } else {
+            this.$toast.error('Payment Failed. Try again ')
           }
         },
-        customizations: {
-          title: 'Application Form',
-          description: '2022/23 Admission registration fee',
-          logo: 'https://project-egbiancohst.web.app/_nuxt/img/Logo.f757544.svg',
+        onClose: () => {
+          // Do something.
         },
       })
     },

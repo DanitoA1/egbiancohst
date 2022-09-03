@@ -1,51 +1,17 @@
+<!-- eslint-disable -->
+
 <template>
   <div>
     <div
-      class="
-        bg-black
-        h-screen
-        w-screen
-        flex
-        justify-center
-        items-center
-        inset-0
-        bg-opacity-50
-        px-10
-        cursor-pointer
-        fixed
-        z-20
-      "
+      class="bg-black h-screen w-screen flex justify-center items-center inset-0 bg-opacity-50 px-10 cursor-pointer fixed z-20"
       @click="handleClose"
     >
       <div
         id="printMe"
-        class="
-          bg-white
-          flex flex-col
-          rounded-sm
-          shadow-md
-          lg:w-full
-          max-w-3xl
-          h-full
-          px-16
-          lg:m-20
-          my-20
-          py-4
-          z-50
-          overflow-auto
-        "
+        class="bg-white flex flex-col rounded-sm shadow-md lg:w-full max-w-3xl h-full px-16 lg:m-20 my-20 py-4 z-50 overflow-auto"
       >
         <div
-          class="
-            flex flex-col
-            items-center
-            justify
-            space-y-4
-            border-b border-gray-400
-            pb-3
-            mb-4
-            text-center
-          "
+          class="flex flex-col items-center justify space-y-4 border-b border-gray-400 pb-3 mb-4 text-center"
         >
           <div class="py-2 text-4xl uppercase flex">
             <div>
@@ -66,7 +32,7 @@
         <div class="flex justify-between">
           <!-- credential  -->
           <div class="flex flex-col space-y-5 text-lg font-meduim">
-            <div>Application No : {{ previewData.regId }}</div>
+            <div>Application No : {{ previewData.user.username }}</div>
             <div>Surname : {{ previewData.surname }}</div>
             <div>Middlename : {{ previewData.middlename }}</div>
             <div>Lastname : {{ previewData.lastname }}</div>
@@ -88,33 +54,13 @@
 
         <div class="flex justify-between items-center">
           <button
-            class="
-              bg-blue-600
-              hover:bg-dark-blue
-              text-white text-center
-              my-6
-              border
-              outline-none
-              border-gray-300
-              rounded-4px
-              p-3.5
-            "
+            class="bg-blue-600 hover:bg-dark-blue text-white text-center my-6 border outline-none border-gray-300 rounded-4px p-3.5"
             @click="handlePrint"
           >
             Print
           </button>
           <button
-            class="
-              bg-blue-600
-              hover:bg-dark-blue
-              text-white text-center
-              my-6
-              border
-              outline-none
-              border-gray-300
-              rounded-4px
-              p-3.5
-            "
+            class="bg-blue-600 hover:bg-dark-blue text-white text-center my-6 border outline-none border-gray-300 rounded-4px p-3.5"
             @click="handleClose"
           >
             Close
@@ -126,6 +72,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 export default {
   name: 'BiodataPreview',
   props: ['previewData', 'handleClose'],

@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 <template>
   <div>
     <div
@@ -22,7 +23,7 @@
       />
       <span
         ><strong>Congratulations</strong> ! You've been given provision admission into Egbian College of
-        Health and Technology to study {{ getCurrentCandidate.selectedCourse }}
+        Health and Technology to study {{ userData?.department || "None"}}
       </span>
     </div>
     <div
@@ -50,7 +51,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+/* eslint-disable */
+import { mapState } from 'vuex'
 export default {
   data() {
     return {
@@ -58,10 +60,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getCurrentCandidate']),
+    ...mapState(['userData']),
   },
-  created() {
-    this.adminStatus = this.getCurrentCandidate.adminStatus
+  mounted() {
+    this.adminStatus = this.userData.is_admited
   },
 }
 </script>
