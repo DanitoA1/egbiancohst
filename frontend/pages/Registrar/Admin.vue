@@ -1,153 +1,347 @@
 <!-- eslint-disable -->
 <template>
-  <!-- <div class="mx-auto container w-11/12">
-    <RegistrarModal v-if="showModal" />
-    <Loading v-if="loading" />
+  <div class="flex min-h-screen">
+    <!-- <div
+          class="toggle-menu px-4 bg-white fixed top-0 inset-x-0 flex justify-between items-center"
+        >
+          <a href="/dashboard" class="font-bold text-[#0192ED]">
+            <img src="@/assets/Middey_Horizontal.png" class="logo" />
+          </a>
+          <div class="space-x-6 flex items-center">
+            <button class=" ">
+              <i class="fa-solid text-xl fa-bell"></i>
+            </button>
+    
+            <button @click="toggle" class=" ">
+              <i class="fa-solid text-xl fa-bars"></i>
+            </button>
+          </div>
+        </div> -->
 
     <div
-      class="flex flex-col items-center justify space-y-4 border-b border-gray-400 pb-3 text-center"
+      class="md:ml-[300px] px-4 py-3 bg-[#f7f7f7] shadow-md text-[#000000] fixed top-0 inset-x-0 flex justify-between items-center"
     >
-      <div class="py-2 text-4xl uppercase">
-        Egbian College of Health and Technology
-      </div>
-      <div class="">
-        <img
-          src="~/assets/images/Logo.svg"
-          class="lg:w-40 lg:h-40 w-20 h-20"
-          alt=""
-        />
-      </div>
-      <div class="text-2xl">OFFICE OF THE REGISTRAR</div>
-
-      <h2 class="text-xl">
-        Admission into Undergraduate Programmes For 2022/2023 Academic Session
-      </h2>
-    </div>
-    <div class="flex justify-between my-2">
-      <div class="bg-dark-blue rounded-lg p-3 text-white text-lg">
-        <font-awesome-icon
-          :icon="['fas', `user`]"
-          class="w-6 mr-4 text-white h-6"
-        />
-        <span>{{ getCurrentAdmin }} </span>
-      </div>
-      <div>
-        <button
-          class="bg-dark-blue text-white text-center overflow-ellipsis border outline-none border-gray-300 font-bold rounded-lg p-3"
-          @click="signOut"
-        >
-          <font-awesome-icon
-            :icon="['fas', `power-off`]"
-            class="w-6 text-white h-6 mr-4"
-          />
-          Sign Out
+      <div class="font-bold capitalize flex gap-4 items-center">
+        <button @click="toggle" class="md:hidden block">
+          <font-awesome-icon :icon="['fas', `bars`]" />
         </button>
+        <div class="font-bold md:hidden block">ECHST ADMIN</div>
       </div>
-    </div>
-    <div class="my-4 grid grid-cols-3 gap-6">
-      <div
-        v-for="(item, idx) in applicants"
-        :key="idx"
-        class="stat-box p-8 my-5 rounded-xl transition-all cursor-pointer transform hover:-translate-y-2 duration-300 bg-blue-100 max-w-lg shadow-lg"
-      >
-        <div class="stat-icon flex flex-col space-y-6">
-          <div class="text-2xl text-blue-500 font-semibold">
-            Total Number of {{ item.status }}
-          </div>
-          <div
-            :class="item.bg"
-            class="rounded-full w-8 h-8 p-4 grid place-content-center"
-          >
-            <font-awesome-icon
-              :icon="['fas', `${item.icon}`]"
-              class="w-10 text-white h-10"
-            />
-          </div>
+      <div class="space-x-6 flex items-center">
+        <button class=" ">
+          <i class="fa-solid text-xl fa-bell"></i>
+        </button>
 
-          <div class="text-2xl text-blue-500 font-semibold">
-            {{ item.count }}
-          </div>
+        <div class="flex items-center gap-4">
+          <h3 class="text-base font-medium">{{ loginUser }}</h3>
+          <img
+            src="@/assets/Svg/user.svg"
+            class="object-fit md:h-10 h-8 md:w-10 w-8"
+          />
         </div>
       </div>
     </div>
 
-    <RegistrarTable :allCandidates="allCandidates" />
-  </div> -->
-  <div>Hi</div>
+    <div
+      v-if="isMobile"
+      class="inset-0 bg-[#00000090] z-[3] absolute"
+      @click="toggle"
+    ></div>
+    <div
+      :class="[isMobile ? 'isOpen' : null, 'sidebar']"
+      class="sidebar text-gray-400 transform duration-500 md:w-[300px] w-[280px] z-10 h-screen md:flex flex-col justify-between bg-white pb-10"
+    >
+      <div>
+        <div class="ml-7 my-5 text-white text-3xl font-bold">ECHST ADMIN</div>
+
+        <div
+          class="flex items-center mt-14 mx-5 bg-[#95959533] transition-all transform duration-500 font-medium rounded-md px-5 py-2"
+        >
+          <span class="w-2/12">
+            <img src="@/assets/Svg/search_admin.svg" alt="" />
+          </span>
+          <div class="w-10/12">
+            <input
+              type="search"
+              name="search"
+              placeholder="Search.."
+              class="bg-transparent outline-none px-2 py-1"
+            />
+          </div>
+        </div>
+
+        <div class="mt-4 px-5 space-y-2" @click="isMobile = false">
+          <!-- Dashboard -->
+
+          <nuxt-link
+            to="/registrar/admin/dashboard"
+            class="flex items-center mt-14 hover:bg-[#0092EC] hover:text-[#ffffffdb] transition-all transform duration-500 font-medium rounded-md px-5 py-2"
+            :class="
+              isActiveRoute('/dashboard')
+                ? 'bg-[#0092EC] text-[#ffffffdb]'
+                : 'text-gray-400'
+            "
+          >
+            <span class="w-2/12">
+              <img src="@/assets/Svg/home.svg" alt="" />
+            </span>
+            <div class="w-10/12">Dashboard</div>
+          </nuxt-link>
+
+          <!-- Applicant -->
+
+          <nuxt-link
+            to="/registrar/admin/applicant"
+            class="flex items-center hover:bg-[#0092EC] hover:text-[#ffffffdb] transition-all transform duration-500 font-medium rounded-md px-5 py-2"
+            :class="
+              isActiveRoute('applicant')
+                ? 'bg-[#0092EC] text-[#ffffffdb]'
+                : 'text-gray-400'
+            "
+          >
+            <span class="w-2/12">
+              <img src="@/assets/Svg/kyc.svg" alt="" />
+            </span>
+
+            <div class="w-10/12">Applicant</div>
+          </nuxt-link>
+
+          <!-- Student -->
+
+          <nuxt-link
+            to="/registrar/admin/student"
+            class="flex items-center hover:bg-[#0092EC] hover:text-[#ffffffdb] transition-all transform duration-500 font-medium rounded-md px-5 py-2"
+            :class="
+              isActiveRoute('student')
+                ? 'bg-[#0092EC] text-[#ffffffdb]'
+                : 'text-gray-400'
+            "
+          >
+            <span class="w-2/12">
+              <img src="@/assets/Svg/users.svg" alt="" />
+            </span>
+            <div class="w-10/12">Student</div>
+          </nuxt-link>
+          <!-- Faculty -->
+
+          <nuxt-link
+            to="/registrar/admin/faculty"
+            class="flex items-center hover:bg-[#0092EC] hover:text-[#ffffffdb] transition-all transform duration-500 font-medium rounded-md px-5 py-2"
+            :class="
+              isActiveRoute('Faculty')
+                ? 'bg-[#0092EC] text-[#ffffffdb]'
+                : 'text-gray-400'
+            "
+          >
+            <span class="w-2/12">
+              <img src="@/assets/Svg/monitor.svg" alt="" />
+            </span>
+            <div class="w-10/12">Faculty</div>
+          </nuxt-link>
+          <nuxt-link
+            to="/registrar/admin/department"
+            class="flex items-center hover:bg-[#0092EC] hover:text-[#ffffffdb] transition-all transform duration-500 font-medium rounded-md px-5 py-2"
+            :class="
+              isActiveRoute('Department')
+                ? 'bg-[#0092EC] text-[#ffffffdb]'
+                : 'text-gray-400'
+            "
+          >
+            <span class="w-2/12">
+              <img src="@/assets/Svg/monitor.svg" alt="" />
+            </span>
+            <div class="w-10/12">Department</div>
+          </nuxt-link>
+          <!-- Department -->
+
+          <nuxt-link
+            to="/registrar/admin/staff/lecturer"
+            class="flex items-center hover:bg-[#0092EC] hover:text-[#ffffffdb] transition-all transform duration-500 font-medium rounded-md px-5 py-2"
+            :class="
+              isActiveRoute('Staff')
+                ? 'bg-[#0092EC] text-[#ffffffdb]'
+                : 'text-gray-400'
+            "
+          >
+            <span class="w-2/12">
+              <img src="@/assets/Svg/users.svg" alt=""
+            /></span>
+            <div class="w-10/12">Staff</div>
+          </nuxt-link>
+
+          <!-- Bursary -->
+
+          <nuxt-link
+            to="/registrar/admin/Bursary"
+            class="flex items-center mb-4 hover:bg-[#0092EC] hover:text-[#ffffffdb] transition-all transform duration-500 font-medium rounded-md px-5 mt-6 py-2"
+            :class="
+              isActiveRoute('transaction')
+                ? 'bg-[#0092EC] text-[#ffffffdb]'
+                : 'text-gray-400'
+            "
+          >
+            <span class="w-2/12">
+              <img src="@/assets/Svg/transaction.svg" alt=""
+            /></span>
+            <div class="w-10/12">Bursary</div>
+          </nuxt-link>
+        </div>
+      </div>
+
+      <div
+        @click="logout"
+        class="flex items-center transform duration-500 transition-all font-medium text-base rounded-md bg-[#0092EC33] text-[#0092EC] mx-5 px-5 mt-10 py-2 cursor-pointer"
+      >
+        <span class="w-2/12">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i
+        ></span>
+        <div class="w-10/12">Logout</div>
+      </div>
+    </div>
+    <div class="main">
+      <div class="w-full py-16 px-4">
+        <div
+          class="flex flex-col items-center justify space-y-4 border-b border-gray-400 pb-3 text-center"
+        >
+          <div class="py-2 text-4xl uppercase">
+            Egbian College of Health and Technology
+          </div>
+          <div class="">
+            <img
+              src="~/assets/images/Logo.svg"
+              class="lg:w-40 lg:h-40 w-20 h-20"
+              alt=""
+            />
+          </div>
+          <div class="text-2xl">OFFICE OF THE REGISTRAR</div>
+
+          <h2 class="text-xl">
+            Admission into Undergraduate Programmes For 2022/2023 Academic
+            Session
+          </h2>
+        </div>
+        <nuxt-child />
+        <!-- <div class="text-center ">Copyright &copy; 2022</div> -->
+      </div>
+    </div>
+  </div>
 </template>
+<!-- eslint-disable -->
 
 <script>
-/* eslint-disable */
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
-  middleware: 'auth',
-  name: 'Admin',
+  name: 'admin',
   data() {
     return {
-      loading: true,
-      showModal: false,
-      admin: 'Admin',
-      applicants: [
-        {
-          status: 'Applicants',
-          count: 0,
-          icon: 'user',
-          bg: 'bg-purple-400',
-        },
-        {
-          status: 'Admitted ',
-          count: 0,
-          icon: 'check-circle',
-          bg: 'bg-green-300',
-        },
-        {
-          status: 'Rejected ',
-          count: 0,
-          icon: 'ban',
-          bg: 'bg-red-300',
-        },
-      ],
+      isMobile: false,
+      isIntegrationActive: false,
+      loginUser: '',
     }
   },
-  // computed: {
-  //   ...mapGetters(['getCurrentCandidate']),
-  //   ...mapState(['allCandidates']),
-  //   getAdmittedCandidates() {
-  //     return this.allCandidates.filter((item) => item.adminStatus)
-  //   },
-  //   getRejectedCandidates() {
-  //     return this.allCandidates.filter((item) => !item.adminStatus)
-  //   },
-  //   getCurrentAdmin() {
-  //     return this.$fire.auth.currentUser
-  //       ? this.$fire.auth.currentUser.email
-  //       : 'Admin'
-  //   },
-  // },
-  // created() {
-  //   this.$store.dispatch('getAllCandidates')
-  //   this.applicants[0].count = this.allCandidates
-  //     ? this.allCandidates.length
-  //     : 0
-  //   this.applicants[1].count = this.getAdmittedCandidates
-  //     ? this.getAdmittedCandidates.length
-  //     : 0
-  //   this.applicants[2].count = this.getRejectedCandidates
-  //     ? this.getRejectedCandidates.length
-  //     : 0
-  //   if (this.allCandidates) {
-  //     this.loading = false
-  //   }
-  // },
-  // beforeMount() {
-  //   if (!this.$fire.auth.currentUser) {
-  //     this.$router.push('/registrar/login')
-  //   }
-  // },
+  watch: {
+    // checkActivity() {
+    //   if (this.checkActivity) {
+    //     this.logout();
+    //     this.$swal("Timeout, Your session has expired");
+    //   }
+    // },
+  },
+  computed: {
+    currentPath() {
+      return this.$route.path
+    },
+    pageHeader() {
+      return this.$route.name
+    },
+    checkMobile() {
+      return this.isMobile
+    },
+    //   checkActivity() {
+    //     return this.$store.state.idleVue.isIdle;
+    //   },
+    ...mapGetters(['userData']),
+  },
+  mounted() {
+    // console.log(this.userData)
+    this.loginUser = `${this.userData?.first_name} ${this.userData?.last_name}`
+  },
   methods: {
-   
+    logout() {
+      this.$store.dispatch('logout')
+      this.$nuxt.push('/')
+      localStorage.clear()
+    },
+    toggle() {
+      this.isMobile = !this.isMobile
+    },
+    toggleIntegration() {
+      this.isIntegrationActive = !this.isIntegrationActive
+    },
+    isActiveRoute(route) {
+      if (this.currentPath.toLowerCase().includes(route)) {
+        return true
+      }
+    },
   },
 }
 </script>
+<!-- eslint-disable -->
 
-<style></style>
+<!-- eslint-disable -->
+<style scoped>
+.toggle-menu {
+  display: none;
+}
+.sidebar {
+  position: fixed;
+  min-width: 300px;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+  background: #343b4a;
+  @apply overflow-x-hidden shadow-sm;
+}
+.sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  border-radius: 25px;
+  background: #999;
+}
+.main {
+  margin-left: 300px;
+  width: 100%;
+  background: #f7f7f7;
+}
+
+.logo {
+  width: 200px;
+  height: 40px;
+  object-fit: contain;
+}
+@media screen and (max-width: 640px) {
+  .logo {
+    width: 100px;
+    height: 20px;
+    object-fit: contain;
+  }
+  .toggle-menu {
+    display: flex;
+  }
+
+  .main {
+    margin-left: 0;
+  }
+
+  .sidebar {
+    left: -100vw;
+    transition: all 0.2s linear;
+  }
+  .sidebar.isOpen {
+    left: 0;
+  }
+}
+</style>
+<!-- eslint-disable -->

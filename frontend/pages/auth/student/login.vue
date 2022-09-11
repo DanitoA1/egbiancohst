@@ -132,7 +132,7 @@ export default {
       }
       try {
         this.loading = true
-        await this.$axios.post('/account/auth/applicant/', auth).then((res) => {
+        await this.$axios.post('/account/auth/student/', auth).then((res) => {
           const { id } = res.data.data
           const { user_type } = res.data.data.user
           this.$cookies.set('token', res.data.data.token)

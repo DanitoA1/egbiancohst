@@ -79,9 +79,9 @@ export default {
     async makePayment() {
       //paystack payment
       this.$paystack({
-        // key: process.env.PAYSTACK_KEY, // Replace with your public key.
-        email: this.loggedInUser.email,
-        amount: util.calculateTotalCost(amountNaira),
+        key: process.env.PAYSTACK_KEY, // Replace with your public key.
+        email: this.userData.email,
+        amount: util.calculateTotalCost(this.amount),
         ref: Date.now(),
         currency: 'NGN',
         // metadata: {

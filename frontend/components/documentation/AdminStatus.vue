@@ -1,6 +1,6 @@
 <!-- eslint-disable -->
 <template>
-  <div>
+  <!-- <div>
     <div
       v-if="adminStatus"
       class="
@@ -47,8 +47,11 @@
       />
       <span>No Admission Yet</span>
     </div>
-  </div>
+  </div> -->
+
+  <div>Hi</div>
 </template>
+<!-- eslint-disable -->
 
 <script>
 /* eslint-disable */
@@ -63,7 +66,7 @@ export default {
     ...mapState(['userData']),
   },
   mounted() {
-    this.adminStatus = this.userData.is_admited
+    this.adminStatus = this.userData?.is_admitted
   },
 }
 </script>

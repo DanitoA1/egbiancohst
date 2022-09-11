@@ -118,7 +118,7 @@
           <div class="w-full">
             <InputForm
               v-model.trim="dob"
-              :type="`text`"
+              :type="`date`"
               :label="`Date 0f birth. ex: (27/12/1990)`"
               :placeholder="`ex: (27/12/1990)`"
             />
@@ -169,9 +169,9 @@
               :placeholder="``"
             />
           </div>
-          <!-- <div class="w-full">
+          <div class="w-full">
             <InputForm
-              v-model.trim="nextOfKin.name"
+              v-model.trim="next_kin_name"
               :type="`text`"
               :label="`Next of Kin(Name)`"
               :placeholder="``"
@@ -179,7 +179,7 @@
           </div>
           <div class="w-full">
             <InputForm
-              v-model.trim="nextOfKin.address"
+              v-model.trim="next_kin_address"
               :type="`text`"
               :label="`Next of Kin(Address)`"
               :placeholder="``"
@@ -188,7 +188,7 @@
 
           <div class="w-full">
             <InputForm
-              v-model.trim="nextOfKin.phoneNumber"
+              v-model.trim="next_kin_phoneNumber"
               :type="`text`"
               :label="`Next of Kin(Phone)`"
               :placeholder="`070XXXXXXXX`"
@@ -196,12 +196,12 @@
           </div>
           <div class="w-full">
             <InputForm
-              v-model.trim="nextOfKin.email"
+              v-model.trim="next_kin_email"
               :type="`text`"
               :label="`Next of Kin(Email)`"
               :placeholder="`Example@email.com`"
             />
-          </div> -->
+          </div>
         </div>
 
         <button
@@ -240,6 +240,7 @@
 <script>
 /* eslint-disable */
 import { mapState } from 'vuex'
+import getUser from '@/Utils/getUser'
 import CountryNames from './CountryNames'
 import Cities from './Cities'
 export default {
@@ -249,26 +250,16 @@ export default {
       loading: false,
       showModal: false,
       previewData: null,
-      surname: this.userData ? this.userData.first_name : '',
-      middleName: this.userData ? this.userData.middle_name : '',
-      lastName: this.userData ? this.userData.last_name : '',
-      phoneNumber: this.userData ? this.userData.phone : '',
-      address: this.userData ? this.userData.address : '',
-      // nextOfKin: {
-      //   name: this.userData
-      //     ? this.userData.nextOfKin.name
-      //     : '',
-      //   address: this.userData
-      //     ? this.userData.nextOfKin.address
-      //     : '',
-      //   phoneNumber: this.userData
-      //     ? this.userData.nextOfKin.phone
-      //     : '',
-      //   email: this.userData
-      //     ? this.userData.nextOfKin.email
-      //     : '',
-      // },
-      email: this.userData ? this.userData.email : '',
+      surname: '',
+      middleName: '',
+      lastName: '',
+      phoneNumber: '',
+      address: '',
+      next_kin_name: '',
+      next_kin_address: '',
+      next_kin_phoneNumber: '',
+      next_kin_email: '',
+      email: '',
       CountryList: CountryNames.countryList,
       courseList: [
         'Environmental Health Technicians (EHT)',
@@ -281,13 +272,13 @@ export default {
         'Medical Laboratory Technology (MLT)',
       ],
       genderList: ['male', 'female'],
-      selectedCountry: this.userData ? this.userData.selectedCountry : '',
-      selectedGender: this.userData ? this.userData.selectedGender : '',
-      selectedCourse: this.userData ? this.userData.selectedCourse : '',
+      selectedCountry: '',
+      selectedGender: '',
+      selectedCourse: '',
 
-      dob: this.userData ? this.userData.dob : '',
-      selectedLga: this.userData ? this.userData.selectedLga : '',
-      selectedState: this.userData ? this.userData.selectedState : '',
+      dob: '',
+      selectedLga: '',
+      selectedState: '',
       correspondingCities: [],
       cities: Cities,
       states: [
@@ -335,6 +326,24 @@ export default {
   computed: {
     ...mapState(['userData']),
   },
+  mounted() {
+    this.surname = this.userData.first_name || ''
+    this.middleName = this.userData.middle_name || ''
+    this.lastName = this.userData.last_name || ''
+    this.phoneNumber = this.userData.phone || ''
+    this.address = this.userData.address || ''
+    this.next_kin_name = this.userData.next_kin_name || ''
+    this.next_kin_address = this.userData.next_kin_address || ''
+    this.next_kin_phoneNumber = this.userData.next_kin_phone || ''
+    this.next_kin_email = this.userData.next_kin_email || ''
+    this.email = this.userData.email || ''
+    this.selectedCountry = this.userData ? this.userData.nationality : ''
+    this.selectedGender = this.userData ? this.userData.gender : ''
+    this.selectedCourse = this.userData ? this.userData.department : ''
+    this.dob = this.userData ? this.userData.dob : ''
+    this.selectedLga = this.userData ? this.userData.lga : ''
+    this.selectedState = this.userData ? this.userData.state : ''
+  },
   methods: {
     pickedState(event) {
       this.correspondingCities = this.cities[`${event.target.value}`]
@@ -360,7 +369,7 @@ export default {
 
     // Add a new document in collection "Users"
 
-    handleUpdate() {
+    async handleUpdate() {
       const department = {
         id: 1,
         name: 'physics',
@@ -383,22 +392,30 @@ export default {
         department: this.selectedCourse,
         address: this.address,
 
-        // nextOfKin: {
-        //   name: this.nextOfKin.name,
-        //   address: this.nextOfKin.address,
-        //   phoneNumber: this.nextOfKin.phoneNumber,
-        //   email: this.nextOfKin.email,
-        // },
+        next_kin_name: this.next_kin_name,
+        next_kin_address: this.next_kin_address,
+        next_kin_phone: this.next_kin_phoneNumber,
+        next_kin_email: this.next_kin_email,
       }
 
       try {
         this.loading = true
-        this.$axios
+        const { user_type } = this.userData.user
+        const { id } = this.userData
+        await this.$axios
           .put(`/api/v1/applicant/${this.userData.id}/`, updatedData)
-          .then((res) => {
+          .then(async (res) => {
             console.log(res)
 
             this.$toast.success('Biodata updated sucessfully')
+            await getUser(
+              this.$axios,
+              this.$store,
+              this.$cookies,
+              user_type,
+              id
+            )
+
             this.loading = false
           })
       } catch (error) {

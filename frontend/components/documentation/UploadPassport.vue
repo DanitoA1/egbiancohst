@@ -32,6 +32,7 @@
 <script>
 /* eslint-disable */
 import { mapState } from 'vuex'
+import getUser from '~/Utils/getUser'
 export default {
   data() {
     return {
@@ -47,12 +48,15 @@ export default {
     handleUpdate(passport) {
       try {
         this.loading = true
+        const {user_type} = this.userData.user
+        const {id} = this.userData
         this.$axios
           .put(`/api/v1/applicant/${this.userData.id}/`, passport)
           .then((res) => {
             console.log(res)
 
             this.$toast.success('Passport Uploaded Sucessfully')
+            getUser(this.$axios, this.$store, this.$cookies, user_type, id)
             this.loading = false
           })
       } catch (error) {
@@ -61,7 +65,6 @@ export default {
         if (error.response) {
           this.$toast.error(error.response.data.message)
         }
-
       }
     },
     uploadImage(e) {

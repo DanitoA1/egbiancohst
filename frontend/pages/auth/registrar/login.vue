@@ -132,22 +132,22 @@ export default {
       }
       try {
         this.loading = true
-        await this.$axios.post('/account/auth/applicant/', auth).then((res) => {
-          const { id } = res.data.data
-          const { user_type } = res.data.data.user
-          this.$cookies.set('token', res.data.data.token)
+        await this.$axios.post('/account/auth/staff/admin/', auth).then((res) => {
+          const { id } = res.data
+          const { user_type } = res.data.user
+          this.$cookies.set('token', res.data.token)
           this.$cookies.set('user_type', user_type)
           const redirectUrl = this.$cookies.get('redirect')
-          getUser(this.$axios, this.$store, this.$cookies, id)
-          if (user_type.toLowerCase().includes('student')) {
+          getUser(this.$axios, this.$store, this.$cookies, user_type, id)
+          if (user_type.toLowerCase().includes('staff')) {
             if (redirectUrl) {
               this.$router.push(redirectUrl)
             } else {
-              this.$router.push('/student/dashboard')
+              this.$router.push('/registrar/admin')
             }
             this.$toast.success('Login Successful')
           } else {
-            this.$toast.error('Permission denied, user is not  student')
+            this.$toast.error('Permission denied, user is not  staff')
           }
           this.$cookies.remove('redirect')
           this.loading = false

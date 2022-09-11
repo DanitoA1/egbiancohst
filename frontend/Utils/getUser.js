@@ -1,8 +1,8 @@
 /*eslint-disable */
-const getUser = async (axios, store, cookies, id) => {
+const getUser = async (axios, store, cookies, user_type, id) => {
   const token  = cookies.get('token')
   await axios
-    .get(`/api/v1/applicant/${id}/`, {
+    .get(`/api/v1/${user_type}/${id}/`, {
       headers: {
         authorization: `Bearer ${token}`,
       },

@@ -37,7 +37,7 @@ export default function ({ app, route, redirect }) {
     if (user_type != 'lecturer' && route.fullPath.includes('/school/')) {
       redirect('/school/staffs')
     }
-    if (user_type != 'admin' && route.fullPath.includes('/registrar/')) {
+    if (user_type != 'staff' && route.fullPath.includes('/registrar/')) {
       redirect('/auth/registrar/login')
     }
   }

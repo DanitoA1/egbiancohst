@@ -141,7 +141,6 @@
 
 <script>
 /* eslint-disable */
-import Cookies from 'js-cookie'
 import getUser from '@/Utils/getUser'
 
 import { validationMixin } from 'vuelidate'
@@ -187,7 +186,7 @@ export default {
           this.$cookies.set('token', res.data.data.token)
           this.$cookies.set('user_type', user_type)
           const redirectUrl = this.$cookies.get('redirect')
-          getUser(this.$axios, this.$store, this.$cookies, id)
+          getUser(this.$axios, this.$store, this.$cookies, user_type, id)
           if (user_type.toLowerCase().includes('applicant')) {
             if (redirectUrl) {
               this.$router.push(redirectUrl)
