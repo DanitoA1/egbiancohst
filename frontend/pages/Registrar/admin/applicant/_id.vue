@@ -21,8 +21,10 @@
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-4">Passport</div>
           <div class="col-span-8 flex-col">
-            <img :src="user.picture" alt="" class="h-32 w-32 m mb-2b-2" />
-            <button @click="handlePreview(user.picture) class="text-blue-500" >Larger View</button>
+            <img :src="user.picture" alt="" class="h-32 w-32 mb-2" />
+            <button class="text-blue-500" @click="handlePreview(user.picture)">
+              Larger View
+            </button>
           </div>
         </div>
       </div>
@@ -128,6 +130,9 @@
           <div class="col-span-4">Primary school certificates</div>
           <div class="col-span-8 capitalize">
             <img :src="user.primary_cert" class="h-32 w-32 mb-2" alt="" />
+            <button class="text-blue-500" @click="handlePreview(user.primary_cert)">
+              Larger View
+            </button>
           </div>
         </div>
       </div>
@@ -136,6 +141,9 @@
           <div class="col-span-4">Secondary school certificates</div>
           <div class="col-span-8 capitalize">
             <img :src="user.secondary_cert" class="h-32 w-32 mb-2" alt="" />
+            <button class="text-blue-500" @click="handlePreview(user.secondary_cert)">
+              Larger View
+            </button>
           </div>
         </div>
       </div>
@@ -144,6 +152,9 @@
           <div class="col-span-4">Brith Certificates</div>
           <div class="col-span-8 capitalize">
             <img :src="user.birth_cert" class="h-32 w-32 mb-2" alt="" />
+            <button class="text-blue-500" @click="handlePreview(user.birth_cert)">
+              Larger View
+            </button>
           </div>
         </div>
       </div>
@@ -152,6 +163,9 @@
           <div class="col-span-4">Testimonial</div>
           <div class="col-span-8 capitalize">
             <img :src="user.testimonial" class="h-32 w-32 mb-2" alt="" />
+            <button class="text-blue-500" @click="handlePreview(user.testimonial)">
+              Larger View
+            </button>
           </div>
         </div>
       </div>
@@ -199,7 +213,6 @@
 import Loading from '~/components/Loading.vue'
 import ImageViewer from '~/components/UI/imageViewer.vue'
 /* eslint-disable */
-
 
 export default {
   name: 'ApplicantDetails',
