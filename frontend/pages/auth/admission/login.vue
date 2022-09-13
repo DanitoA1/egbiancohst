@@ -183,7 +183,9 @@ export default {
         await this.$axios.post('/account/auth/applicant/', auth).then((res) => {
           const { id } = res.data.data
           const { user_type } = res.data.data.user
-          this.$cookies.set('token', res.data.data.token)
+          const token = res.data.data.token
+          this.$store.dispatch('setToken', token)
+          this.$cookies.set('token', token)
           this.$cookies.set('user_type', user_type)
           const redirectUrl = this.$cookies.get('redirect')
           getUser(this.$axios, this.$store, this.$cookies, user_type, id)

@@ -14,29 +14,17 @@
       <div
         class="capitalize flex font-bold rounded-t-xl text-base bg-blue-500 text-white p-4"
       >
-        Applicant Profile
+        Student Profile
       </div>
+
       <div class="border-b p-4">
         <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-4">Application Fee</div>
+          <div class="col-span-4">Admission Status</div>
           <div
             class="col-span-8 capitalize"
-            :class="
-              user.application_fee_paid ? 'text-green-500' : 'text-red-500'
-            "
+            :class="user.status ? 'text-green-500' : 'text-red-500'"
           >
-            {{ user.application_fee_paid ? 'Paid' : 'Not Paid' }}
-          </div>
-        </div>
-      </div>
-      <div class="border-b p-4">
-        <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-4">Application Status</div>
-          <div
-            class="col-span-8 capitalize"
-            :class="user.is_admitted ? 'text-green-500' : 'text-red-500'"
-          >
-            {{ user.is_admitted ? 'Admitted' : 'Not Admitted' }}
+            {{ user.status }}
           </div>
         </div>
       </div>
@@ -53,8 +41,8 @@
       </div>
       <div class="border-b p-4">
         <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-4">Applicant ID</div>
-          <div class="col-span-8 capitalize">{{ user.id }}</div>
+          <div class="col-span-4">Matric No</div>
+          <div class="col-span-8 capitalize">{{ user.matric_no }}</div>
         </div>
       </div>
       <div class="border-b p-4">
@@ -84,6 +72,22 @@
           <div class="col-span-4">Faculty</div>
           <div class="col-span-8 capitalize">
             {{ user.department ? user.department.faculty.name : null }}
+          </div>
+        </div>
+      </div>
+      <div class="border-b p-4">
+        <div class="grid grid-cols-12 gap-4">
+          <div class="col-span-4">Level</div>
+          <div class="col-span-8 capitalize">
+            {{ user.level }}
+          </div>
+        </div>
+      </div>
+      <div class="border-b p-4">
+        <div class="grid grid-cols-12 gap-4">
+          <div class="col-span-4">Student Type</div>
+          <div class="col-span-8 capitalize">
+            {{ user.student_type }}
           </div>
         </div>
       </div>
@@ -130,7 +134,7 @@
       </div>
 
       <div class="flex font-bold text-base bg-blue-500 text-white p-4">
-        Applicant Certificates
+        Student Certificates
       </div>
 
       <div class="border-b p-4">
@@ -236,7 +240,7 @@
       </div>
 
       <div class="flex font-bold text-base bg-blue-500 text-white p-4">
-        Applicant Status Action
+        Student Action
       </div>
 
       <div class="p-4 flex gap-4">
@@ -248,24 +252,7 @@
         >
           <span class="">Edit Applicant</span>
         </button>
-        <button
-          v-if="user.is_admitted"
-          @click="rejectApplicant(user.id, 'not-admitted')"
-          class="flex justify-center items-center space-x-3 text-white px-8 py-3 rounded w-auto"
-          :class="loading ? 'cursor-not-allowed bg-red-200' : 'bg-red-500'"
-          :disabled="loading"
-        >
-          <span class="">Reject</span>
-        </button>
-        <button
-          v-else
-          @click="admitApplicant(user.id, 'admitted')"
-          class="flex justify-center items-center space-x-3 text-white px-8 py-3 rounded w-auto"
-          :class="loading ? 'cursor-not-allowed bg-green-200' : 'bg-green-500'"
-          :disabled="loading"
-        >
-          <span class="">Admit</span>
-        </button>
+        
       </div>
     </div>
     <ImageViewer v-if="isImageOpen" :closeModal="closeModal" :imgSrc="imgSrc" />
@@ -278,7 +265,7 @@ import ImageViewer from '~/components/UI/imageViewer.vue'
 /* eslint-disable */
 
 export default {
-  name: 'ApplicantDetails',
+  name: 'StudentDetails',
   data() {
     return {
       imgSrc: null,
@@ -293,13 +280,12 @@ export default {
     },
   },
   mounted() {
-    this.getApplicantDetails()
+    this.getStudentDetails()
   },
   methods: {
-    
-    async getApplicantDetails() {
+    async getStudentDetails() {
       await this.$axios
-        .get(`/api/v1/applicant/${this.userId}/`)
+        .get(`/api/v1/student/${this.userId}/`)
         .then((res) => {
           this.user = res.data.data
           this.loading = false
@@ -309,10 +295,10 @@ export default {
           // location.reload()
         })
     },
-    async admitApplicant(id, status) {
+    async admitStudent(id, status) {
       this.loading = true
       await this.$axios
-        .post(`/api/v1/applicant/update/${id}/`, {
+        .post(`/api/v1/student/update/${id}/`, {
           status,
         })
         .then((res) => {
@@ -324,10 +310,10 @@ export default {
           this.loading = false
         })
     },
-    async rejectApplicant(id, status) {
+    async rejectStudent(id, status) {
       this.loading = true
       await this.$axios
-        .put(`/api/v1/applicant/update/${id}/`, {
+        .put(`/api/v1/student/update/${id}/`, {
           status,
         })
         .then((res) => {
@@ -339,9 +325,9 @@ export default {
           location.reload()
         })
     },
-    async EditApplicant() {
+    async EditStudent() {
       // await this.$axios
-      //   .put(`/api/v1/applicant/${this.userId}`)
+      //   .put(`/api/v1/student/${this.userId}`)
       //   .then((res) => {
       //     this.user = res.data.data
       //     this.loading = false

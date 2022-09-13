@@ -8,35 +8,33 @@ export default {
   head: {
     title: 'Egbian College of Sciences  And Technology',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'en',
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Egbian College of Sciences  And Technology' },
-      { name: 'format-detection', content: 'telephone=no' }
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Egbian College of Sciences  And Technology',
+      },
+      { name: 'format-detection', content: 'telephone=no' },
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
-  loading: { color: "#0A369D" },
+  loading: { color: '#0A369D' },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-    'element-ui/lib/theme-chalk/index.css',
-    '@/assets/styles/index.css'
-  ],
+  css: ['element-ui/lib/theme-chalk/index.css', '@/assets/styles/index.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '@/plugins/element-ui',
-   '@/plugins/persistedState.client.js',
-   '@/plugins/vueprint.client.js',
-   { src: "~/plugins/vuelidate.client.js" },
-
-
+    '@/plugins/persistedState.client.js',
+    '@/plugins/vueprint.client.js',
+    '@/plugins/axios.client.js',
+    { src: '~/plugins/vuelidate.client.js' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -49,15 +47,13 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/stylelint
     '@nuxtjs/stylelint-module',
-  
   ],
 
-  fontawesome : {
-    icons : {
-      solid : true,
-      brands : true,
-   
-    }
+  fontawesome: {
+    icons: {
+      solid: true,
+      brands: true,
+    },
   },
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
@@ -66,42 +62,39 @@ export default {
     '@nuxtjs/svg-sprite',
     'nuxt-paystack',
     // '@nuxtjs/auth-next',
-    "vue-toastification/nuxt",
-    "cookie-universal-nuxt",
-    "@nuxt/postcss8"
-   
+    'vue-toastification/nuxt',
+    'cookie-universal-nuxt',
+    '@nuxt/postcss8',
   ],
 
+  axios: {
+    baseUrl: process.env.API_HOST_DEV,
+  },
+  // auth: {
+  //   strategies: {
+  //     local: {
+  //       token: {
+  //         property: 'token',
+  //         global: true,
+  //         // required: true,
+  //         type: 'Bearer' //this automagically inject Bearer Token into all API request(Needed or not)
+  //       },
 
-axios: {
-  baseUrl: process.env.API_HOST_DEV,
-},
-// auth: {
-//   strategies: {
-//     local: {
-//       token: {
-//         property: 'token',
-//         global: true,
-//         // required: true,
-//         type: 'Bearer' //this automagically inject Bearer Token into all API request(Needed or not)
-//       },
-    
-//       endpoints: {
-//         login: { url: '/account/auth/applicant/', method: 'post'},
-//         logout: false,
-//         user: false
-//       }
-//     }
-//   }
-// },
+  //       endpoints: {
+  //         login: { url: '/account/auth/applicant/', method: 'post'},
+  //         logout: false,
+  //         user: false
+  //       }
+  //     }
+  //   }
+  // },
 
   svgSprite: {
     // manipulate module options
-    input: '~/assets/icons/'
+    input: '~/assets/icons/',
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
 

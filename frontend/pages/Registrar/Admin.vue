@@ -25,11 +25,17 @@
         <button @click="toggle" class="md:hidden block">
           <font-awesome-icon :icon="['fas', `bars`]" />
         </button>
-        <div class="font-bold md:hidden block">ECHST ADMIN</div>
+        <button
+          class="outline-none font-bold text-blue-500 flex items-center gap-4"
+          @click="$router.go(-1)"
+        >
+          <font-awesome-icon :icon="['fas', `arrow-left`]" />
+          <h2>Back</h2>
+        </button>
       </div>
       <div class="space-x-6 flex items-center">
         <button class=" ">
-          <i class="fa-solid text-xl fa-bell"></i>
+          <font-awesome-icon :icon="['fas', `bell`]" />
         </button>
 
         <div class="flex items-center gap-4">
@@ -128,7 +134,7 @@
             to="/registrar/admin/faculty"
             class="flex items-center hover:bg-[#0092EC] hover:text-[#ffffffdb] transition-all transform duration-500 font-medium rounded-md px-5 py-2"
             :class="
-              isActiveRoute('Faculty')
+              isActiveRoute('faculty')
                 ? 'bg-[#0092EC] text-[#ffffffdb]'
                 : 'text-gray-400'
             "
@@ -142,7 +148,7 @@
             to="/registrar/admin/department"
             class="flex items-center hover:bg-[#0092EC] hover:text-[#ffffffdb] transition-all transform duration-500 font-medium rounded-md px-5 py-2"
             :class="
-              isActiveRoute('Department')
+              isActiveRoute('department')
                 ? 'bg-[#0092EC] text-[#ffffffdb]'
                 : 'text-gray-400'
             "
@@ -155,10 +161,10 @@
           <!-- Department -->
 
           <nuxt-link
-            to="/registrar/admin/staff/lecturer"
+            to="/registrar/admin/staff/"
             class="flex items-center hover:bg-[#0092EC] hover:text-[#ffffffdb] transition-all transform duration-500 font-medium rounded-md px-5 py-2"
             :class="
-              isActiveRoute('Staff')
+              isActiveRoute('staff')
                 ? 'bg-[#0092EC] text-[#ffffffdb]'
                 : 'text-gray-400'
             "
@@ -229,7 +235,7 @@
 <!-- eslint-disable -->
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'admin',
   data() {
@@ -267,10 +273,9 @@ export default {
     this.loginUser = `${this.userData?.first_name} ${this.userData?.last_name}`
   },
   methods: {
+    ...mapActions(['logOut']),
     logout() {
-      this.$store.dispatch('logout')
-      this.$nuxt.push('/')
-      localStorage.clear()
+      this.logOut()
     },
     toggle() {
       this.isMobile = !this.isMobile

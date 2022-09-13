@@ -30,11 +30,11 @@
           <div class="flex justify-content items-center mb-4">
             <img
               :src="
-                userData
-                  ? userData.picture
+                candidateImage
+                  ? candidateImage
                   : require('~/assets/images/user-acct.svg')
               "
-              class="h-10 w-10 object-contain mr-4"
+              class="h-10 w-10 object-contain mr-4 rounded-full"
               alt=""
             />
             <div class="sidebar-text flex-col">
@@ -130,6 +130,7 @@ export default {
   data() {
     return {
       loadingState: true,
+      candidateImage: null,
       page: null,
       pageTracker: 1,
       sideabrContents: [
@@ -166,6 +167,7 @@ export default {
   },
 
   mounted() {
+    this.candidateImage = this.userData.picture
     console.log(this.userData)
   },
 

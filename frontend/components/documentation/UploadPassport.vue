@@ -6,15 +6,15 @@
     <div class="font-bold mt-10 mb-6">Upload Your Passport</div>
     <div class="flex justify-center">
       <img
-        v-if="userData"
-        :src="userData.picture"
-        class="object-center h-520 w-52 object-contain"
+        v-if="candidateImage"
+        :src="candidateImage"
+        class="object-center h-52 w-52 object-contain"
         alt=""
       />
       <img
         v-else
         :src="require('~/assets/images/user-acct.svg')"
-        class="object-center h-520 w-52 object-contain"
+        class="object-center h-52 w-52 object-contain rounded"
         alt=""
       />
     </div>
@@ -36,7 +36,7 @@ import getUser from '~/Utils/getUser'
 export default {
   data() {
     return {
-      currentCandidate: null,
+      candidateImage: null,
       loading: false,
     }
   },
@@ -44,12 +44,15 @@ export default {
     ...mapState(['userData']),
   },
 
+  mounted() {
+    this.candidateImage = this.userData.picture
+  },
   methods: {
     handleUpdate(passport) {
       try {
         this.loading = true
-        const {user_type} = this.userData.user
-        const {id} = this.userData
+        const { user_type } = this.userData.user
+        const { id } = this.userData
         this.$axios
           .put(`/api/v1/applicant/${this.userData.id}/`, passport)
           .then((res) => {
@@ -57,7 +60,7 @@ export default {
 
             this.$toast.success('Passport Uploaded Sucessfully')
             getUser(this.$axios, this.$store, this.$cookies, user_type, id)
-            this.loading = false
+            location.reload()
           })
       } catch (error) {
         console.log(error)

@@ -143,7 +143,7 @@ export default {
             if (redirectUrl) {
               this.$router.push(redirectUrl)
             } else {
-              this.$router.push('/registrar/admin')
+              this.$router.push('/registrar/admin/dashboard')
             }
             this.$toast.success('Login Successful')
           } else {

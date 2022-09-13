@@ -47,14 +47,14 @@
               class="mt-3 mr-5 overflow-ellipsis border-2 outline-none border-gray-300 w-full shadow-md rounded-md p-3.5 focus:border-blue-400"
               name="nationality"
               @change="handleSelectedCourse"
-              v-model.trim="selectedCourse"
             >
+              <option>{{ selectedCourse.name }}</option>
               <option
-                v-for="(course, idx) in courseList"
+                v-for="(item, idx) in departments.results"
                 :key="idx"
-                :value="course"
+                :value="JSON.stringify(item)"
               >
-                {{ course }}
+                {{ item.name }}
               </option>
             </select>
           </div>
@@ -101,14 +101,16 @@
           </div>
           <div class="w-full">
             <label for="localgovt" class="text-gray-600 font-bold">
-              Local Government Area - {{ selectedLga }}
+              Local Government Area
             </label>
 
             <select
-              v-model.trim="selectedLga"
               class="mt-3 mr-5 overflow-ellipsis border-2 outline-none border-gray-300 w-full shadow-md rounded-md p-3.5 focus:border-blue-400"
               @change="handleSelectedLga"
             >
+              <option>
+                {{ selectedLga }}
+              </option>
               <option v-for="(city, idx) in correspondingCities" :key="idx">
                 {{ city }}
               </option>
@@ -250,6 +252,7 @@ export default {
       loading: false,
       showModal: false,
       previewData: null,
+      departments: [],
       surname: '',
       middleName: '',
       lastName: '',
@@ -274,8 +277,10 @@ export default {
       genderList: ['male', 'female'],
       selectedCountry: '',
       selectedGender: '',
-      selectedCourse: '',
-
+      selectedCourse: {
+        name: '',
+        id: '',
+      },
       dob: '',
       selectedLga: '',
       selectedState: '',
@@ -326,7 +331,8 @@ export default {
   computed: {
     ...mapState(['userData']),
   },
-  mounted() {
+  async mounted() {
+    await this.getAlldepartment()
     this.surname = this.userData.first_name || ''
     this.middleName = this.userData.middle_name || ''
     this.lastName = this.userData.last_name || ''
@@ -345,6 +351,14 @@ export default {
     this.selectedState = this.userData ? this.userData.state : ''
   },
   methods: {
+    async getAlldepartment() {
+      await this.$axios
+        .get('/api/v1/department/')
+        .then((res) => {
+          this.departments = res.data.data
+        })
+        .catch((err) => {})
+    },
     pickedState(event) {
       this.correspondingCities = this.cities[`${event.target.value}`]
     },
@@ -363,22 +377,13 @@ export default {
       console.log(this.selectedGender)
     },
     handleSelectedCourse(event) {
-      this.selectedCourse = event.target.value
+      this.selectedCourse = JSON.parse(event.target.value)
       console.log(this.selectedCourse)
     },
 
     // Add a new document in collection "Users"
 
     async handleUpdate() {
-      const department = {
-        id: 1,
-        name: 'physics',
-        short_name: 'phy',
-        faculty: {
-          id: 1,
-          name: 'physical science',
-        },
-      }
       const updatedData = {
         first_name: this.surname,
         middle_name: this.middleName,
@@ -389,7 +394,7 @@ export default {
         gender: this.selectedGender,
         state: this.selectedState,
         lga: this.selectedLga,
-        department: this.selectedCourse,
+        department_id: this.selectedCourse.id,
         address: this.address,
 
         next_kin_name: this.next_kin_name,
@@ -402,8 +407,14 @@ export default {
         this.loading = true
         const { user_type } = this.userData.user
         const { id } = this.userData
+        const token = this.$store.state.token
+
         await this.$axios
-          .put(`/api/v1/applicant/${this.userData.id}/`, updatedData)
+          .put(`/api/v1/applicant/${this.userData.id}/`, updatedData, {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          })
           .then(async (res) => {
             console.log(res)
 

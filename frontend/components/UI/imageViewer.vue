@@ -1,8 +1,11 @@
 <!-- eslint-disable -->
 <template>
-  <section class="bg-[#00000050] grid place-content-center relative h-screen overflow-y-auto">
-    <div class="absolute right-5 top-5">X</div>
-    <img :src="imgSrc" class="h-full w-full object-contain" alt="">
+  <section class="fixed inset-0 bg-[#00000050] z-10 grid place-content-center py-10 h-screen overflow-y-auto">
+    <button class="fixed right-5 top-5" @click="closeModal">   <font-awesome-icon
+            class="text-3xl text-red-500 transform rotate-45"
+            :icon="['fas', `plus`]"
+          /> </button>
+    <img :src="imgSrc" class="h-10/12 w-full" alt="">
   </section>
 </template>
 
