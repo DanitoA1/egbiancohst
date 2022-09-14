@@ -76,10 +76,6 @@
           </button>
 
           <div class="text-center">
-            <span class="text-gray-600"> Already have an account ? </span>
-            <span class="font-bold text-dark-blue"
-              ><a href="/admission/registration"> Create account </a></span
-            >|
             <span class="font-bold text-dark-blue"
               ><a href="/"> Homepage </a></span
             >
@@ -132,26 +128,30 @@ export default {
       }
       try {
         this.loading = true
-        await this.$axios.post('/account/auth/staff/admin/', auth).then((res) => {
-          const { id } = res.data
-          const { user_type } = res.data.user
-          this.$cookies.set('token', res.data.token)
-          this.$cookies.set('user_type', user_type)
-          const redirectUrl = this.$cookies.get('redirect')
-          getUser(this.$axios, this.$store, this.$cookies, user_type, id)
-          if (user_type.toLowerCase().includes('staff')) {
-            if (redirectUrl) {
-              this.$router.push(redirectUrl)
+        await this.$axios
+          .post('/account/auth/staff/admin/', auth)
+          .then((res) => {
+            const { id } = res.data
+            const { user_type } = res.data.user
+            const token = res.data.token
+            this.$store.dispatch('setToken', token)
+            this.$cookies.set('token', token)
+            this.$cookies.set('user_type', user_type)
+            const redirectUrl = this.$cookies.get('redirect')
+            getUser(this.$axios, this.$store, this.$cookies, user_type, id)
+            if (user_type.toLowerCase().includes('staff')) {
+              if (redirectUrl) {
+                this.$router.push(redirectUrl)
+              } else {
+                this.$router.push('/registrar/admin/dashboard')
+              }
+              this.$toast.success('Login Successful')
             } else {
-              this.$router.push('/registrar/admin/dashboard')
+              this.$toast.error('Permission denied, user is not  staff')
             }
-            this.$toast.success('Login Successful')
-          } else {
-            this.$toast.error('Permission denied, user is not  staff')
-          }
-          this.$cookies.remove('redirect')
-          this.loading = false
-        })
+            this.$cookies.remove('redirect')
+            this.loading = false
+          })
       } catch (error) {
         console.log(error)
         if (error.response) {

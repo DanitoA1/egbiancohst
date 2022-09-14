@@ -76,10 +76,6 @@
           </button>
 
           <div class="text-center">
-            <span class="text-gray-600"> Already have an account ? </span>
-            <span class="font-bold text-dark-blue"
-              ><a href="/admission/registration"> Create account </a></span
-            >|
             <span class="font-bold text-dark-blue"
               ><a href="/"> Homepage </a></span
             >
@@ -92,9 +88,6 @@
 
 <script>
 /* eslint-disable */
-import Cookies from 'js-cookie'
-import getUser from '@/Utils/getUser'
-
 import { validationMixin } from 'vuelidate'
 import { required, minLength } from 'vuelidate/lib/validators'
 export default {
@@ -133,12 +126,14 @@ export default {
       try {
         this.loading = true
         await this.$axios.post('/account/auth/student/', auth).then((res) => {
-          const { id } = res.data.data
+          console.log(res.data)
           const { user_type } = res.data.data.user
-          this.$cookies.set('token', res.data.data.token)
+          const token = res.data.data.token
+          this.$store.dispatch('setToken', token)
+          this.$cookies.set('token', token)
           this.$cookies.set('user_type', user_type)
           const redirectUrl = this.$cookies.get('redirect')
-          getUser(this.$axios, this.$store, this.$cookies, id)
+          this.$store.dispatch('getUserData', res.data.data)
           if (user_type.toLowerCase().includes('student')) {
             if (redirectUrl) {
               this.$router.push(redirectUrl)

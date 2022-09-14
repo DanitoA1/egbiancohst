@@ -26,7 +26,7 @@ const actions = {
     if (user_type == 'lecturer') {
       this.$router.replace('/auth/school/login')
     }
-    if (user_type == 'admin') {
+    if (user_type == 'staff') {
       this.$router.replace('/auth/registrar/login')
     }
   },

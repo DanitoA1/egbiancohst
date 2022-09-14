@@ -1,45 +1,23 @@
 <!-- eslint-disable -->
 <template>
-  <!-- <div>
+  <div>
     <div
-      v-if="adminStatus"
-      class="
-        px-3
-        py-7
-        my-10
-        text-green-500
-        bg-green-200
-        border border-green-500
-        w-11/12
-        justify-center
-
-        text-base
-        font-medium
-      "
+      v-if="!adminStatus"
+      class="px-3 py-7 my-10 text-green-500 bg-green-200 border border-green-500 w-11/12 justify-center text-base font-medium"
     >
       <font-awesome-icon
         :icon="['fas', `check-circle`]"
         class="text-green-400 text-lg mr-2"
       />
       <span
-        ><strong>Congratulations</strong> ! You've been given provision admission into Egbian College of
-        Health and Technology to study {{ userData?.department || "None"}}
+        ><strong>Congratulations</strong> ! You've been given provision
+        admission into Egbian College of Health and Technology to study
+        {{ department }}
       </span>
     </div>
     <div
       v-else
-      class="
-        px-3
-        py-7
-        my-10
-        text-red-500
-        bg-red-300
-        border border-red-500
-        w-11/12
-        justify-center
-        text-xl
-        font-bold
-      "
+      class="px-3 py-7 my-10 text-red-500 bg-red-300 border border-red-500 w-11/12 justify-center text-xl font-bold"
     >
       <font-awesome-icon
         :icon="['fas', `info-circle`]"
@@ -47,9 +25,7 @@
       />
       <span>No Admission Yet</span>
     </div>
-  </div> -->
-
-  <div>Hi</div>
+  </div>
 </template>
 <!-- eslint-disable -->
 
@@ -60,13 +36,15 @@ export default {
   data() {
     return {
       adminStatus: false,
+      department: null,
     }
   },
   computed: {
     ...mapState(['userData']),
   },
   mounted() {
-    this.adminStatus = this.userData?.is_admitted
+    this.adminStatus = this.userData?.is_admitted || null
+    this.department = this.userData?.department?.name || 'None'
   },
 }
 </script>

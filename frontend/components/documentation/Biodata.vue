@@ -48,7 +48,11 @@
               name="nationality"
               @change="handleSelectedCourse"
             >
-              <option>{{ selectedCourse.name }}</option>
+              <option>
+                {{
+                  selectedCourse ? selectedCourse.name : '--Select Course--  '
+                }}
+              </option>
               <option
                 v-for="(item, idx) in departments.results"
                 :key="idx"
@@ -134,7 +138,7 @@
               name="nationality"
               @change="handleSelectedGender"
             >
-              <option>{{ selectedGender }}</option>
+              <option>{{ selectedGender || '--select gender--' }}</option>
               <option
                 v-for="(gender, idx) in genderList"
                 :key="idx"
@@ -251,7 +255,6 @@ export default {
     return {
       loading: false,
       showModal: false,
-      previewData: null,
       departments: [],
       surname: '',
       middleName: '',
@@ -325,11 +328,26 @@ export default {
         'Yobe',
         'Zamfara',
       ],
+      previewData: null,
     }
   },
 
   computed: {
     ...mapState(['userData']),
+    // previewData() {
+    //   return {
+    //     appId: this.userData.user.username,
+    //     passport: this.userData.picture,
+    //     surname: this.surname,
+    //     middleName: this.middleName,
+    //     lastName: this.lastName,
+    //     selectedCourse: this.selectedCourse.name,
+    //     selectedState: this.selectedState,
+    //     selectedLga: this.selectedLga,
+    //     selectedGender: this.selectedGender,
+    //     selectedCountry: this.selectedCountry,
+    //   }
+    // },
   },
   async mounted() {
     await this.getAlldepartment()
@@ -450,8 +468,19 @@ export default {
       // })
     },
     handlePreview() {
+      this.previewData = {
+        appId: this.userData.user.username,
+        passport: this.userData.picture,
+        surname: this.surname,
+        middleName: this.middleName,
+        lastName: this.lastName,
+        selectedCourse: this.selectedCourse?.name,
+        selectedState: this.selectedState,
+        selectedLga: this.selectedLga,
+        selectedGender: this.selectedGender,
+        selectedCountry: this.selectedCountry,
+      }
       this.showModal = true
-      this.previewData = this.userData
     },
     handleClose() {
       this.showModal = false

@@ -6,66 +6,48 @@
       <h1 class="text-2xl font-medium">Dashboard</h1>
       <div class="my-4 p-3 rounded-sm bg-blue-400 w-full p3">
         <div class="text-blue-700">
-          Hello Welcome Back! <span class="font-bold"> Abdur-rasheed Idris</span>
+          Hello Welcome Back!
+          <span class="font-bold capitalize">
+            {{ userData ? userData.first_name : 'Loading..' }}
+          </span>
         </div>
       </div>
       <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-5 my-5">
         <div
-          class="
-            flex
-            text-center
-            rounded-sm
-            flex-col
-            justify-center
-            items-center
-            p-10
-            bg-reg-blue
-          "
+          class="flex text-center rounded-sm flex-col justify-center items-center p-10 bg-reg-blue"
         >
-          <div class=""><img src="@/assets/images/registration.png" class="w-10 h-10" > </div>
+          <div class="">
+            <img src="@/assets/images/registration.png" class="w-10 h-10" />
+          </div>
           <h1 class="text-red-600">
             <p>Registration</p>
             <p>Yes</p>
           </h1>
         </div>
         <div
-          class="
-            flex
-            text-center
-            rounded-sm
-            flex-col
-            justify-center
-            items-center
-            p-10
-            bg-adm-purple
-          "
+          class="flex text-center rounded-sm flex-col justify-center items-center p-10 bg-adm-purple"
         >
-          <div class=""><img src="@/assets/images/admission.png" class="w-10 h-10" ></div>
+          <div class="">
+            <img src="@/assets/images/admission.png" class="w-10 h-10" />
+          </div>
           <h1 class="text-red-600">
             <p>Admission</p>
             <p>Yes</p>
           </h1>
         </div>
         <div
-          class="
-            flex
-            text-center
-            rounded-sm
-            flex-col
-            justify-center
-            items-center
-            p-10
-            bg-acc-yellow
-          "
+          class="flex text-center rounded-sm flex-col justify-center items-center p-10 bg-acc-yellow"
         >
-          <div class=""><img src="@/assets/images/room-key.png" class="w-10 h-10" ></div>
+          <div class="">
+            <img src="@/assets/images/room-key.png" class="w-10 h-10" />
+          </div>
           <h1 class="text-red-600">
             <p>Accomodation</p>
             <p>Yes</p>
           </h1>
         </div>
       </div>
-      <div class="border border-dark-blue rounded-sm">
+      <div class="border border-dark-blue rounded-sm capitalize">
         <div class="bg-dark-blue w-full p-3">
           <div class="text-white font-bold">Admission Data</div>
         </div>
@@ -77,13 +59,13 @@
           >
             <div
               :class="id % 2 === 0 ? 'bg-gray-100' : 'bg-gray-50'"
-              class="border text-center py-4"
+              class="border px-6 py-4"
             >
               {{ item.key }}
             </div>
             <div
               :class="id % 2 === 0 ? 'bg-gray-100' : 'bg-gray-50'"
-              class="border text-center py-4"
+              class="border px-6 py-4"
             >
               {{ item.value }}
             </div>
@@ -97,6 +79,8 @@
 
 <script>
 export default {
+  name: 'StudentDashboard',
+  props: ['userData'],
   data() {
     return {
       admissionData: [
@@ -110,15 +94,17 @@ export default {
         },
         {
           key: 'Candidate Name',
-          value: 'John Doe',
+          value:
+            `${this.userData?.first_name} ${this.userData?.last_name}` ||
+            'Loading',
         },
         {
           key: 'Gender',
-          value: 'M',
+          value: this.userData?.gender || 'Loading...',
         },
         {
           key: 'Department',
-          value: 'Health Sci',
+          value: this.userData?.department.name || 'Loading...',
         },
       ],
     }

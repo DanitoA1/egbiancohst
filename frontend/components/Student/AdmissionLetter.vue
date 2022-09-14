@@ -49,9 +49,9 @@
           </h1>
           <ol class="list-decimal">
             <li>JAMB Registration Number : 76389494DC</li>
-            <li>Names: John Doe</li>
-            <li>State of Origin : Lagos</li>
-            <li>Local Government: Epe</li>
+            <li>Names:  {{ userData ? userData.first_name : 'Loading..' }}  {{ userData ? userData.last_name : 'Loading..' }}  </li>
+            <li>State of Origin :  {{ userData ? userData.state : 'Loading..' }}</li>
+            <li>Local Government:  {{ userData ? userData.lga : 'Loading..' }}</li>
           </ol>
         </div>
         <div class="py-5 px-3">
@@ -59,7 +59,7 @@
             SECTION B: Academic DETAIL
           </h1>
           <ol class="list-decimal">
-            <li>Faculty: Health Science</li>
+            <li>Faculty:  {{ userData ? userData.department.faculty.name : 'Loading..' }}</li>
             <li>Programme : Full Time</li>
             <li>Level : 100</li>
             <li>Mode Of Entry</li>
@@ -141,7 +141,10 @@
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'Admission-Letter',
+  props: ['userData']
+}
 </script>
 
 <style></style>

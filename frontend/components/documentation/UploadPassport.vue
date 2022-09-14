@@ -18,7 +18,13 @@
         alt=""
       />
     </div>
-    <input hidden type="file" id="image" @change="uploadImage" />
+    <input
+      hidden
+      accept="image/jpeg"
+      type="file"
+      id="image"
+      @change="uploadImage"
+    />
     <label class="cursor-pointer text-dark-blue" for="image">
       <span
         class="bg-blue-600 hover:bg-dark-blue text-white text-center my-4 overflow-ellipsis border outline-none border-gray-300 w-95 block rounded-4px p-3.5"
@@ -45,7 +51,7 @@ export default {
   },
 
   mounted() {
-    this.candidateImage = this.userData.picture
+    this.candidateImage = this.userData?.picture || null
   },
   methods: {
     handleUpdate(passport) {

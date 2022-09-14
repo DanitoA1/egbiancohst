@@ -50,7 +50,7 @@ export default {
   props: ['userData'],
   data() {
     return {
-      amount: 100,
+      amount: 1000,
       admissionData: [
         {
           key: 'Amout',
@@ -58,11 +58,13 @@ export default {
         },
         {
           key: 'Aplication Number',
-          value: this.userData ? this.userData.user.username : 'Loading',
+          value: this.userData?.user.username || 'Loading',
         },
         {
           key: 'Candidate Name',
-          value: this.userData ? this.userData.first_name : 'Loading',
+          value:
+            `${this.userData?.first_name} ${this.userData?.last_name}` ||
+            'Loading',
         },
         {
           key: 'Payment Category',
@@ -77,9 +79,10 @@ export default {
   },
   methods: {
     async makePayment() {
+      console.log(process.env.PAYSTACK_KEY)
       //paystack payment
       this.$paystack({
-        key: process.env.PAYSTACK_KEY, // Replace with your public key.
+        key: 'pk_test_f28c149aad2ca11d114b8c9a0d594ca15fd94d3c', // Replace with your public key.
         email: this.userData.email,
         amount: util.calculateTotalCost(this.amount),
         ref: Date.now(),
@@ -91,11 +94,10 @@ export default {
           console.log(data)
 
           if (data.status === 'success') {
-            // await this.$swal(
-            //   "Congratulations",
-            //   `Payment Successful`,
-            //   "success"
-            // );
+            await this.$axios.put(`/api/v1/applicant/${this.userData.id}/`, {
+              application_fee_paid: true,
+            })
+            await this.$swal('Congratulations', `Payment Successful`, 'success')
             //Update applicant payment status
           } else {
             this.$toast.error('Payment Failed. Try again ')

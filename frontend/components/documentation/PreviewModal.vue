@@ -16,7 +16,7 @@
           <div class="py-2 text-4xl uppercase flex">
             <div>
               <img
-                src="~/assets/images/Logo.svg"
+              src="~/assets/images/Logo.svg"
                 class="h-10 w-10 mr-3"
                 alt="Egbian Logo"
               />
@@ -32,10 +32,10 @@
         <div class="flex justify-between">
           <!-- credential  -->
           <div class="flex flex-col space-y-5 text-lg font-meduim">
-            <div>Application No : {{ previewData.user.username }}</div>
+            <div>Application No : {{ previewData.appId }}</div>
             <div>Surname : {{ previewData.surname }}</div>
-            <div>Middlename : {{ previewData.middlename }}</div>
-            <div>Lastname : {{ previewData.lastname }}</div>
+            <div>Middlename : {{ previewData.middleName }}</div>
+            <div>Lastname : {{ previewData.lastName }}</div>
             <div>Course : {{ previewData.selectedCourse }}</div>
             <div>Nationality : {{ previewData.selectedCountry }}</div>
             <div>State : {{ previewData.selectedState }}</div>
@@ -45,7 +45,7 @@
           <!-- passport  -->
           <div>
             <img
-              :src="previewData.passportUrl"
+              :src="previewData.passport"
               class="object-center h-52 w-52"
               alt=""
             />

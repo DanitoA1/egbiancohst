@@ -131,10 +131,10 @@
           <!-- Faculty -->
 
           <nuxt-link
-            to="/registrar/admin/faculty"
+            to="/registrar/admin/College"
             class="flex items-center hover:bg-[#0092EC] hover:text-[#ffffffdb] transition-all transform duration-500 font-medium rounded-md px-5 py-2"
             :class="
-              isActiveRoute('faculty')
+              isActiveRoute('College')
                 ? 'bg-[#0092EC] text-[#ffffffdb]'
                 : 'text-gray-400'
             "
@@ -142,7 +142,7 @@
             <span class="w-2/12">
               <img src="@/assets/Svg/monitor.svg" alt="" />
             </span>
-            <div class="w-10/12">Faculty</div>
+            <div class="w-10/12">College</div>
           </nuxt-link>
           <nuxt-link
             to="/registrar/admin/department"

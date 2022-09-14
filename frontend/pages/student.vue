@@ -51,7 +51,11 @@
               alt=""
             />
             <div class="w-auto ml-4">
-              <div class="font-semibold text-xl">Abdur-rasheed Idris</div>
+              <div class="font-semibold text-xl">{{
+                  userData
+                    ? `${userData.first_name}   ${userData.last_name}`
+                    : 'Loading'
+                }}</div>
               <p class="text-md text-gray-300">Reg No: 2343243</p>
             </div>
           </div>
@@ -103,7 +107,7 @@
 
 <script>
 /* eslint-disable */
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import Dashboard from '~/components/Student/Dashboard.vue'
 export default {
   name: 'DashboardStudent',
@@ -151,6 +155,9 @@ export default {
         { icon: 'book', name: 'Result', type: 'fas', link: '/student/result/' },
       ],
     }
+  },
+  computed: {
+    ...mapState(['userData']),
   },
   methods: {
     ...mapActions(['logOut']),

@@ -109,7 +109,7 @@
           <div class="text-center mt-8 mb-20 space-x-4">
             <span class="text-gray-600"> Dont have an account ? </span>
             <span class="font-bold text-dark-blue mr-3"
-              ><nuxt-link to="/admission/registration"
+              ><nuxt-link to="/auth/admission/registration"
                 >Start Application</nuxt-link
               ></span
             >

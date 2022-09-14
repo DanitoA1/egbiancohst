@@ -42,7 +42,7 @@
                 {{
                   userData
                     ? `${userData.first_name}   ${userData.last_name}`
-                    : 'Loading'
+                    : ''
                 }}
               </div>
               <p class="text-xs">
@@ -105,6 +105,23 @@
           v-if="pageTracker === 5"
           :userData="userData"
         />
+
+        <div class="flex justify-between w-full my-6 md:pr-10 pr-4">
+          <button
+            @click="prevHandler"
+            :class="pageTracker > 1 ? 'opacity-100' : 'opacity-0'"
+            class="outline-none hover:bg-blue-600 border border-blue-600 py-3 px-4 rounded-md text-blue-500 hover:text-white"
+          >
+            Prev
+          </button>
+          <button
+            @click="nextHandler"
+            :class="pageTracker < 5 ? 'opacity-100' : 'opacity-0'"
+            class="outline-none hover:bg-blue-600 border border-blue-600 py-3 px-4 rounded-md text-blue-500 hover:text-white"
+          >
+            Next
+          </button>
+        </div>
       </div>
 
       <div class="bg-dark-blue hidden lg:flex justify-center items-end">
@@ -167,7 +184,7 @@ export default {
   },
 
   mounted() {
-    this.candidateImage = this.userData.picture
+    this.candidateImage = this.userData?.picture || null
     console.log(this.userData)
   },
 
@@ -190,6 +207,16 @@ export default {
     ...mapActions(['logOut']),
     logoutHandler() {
       this.logOut()
+    },
+    nextHandler() {
+      if (this.pageTracker < 5) {
+        this.pageTracker++
+      }
+    },
+    prevHandler() {
+      if (this.pageTracker > 1) {
+        this.pageTracker--
+      }
     },
   },
 }

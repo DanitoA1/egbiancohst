@@ -7,24 +7,24 @@
     <!-- <div v-if="getCurrentCandidate.paymentStatus"> -->
     <div v-if="true">
       <comp-upload-doc
-        :doctype="`scert`"
-        :label="`Waec or Neco or Nabteb`"
-        :handlerUpload="uploadScert"
+        :doctype="`secondary_cert`"
+        :label="`WAEC/NECO/NABTEB`"
+        :handlerUpload="uploadDoc"
       />
       <comp-upload-doc
-        :doctype="`pcert`"
+        :doctype="`primary_cert`"
         :label="`Primary School Certificate`"
-        :handlerUpload="uploadPcert"
+        :handlerUpload="uploadDoc"
       />
       <comp-upload-doc
         :doctype="`testimonial`"
         :label="`Testimonial`"
-        :handlerUpload="uploadTestimonial"
+        :handlerUpload="uploadDoc"
       />
       <comp-upload-doc
-        :doctype="`bcert`"
+        :doctype="`birth_cert`"
         :label="`Birth Certificate or Age Declaration`"
-        :handlerUpload="uploadBcert"
+        :handlerUpload="uploadDoc"
       />
     </div>
     <div
@@ -44,6 +44,7 @@
 /* eslint-disable */
 
 import { mapState } from 'vuex'
+import getUser from '~/Utils/getUser'
 
 import CompUploadDoc from './CompUploadDoc.vue'
 export default {
@@ -57,92 +58,21 @@ export default {
     ...mapState(['userData']),
   },
   methods: {
-    uploadScert(e) {
+    uploadDoc(e, docType) {
       const file = e.target.files[0]
       // const imageUrl = URL.createObjectURL(file)
       let formData = new FormData()
-      formData.append('picture', file)
+      formData.append(docType, file)
+      const { user_type } = this.userData.user
+      const { id } = this.userData
       try {
         this.loading = true
         this.$axios
-          .put(`/api/v1/applicant/${this.userData.id}/`, passport)
+          .put(`/api/v1/applicant/${this.userData.id}/`, formData)
           .then((res) => {
-            console.log(res)
-
-            this.$toast.success('Certificate Uploaded Sucessfully')
-            this.loading = false
-          })
-      } catch (error) {
-        this.loading = false
-        console.log(error)
-        if (error.response) {
-          this.$toast.error(error.response.data.message)
-        }
-      }
-    },
-
-    uploadPcert(e) {
-      const file = e.target.files[0]
-      // const imageUrl = URL.createObjectURL(file)
-      let formData = new FormData()
-      formData.append('picture', file)
-      try {
-        this.loading = true
-        this.$axios
-          .put(`/api/v1/applicant/${this.userData.id}/`, passport)
-          .then((res) => {
-            console.log(res)
-
-            this.$toast.success('Certificate Uploaded Sucessfully')
-            this.loading = false
-          })
-      } catch (error) {
-        this.loading = false
-        console.log(error)
-        if (error.response) {
-          this.$toast.error(error.response.data.message)
-        }
-      }
-    },
-
-    uploadBcert(e) {
-      const file = e.target.files[0]
-      // const imageUrl = URL.createObjectURL(file)
-      let formData = new FormData()
-      formData.append('picture', file)
-      try {
-        this.loading = true
-        this.$axios
-          .put(`/api/v1/applicant/${this.userData.id}/`, passport)
-          .then((res) => {
-            console.log(res)
-
-            this.$toast.success('Certificate Uploaded Sucessfully')
-            this.loading = false
-          })
-      } catch (error) {
-        this.loading = false
-        console.log(error)
-        if (error.response) {
-          this.$toast.error(error.response.data.message)
-        }
-      }
-    },
-
-    uploadTestimonial(e) {
-      const file = e.target.files[0]
-      // const imageUrl = URL.createObjectURL(file)
-      let formData = new FormData()
-      formData.append('picture', file)
-      try {
-        this.loading = true
-        this.$axios
-          .put(`/api/v1/applicant/${this.userData.id}/`, passport)
-          .then((res) => {
-            console.log(res)
-
-            this.$toast.success('Certificate Uploaded Sucessfully')
-            this.loading = false
+            this.$toast.success('Document Uploaded Sucessfully')
+            getUser(this.$axios, this.$store, this.$cookies, user_type, id)
+            location.reload()
           })
       } catch (error) {
         this.loading = false
