@@ -1,12 +1,12 @@
 <template>
-  <div class="my-5 mx-auto container w-11/12">
+  <div class="my-5 pr-4">
     <!-- <div v-if="!userData.paymentStatus"> -->
     <div v-if="true">
-      <div class="p-3">
+      <div class="">
         <div
           v-for="(item, id) in admissionData"
           :key="id"
-          class="grid grid-cols-2"
+          class="grid grid-cols-2 md:text-sm text-xs"
         >
           <div
             :class="id % 2 === 0 ? 'bg-gray-100' : 'bg-gray-50'"
@@ -95,7 +95,7 @@ export default {
 
           if (data.status === 'success') {
             await this.$axios.put(`/api/v1/applicant/${this.userData.id}/`, {
-              application_fee_paid: true,
+              application_fee_paid: 'paid',
             })
             await this.$swal('Congratulations', `Payment Successful`, 'success')
             //Update applicant payment status

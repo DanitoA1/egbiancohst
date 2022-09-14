@@ -172,7 +172,7 @@
           <div class="text-center mt-8 pb-20 space-x-4">
             <span class="text-gray-600"> Already have an account ? </span>
             <span class="font-bold text-dark-blue mr-3"
-              ><nuxt-link to="/admission/login">Login</nuxt-link></span
+              ><nuxt-link to="/auth/admission/login">Login</nuxt-link></span
             >
             |
             <span class="font-bold text-dark-blue"

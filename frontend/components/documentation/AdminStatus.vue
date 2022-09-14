@@ -2,7 +2,7 @@
 <template>
   <div>
     <div
-      v-if="!adminStatus"
+      v-if="adminStatus === 'admitted'"
       class="px-3 py-7 my-10 text-green-500 bg-green-200 border border-green-500 w-11/12 justify-center text-base font-medium"
     >
       <font-awesome-icon
@@ -16,6 +16,16 @@
       </span>
     </div>
     <div
+      v-else-if="adminStatus === 'pending'"
+      class="px-3 py-7 my-10 text-pink-500 bg-pink-300 border border-pink-500 w-11/12 justify-center text-xl font-bold"
+    >
+      <font-awesome-icon
+        :icon="['fas', `info-circle`]"
+        class="text-white text-lg mr-5"
+      />
+      <span>No Admission Yet</span>
+    </div>
+    <div
       v-else
       class="px-3 py-7 my-10 text-red-500 bg-red-300 border border-red-500 w-11/12 justify-center text-xl font-bold"
     >
@@ -23,7 +33,7 @@
         :icon="['fas', `info-circle`]"
         class="text-white text-lg mr-5"
       />
-      <span>No Admission Yet</span>
+      <span>Rejected</span>
     </div>
   </div>
 </template>
@@ -43,7 +53,7 @@ export default {
     ...mapState(['userData']),
   },
   mounted() {
-    this.adminStatus = this.userData?.is_admitted || null
+    this.adminStatus = this.userData?.status
     this.department = this.userData?.department?.name || 'None'
   },
 }
