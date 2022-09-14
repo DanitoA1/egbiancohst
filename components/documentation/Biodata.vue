@@ -412,7 +412,7 @@ export default {
         gender: this.selectedGender,
         state: this.selectedState,
         lga: this.selectedLga,
-        department_id: this.selectedCourse.id,
+        department_id: this.selectedCourse?.id || null,
         address: this.address,
 
         next_kin_name: this.next_kin_name,

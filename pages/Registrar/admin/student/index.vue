@@ -86,7 +86,7 @@
                 :to="`/registrar/admin/student/${item.id}`"
                 class="flex justify-center items-center space-x-3 bg-[#0192ED] text-white px-2 py-3 rounded w-auto"
               >
-                View user
+                View student
               </router-link>
             </td>
           </tr>

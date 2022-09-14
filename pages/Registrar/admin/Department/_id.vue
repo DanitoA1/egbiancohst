@@ -253,7 +253,7 @@ export default {
     async EditCourse() {
       this.loading = true
       await this.$axios
-        .delete(`/api/v1/department/${this.departmentId}/`)
+        .put(`/api/v1/department/${this.departmentId}/`)
         .then((res) => {
           this.$toast.success('department removed successfully')
           this.$router.go(-1)

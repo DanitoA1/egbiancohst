@@ -39,11 +39,7 @@
             />
             <div class="sidebar-text flex-col">
               <div class="font-meduim text-xl">
-                {{
-                  userData
-                    ? `${userData.first_name}   ${userData.last_name}`
-                    : ''
-                }}
+                {{ userFullName }}
               </div>
               <p class="text-xs">
                 {{ userData ? userData.email : 'loading...' }}
@@ -181,6 +177,11 @@ export default {
   },
   computed: {
     ...mapState(['userData']),
+    userFullName() {
+      return this.userData?.first_name
+        ? `${this.userData.first_name}  ${this.userData.last_name}`
+        : ''
+    },
   },
 
   mounted() {

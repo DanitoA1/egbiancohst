@@ -96,7 +96,7 @@
                   class="text-base text-blue-500 mr-2"
                   :icon="['fas', `plus`]"
                 />
-                View
+                View staff
               </router-link>
             </td>
           </tr>

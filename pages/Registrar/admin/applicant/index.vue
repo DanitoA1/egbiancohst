@@ -116,7 +116,7 @@
                 :to="`/registrar/admin/applicant/${item.id}`"
                 class="flex justify-center items-center space-x-3 bg-[#0192ED] text-white px-2 py-3 rounded w-auto"
               >
-                View user
+                View Applicant
               </router-link>
             </td>
           </tr>
